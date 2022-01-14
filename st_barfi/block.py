@@ -13,14 +13,18 @@ class Block(object):
         # Initialise the Block object
 
         # To set the name of the Block, default = Block
-        self.BlockName = kwargs.get('name', 'Block')
+        self.name = kwargs.get('name', 'Block')
+        # self.title = kwargs.get('title', 'Block') # Title of the block on the editor
 
-        # To set the defaults for Inputs, Outputs, Options
-        self.Inputs = []
-        self.Outputs = []
-        self.Options = []
+        # To set the defaults for inputs, outputs, options
+        self.inputs = []
+        self.outputs = []
+        self.options = []
 
-    def addInput(self, **kwargs) -> None:
+    def __repr__(self) -> str:
+        return super().__repr__()
+
+    def add_input(self, **kwargs) -> None:
         """
         A function defined to add an Input interface to the Block
 
@@ -31,21 +35,21 @@ class Block(object):
             name (str)  : The name of the Input interface.
         """
 
-        Input = {}
+        input = {}
         if not bool(kwargs):
-            in_nos = len(self.Inputs)
-            Input['name'] = 'Input ' + str(in_nos + 1)
+            in_nos = len(self.inputs)
+            input['name'] = 'Input ' + str(in_nos + 1)
         else:
             for arg in kwargs:
                 if arg not in list(self._interfaceVariables):
                     raise(
                         'Error: Argument passed not in the list of Input interface parameters.')
                 arg_val = kwargs.get(arg)
-                Input[arg] = arg_val
+                input[arg] = arg_val
 
-        self.Inputs.append(Input)
+        self.inputs.append(input)
 
-    def addOutput(self, **kwargs) -> None:
+    def add_output(self, **kwargs) -> None:
         """
         A function defined to add an Output interface to the Block
 
@@ -56,21 +60,21 @@ class Block(object):
             name (str)  : The name of the Output interface.
         """
 
-        Output = {}
+        output = {}
         if not bool(kwargs):
-            in_nos = len(self.Outputs)
-            Output['name'] = 'Output ' + str(in_nos + 1)
+            in_nos = len(self.outputs)
+            output['name'] = 'Output ' + str(in_nos + 1)
         else:
             for arg in kwargs:
                 if arg not in list(self._interfaceVariables):
                     raise(
                         'Error: Argument passed not in the list of Input interface parameters.')
                 arg_val = kwargs.get(arg)
-                Output[arg] = arg_val
+                output[arg] = arg_val
 
-        self.Outputs.append(Output)
+        self.outputs.append(output)
 
-    def addOption(self, name: str, type: str, **kwargs) -> None:
+    def add_option(self, name: str, type: str, **kwargs) -> None:
         """
         A function defined to add interactive Option interface to the Block
 
@@ -86,7 +90,7 @@ class Block(object):
 
         """
 
-        _interactiveOptions = ['name', 'type']
+        _interactiveoptions = ['name', 'type']
 
         assert isinstance(
             name, str), "Error: 'name' argument should be of type string."
@@ -95,26 +99,26 @@ class Block(object):
         assert type in ['checkbox', 'input', 'integer', 'number', 'select', 'slider',
                         'display'], 'Error: Option "type" is not of standard Option interface parameter.'
 
-        Option = {}
+        option = {}
 
-        Option['name'] = name
+        option['name'] = name
 
         if type == 'checkbox':
-            Option['type'] = "CheckboxOption"
+            option['type'] = "CheckboxOption"
             value = kwargs.get('value', False)
             assert isinstance(
                 value, bool), "Error: For checkbox option, 'value' must be of type boolean."
-            Option['value'] = value
+            option['value'] = value
 
         elif type == 'input':
-            Option['type'] = "InputOption"
+            option['type'] = "InputOption"
             value = kwargs.get('value', "Text input")
             assert isinstance(
                 value, str), "Error: For input option, 'value' must be of type string."
-            Option['value'] = value
+            option['value'] = value
 
         elif type == 'integer':
-            Option['type'] = "IntegerOption"
+            option['type'] = "IntegerOption"
 
             if 'value' in kwargs:
                 value = kwargs.get('value')
@@ -122,7 +126,7 @@ class Block(object):
                     value, int), "Error: For checkbox option, 'value' must be of type integer."
             else:
                 value = None
-            Option['value'] = value
+            option['value'] = value
 
             if 'min' in kwargs:
                 min = kwargs.get('min')
@@ -130,7 +134,7 @@ class Block(object):
                     min, int), "Error: For checkbox option, 'min' must be of type integer."
             else:
                 min = None
-            Option['min'] = min
+            option['min'] = min
 
             if 'max' in kwargs:
                 max = kwargs.get('max')
@@ -138,11 +142,11 @@ class Block(object):
                     max, int), "Error: For checkbox option, 'max' must be of type integer."
             else:
                 max = None
-            Option['max'] = max
-            Option['properties'] = {'min': min, 'max': max}
+            option['max'] = max
+            option['properties'] = {'min': min, 'max': max}
 
         elif type == 'number':
-            Option['type'] = "NumberOption"
+            option['type'] = "NumberOption"
 
             if 'value' in kwargs:
                 value = kwargs.get('value')
@@ -150,7 +154,7 @@ class Block(object):
                     value, float), "Error: For checkbox option, 'value' must be of type float or integer."
             else:
                 value = None
-            Option['value'] = value
+            option['value'] = value
 
             if 'min' in kwargs:
                 min = kwargs.get('min')
@@ -158,7 +162,7 @@ class Block(object):
                     min, float), "Error: For checkbox option, 'min' must be of type float or integer."
             else:
                 min = None
-            Option['min'] = min
+            option['min'] = min
 
             if 'max' in kwargs:
                 max = kwargs.get('max')
@@ -166,11 +170,11 @@ class Block(object):
                     max, float), "Error: For checkbox option, 'max' must be of type float or integer."
             else:
                 max = None
-            Option['max'] = max
-            Option['properties'] = {'min': min, 'max': max}
+            option['max'] = max
+            option['properties'] = {'min': min, 'max': max}
 
         elif type == 'select':
-            Option['type'] = "SelectOption"
+            option['type'] = "SelectOption"
 
             if 'value' in kwargs:
                 value = kwargs.get('value')
@@ -178,18 +182,18 @@ class Block(object):
                     value, str), "Error: For select option, 'value' must be of string."
             else:
                 value = None
-            Option['value'] = value
+            option['value'] = value
 
             items = kwargs.get('items', [])
             assert bool(
                 items), "Error: There are no items specified for the select option."
             assert all(isinstance(item, str)
                        for item in items), "Error: items specified for the select option must all be of type string."
-            Option['items'] = items
-            Option['properties'] = {'items': items}
+            option['items'] = items
+            option['properties'] = {'items': items}
 
         elif type == 'slider':
-            Option['type'] = "SliderOption"
+            option['type'] = "SliderOption"
 
             if 'value' in kwargs:
                 value = kwargs.get('value')
@@ -197,42 +201,41 @@ class Block(object):
                     value, float), "Error: For slider option, 'value' must be of type float or integer."
             else:
                 value = None
-            Option['value'] = value
+            option['value'] = value
 
             min = kwargs.get('min', None)
-            print(bool(min))
 
             assert (
                 min is not None), "Error: For slider option, 'min' must be specified."
             assert isinstance(min, int) or isinstance(
                 min, float), "Error: For slider option, 'min' must be of type float or integer."
-            Option['min'] = min
+            option['min'] = min
 
             max = kwargs.get('max', None)
             assert bool(
                 max), "Error: For slider option, 'max' must be specified."
             assert isinstance(max, int) or isinstance(
                 max, float), "Error: For slider option, 'max' must be of type float or integer."
-            Option['max'] = max
-            Option['properties'] = {'min': min, 'max': max}
-            
+            option['max'] = max
+            option['properties'] = {'min': min, 'max': max}
+
         elif type == 'display':
-            Option['type'] = "TextOption"
+            option['type'] = "TextOption"
             value = kwargs.get('value', "null text")
             assert isinstance(
                 value, str), "Error: For text option, 'value' must be of type string."
-            Option['value'] = value
+            option['value'] = value
 
         else:
             raise('Error: No valid option type passed to the addOption method.')
 
-        self.Options.append(Option)
+        self.options.append(option)
 
     def _export(self):
-        return {'Name': self.BlockName, 'Inputs': self.Inputs, 'Outputs': self.Outputs, 'Options': self.Options}
+        return {'name': self.name, 'inputs': self.inputs, 'outputs': self.outputs, 'options': self.options}
 
-    def onCalculate():
+    def on_calculate():
         pass
 
-    def addCalculate(self, calcFunc: Callable):
+    def add_calculate(self, calcFunc: Callable):
         self.onCalculate = types.MethodType(calcFunc, self)

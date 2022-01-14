@@ -40,14 +40,14 @@ export default {
         // and register them.
         this.args.blocks.forEach((el) => {
             const Block = BlockBuilder({
-                BlockName: el.Name,
-                Inputs: el.Inputs,
-                Outputs: el.Outputs,
-                Options: el.Options,
+                BlockName: el.name,
+                Inputs: el.inputs,
+                Outputs: el.outputs,
+                Options: el.options,
             });
             // register the nodes we have defined, so they can be
             // added by the user as well as saved & loaded.
-            this.editor.registerNodeType(el.Name, Block);
+            this.editor.registerNodeType(el.name, Block);
         });
 
         // Load the editor data if load_data not equal to null.

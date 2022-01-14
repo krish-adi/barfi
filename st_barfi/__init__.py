@@ -52,28 +52,26 @@ def st_barfi(blocks, load_data=None, key=None):
 
 
 feed = Block(name='Feed')
-feed.addOutput()
-feed.addOutput()
-feed.addOption(name='a-check-box-option', type='checkbox', value=True)
-feed.addOption(name='a-text-input-option',
+feed.add_output()
+feed.add_output()
+feed.add_option(name='a-check-box-option', type='checkbox', value=True)
+feed.add_option(name='a-text-input-option',
                type='input', value="enter text here")
-feed.addOption(name='an-integer-intput-option',
+feed.add_option(name='an-integer-intput-option',
                type='integer', value=5, min=1, max=10)
-feed.addOption(name='a-number-intput-option',
+feed.add_option(name='a-number-intput-option',
                type='number', value=2.5, min=0, max=5)
-feed.addOption(name='a-select-item-option', type='select',
+feed.add_option(name='a-select-item-option', type='select',
                value='item 1', items=['item 1', 'item 2', 'item 3'])
-feed.addOption(name='a-slider-option', type='slider', value=5, min = 0, max=10)
-feed.addOption(name='a-display-option', type='display',
+feed.add_option(name='a-slider-option', type='slider', value=5, min = 0, max=10)
+feed.add_option(name='a-display-option', type='display',
                value='some text to be displayed here.')
 
 
 result = Block(name='Result')
-result.addInput()
+result.add_input()
 
 blocks = [feed, result]
 
-loads = {'nodes': [{'type': 'Feed', 'id': 'node_16391710737910', 'name': 'Feed', 'options': [], 'state': {}, 'interfaces': [['Output', {'id': 'ni_16391710737911', 'value': None}]], 'position': {'x': 73, 'y': 177}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Result', 'id': 'node_16391710817562', 'name': 'Result',
-                                                                                                                                                                                                                                                                               'options': [], 'state': {}, 'interfaces': [['Input', {'id': 'ni_16391710817563', 'value': None}]], 'position': {'x': 443, 'y': 274}, 'width': 200, 'twoColumn': False, 'customClasses': ''}], 'connections': [{'id': '16391710884286', 'from': 'ni_16391710737911', 'to': 'ni_16391710817563'}], 'panning': {'x': 0, 'y': 0}, 'scaling': 1}
 output_dict = st_barfi(blocks)
 # st.markdown(output_dict)

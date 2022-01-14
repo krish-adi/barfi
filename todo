@@ -2,6 +2,8 @@
 
 ### __init__.py
 - [ ] add a class builder for the blocks
+- [ ] add __repr__
+- [ ] add data classes for the option types and make it easy to check property types
 - [ ] add a calculate function to class
 - [ ] add a engine to do calculation from graph tree
 
