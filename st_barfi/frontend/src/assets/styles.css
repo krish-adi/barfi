@@ -1,3 +1,43 @@
+.root {
+    --editor-bg: rgba(250, 250, 250);
+    --editor-dot: rgba(200, 200, 200);
+    --editor-bg-image: radial-gradient(
+            circle,
+            var(--editor-dot) 1.5px,
+            transparent 0px
+        ),
+        radial-gradient(circle, var(--editor-dot) 1.5px, transparent 0px);
+    --editor-bg-pos: 0 0, 15px 15px;
+    --editor-bg-size: 30px 30px;
+    --minimap-bg: rgba(38, 38, 38, 0.1);
+    --node-bg: rgba(255, 255, 255, 1);
+    --node-text: rgba(38, 38, 38, 1);
+    --node-title-bg: rgb(220, 220, 220);
+    --node-title-text: black;
+    --node-port: rgba(38, 38, 38, 0.8);
+    --connection-stroke: rgba(38, 38, 38, 0.8);
+}
+:root {
+    --editor-bg: rgb(35, 35, 35);
+    --editor-dot: rgba(0, 0, 0, 0.133333);
+    --editor-bg-image: linear-gradient(
+            rgba(0, 0, 0, 0.133333) 2px,
+            transparent 2px
+        ),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.133333) 2px, transparent 2px),
+        linear-gradient(#131313 1px, transparent 1px),
+        linear-gradient(90deg, #131313 1px, transparent 1px);
+    --editor-bg-pos: left 0px top 0px;
+    --editor-bg-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    --minimap-bg: rgba(225, 225, 225, 0.1);
+    --node-bg: rgba(63, 63, 63, 0.8);
+    --node-text: rgba(255, 255, 255, 1);
+    --node-title-bg: #000;
+    --node-title-text: #fff;
+    --node-port: white;
+    --connection-stroke: rgb(255, 255, 255);
+}
+
 .d-flex {
     display: flex !important;
 }
@@ -551,8 +591,8 @@
 }
 .node {
     max-width: 20rem;
-    background: rgba(63, 63, 63, 0.8);
-    color: #fff;
+    background: var(--node-bg);
+    color: var(--node-text);
     border-radius: 4px;
     position: absolute;
     filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.8));
@@ -572,8 +612,9 @@
     cursor: grabbing;
 }
 .node > .__title {
-    background: #000;
-    color: #fff;
+    background: var(--node-title-bg);
+    color: var(--node-title-text);
+    font-size: 0.9rem;
     padding: 0.4em 0.75em;
     border-radius: 4px 4px 0 0;
     cursor: grab;
@@ -613,7 +654,7 @@
     position: absolute;
     width: 10px;
     height: 10px;
-    background: white;
+    background: var(--node-port);
     border-radius: 50%;
     top: calc(50% - 5px);
     cursor: crosshair;
@@ -633,7 +674,7 @@
     right: -1.1em;
 }
 .connection {
-    stroke: #fff;
+    stroke: var(--connection-stroke);
     stroke-width: 2px;
     fill: none;
 }
@@ -692,6 +733,7 @@
     cursor: pointer;
 }
 .minimap {
+    background-color: var(--minimap-bg);
     position: absolute;
     height: 15%;
     width: 15%;
@@ -711,14 +753,10 @@
     font-size: 13px;
 }
 .node-editor .background {
-    background-color: #232323;
-    background-image: linear-gradient(
-            rgba(0, 0, 0, 0.133333) 2px,
-            transparent 2px
-        ),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.133333) 2px, transparent 2px),
-        linear-gradient(#131313 1px, transparent 1px),
-        linear-gradient(90deg, #131313 1px, transparent 1px);
+    background-image: var(--editor-bg-image);
+    background-color: var(--editor-bg);
+    background-position: var(--editor-bg-pos) !important;
+    background-size: var(--editor-bg-size) !important;
     background-repeat: repeat;
     width: 100%;
     height: 100%;

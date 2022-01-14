@@ -1,27 +1,27 @@
 ## TODO
 
 ### __init__.py
-- add a class builder for the blocks
-- add a calculate function to class
-- add a engine to do calculation from graph tree
+- [ ] add a class builder for the blocks
+- [ ] add a calculate function to class
+- [ ] add a engine to do calculation from graph tree
 
 ### frontend
-- add opetions to the blocks
-- change the style.css
-- button for update, save 
+- [ ] add options to the blocks
+- [ ] change the style.css
+- [ ] button for update, save 
 
 ### test.py
-- root sample app to run the package
+- [ ] root sample app to run the package
 
 ### Readme.md
-- Usage
-- demo.gif
+- [ ] Usage
+- [ ] demo.gif
 
 ## Changelog.md
-- https://keepachangelog.com/en/1.0.0/
-- GitHub Releases
+- [ ] https://keepachangelog.com/en/1.0.0/
+- [ ] GitHub Releases
 
-## Reources
+## Resources
 
 - https://stackoverflow.com/questions/1301346/what-is-the-meaning-of-single-and-double-underscore-before-an-object-name
 - https://stackoverflow.com/questions/972/adding-a-method-to-an-existing-object-instance

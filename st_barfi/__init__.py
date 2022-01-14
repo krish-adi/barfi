@@ -1,6 +1,8 @@
 # import streamlit as st
 import streamlit.components.v1 as components
 
+from block import Block
+
 import os
 
 _RELEASE = False
@@ -35,7 +37,11 @@ else:
 
 
 def st_barfi(blocks, load_data=None, key=None):
-    component_value = _component_func(blocks=blocks, load_data=load_data, key=key, default={})
+    blocks_data = []
+    for block in blocks:
+        blocks_data.append(block._export())
+    component_value = _component_func(
+        blocks=blocks_data, load_data=load_data, key=key, default={})
     return component_value
 
 # We use the special "key" argument to assign a fixed identity to this
@@ -44,25 +50,30 @@ def st_barfi(blocks, load_data=None, key=None):
 # and lose its current state. In this case, we want to vary the component's
 # "name" argument without having it get recreated.
 
-feed = {'Name': 'Feed',
-        'InputsInfo': [],
-        'OutputsInfo': [{'name': 'Output'}]}
-splitter = {'Name': 'Splitter',
-            'InputsInfo': [{'name': 'Input'}],
-            'OutputsInfo': [{'name': 'Output 1'}, {'name': 'Output 2'}]}
-mixer = {'Name': 'Mixer',
-         'InputsInfo': [{'name': 'Input 1'}, {'name': 'Input 2'}],
-         'OutputsInfo': [{'name': 'Output'}]}
-result = {'Name': 'Result',
-          'InputsInfo': [{'name': 'Input'}],
-          'OutputsInfo': []}
 
-blocks = [feed, splitter, mixer, result]
+feed = Block(name='Feed')
+feed.addOutput()
+feed.addOutput()
+feed.addOption(name='a-check-box-option', type='checkbox', value=True)
+feed.addOption(name='a-text-input-option',
+               type='input', value="enter text here")
+feed.addOption(name='an-integer-intput-option',
+               type='integer', value=5, min=1, max=10)
+feed.addOption(name='a-number-intput-option',
+               type='number', value=2.5, min=0, max=5)
+feed.addOption(name='a-select-item-option', type='select',
+               value='item 1', items=['item 1', 'item 2', 'item 3'])
+feed.addOption(name='a-slider-option', type='slider', value=5, min = 0, max=10)
+feed.addOption(name='a-display-option', type='display',
+               value='some text to be displayed here.')
 
-loads = {'nodes': [{'type': 'Feed', 'id': 'node_16391710737910', 'name': 'Feed', 'options': [], 'state': {}, 'interfaces': [['Output', {'id': 'ni_16391710737911', 'value': None}]], 'position': {'x': 73, 'y': 177}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Result', 'id': 'node_16391710817562', 'name': 'Result', 'options': [], 'state': {}, 'interfaces': [['Input', {'id': 'ni_16391710817563', 'value': None}]], 'position': {'x': 443, 'y': 274}, 'width': 200, 'twoColumn': False, 'customClasses': ''}], 'connections': [{'id': '16391710884286', 'from': 'ni_16391710737911', 'to': 'ni_16391710817563'}], 'panning': {'x': 0, 'y': 0}, 'scaling': 1}
 
-output_dict = st_barfi(blocks, load_data=loads)
+result = Block(name='Result')
+result.addInput()
+
+blocks = [feed, result]
+
+loads = {'nodes': [{'type': 'Feed', 'id': 'node_16391710737910', 'name': 'Feed', 'options': [], 'state': {}, 'interfaces': [['Output', {'id': 'ni_16391710737911', 'value': None}]], 'position': {'x': 73, 'y': 177}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Result', 'id': 'node_16391710817562', 'name': 'Result',
+                                                                                                                                                                                                                                                                               'options': [], 'state': {}, 'interfaces': [['Input', {'id': 'ni_16391710817563', 'value': None}]], 'position': {'x': 443, 'y': 274}, 'width': 200, 'twoColumn': False, 'customClasses': ''}], 'connections': [{'id': '16391710884286', 'from': 'ni_16391710737911', 'to': 'ni_16391710817563'}], 'panning': {'x': 0, 'y': 0}, 'scaling': 1}
+output_dict = st_barfi(blocks)
 # st.markdown(output_dict)
-
-# Import 
-# from .block_builder import BlockBuilder
