@@ -4,7 +4,7 @@
 
 .PHONY: serve
 serve: 
-	cd st_barfi/frontend && npm run serve
+	cd frontend && npm run serve
 
 .PHONY: run
 run: 
