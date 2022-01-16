@@ -1,4 +1,5 @@
 # Usage: $ make {command}
+# streamlit run st_barfi/__init__.py 
 
 .ONESHELL:
 
@@ -8,4 +9,4 @@ serve:
 
 .PHONY: run
 run: 
-	streamlit run st_barfi/__init__.py 
+	cd tests && streamlit run app.py 

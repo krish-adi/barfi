@@ -1,7 +1,9 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import networkx as nx
 
-from block_builder import Block
+# import block_builder as bb # feed = bb.Block()
+from .block_builder import Block
 
 import os
 
@@ -37,20 +39,34 @@ else:
 
 
 def st_barfi(blocks, load_data=None, key=None):
-    blocks_data = []
-    for block in blocks:
-        blocks_data.append(block._export())
+    blocks_data = [block._export() for block in blocks]
     editor_state = _component_func(
         blocks=blocks_data, load_data=load_data, key=key, default={})
+
     active_blocks = []
     active_connections = []
-
-    print(editor_state)
 
     if bool(editor_state):
         for block in editor_state['nodes']:
             active_blocks.append({'name': block['type'], 'id': block['id'],
                                   'title': block['name'], 'interfaces': block['interfaces']})
+        active_connections = editor_state['connections']
+
+    active_blocks = {}
+    block_label = {}  # Only for testing
+    interface_block_id = {}
+    active_connections = []
+
+    if bool(editor_state):
+        for block in editor_state['nodes']:
+            interfaces = {}
+            for interface in block['interfaces']:
+                interface_block_id[interface[1]['id']] = block['id']
+                interfaces[interface[1]['id']] = interface[1]['value']
+            active_blocks[block['id']] = {
+                'type': block['type'], 'name': block['name'], 'interfaces': interfaces}
+            block_label[block['id']] = block['name']
+            # active_blocks[block['id']] = {'name': block['type'], 'id': block['id'], 'title': block['name'], 'interfaces': interfaces , 'interfaces_data': block['interfaces']}
         active_connections = editor_state['connections']
 
     return [editor_state, active_blocks, active_connections]
@@ -61,33 +77,4 @@ def st_barfi(blocks, load_data=None, key=None):
 # and lose its current state. In this case, we want to vary the component's
 # "name" argument without having it get recreated.
 
-
-feed = Block(name='Feed')
-feed.add_output()
-
-splitter = Block(name='Splitter')
-splitter.add_input()
-splitter.add_output()
-splitter.add_output()
-
-mixer = Block(name='Mixer')
-mixer.add_input()
-mixer.add_input()
-mixer.add_output()
-
-result = Block(name='Result')
-result.add_input()
-
-blocks = [feed, result, mixer, splitter]
-
-editor_preset = {'nodes': [{'type': 'Feed', 'id': 'node_16421654445600', 'name': 'Feed', 'options': [], 'state': {}, 'interfaces': [['Output 1', {'id': 'ni_16421654445601', 'value': None}]], 'position': {'x': 53.10270771798835, 'y': 103.53598351788409}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Feed', 'id': 'node_16421655709876', 'name': 'Feed', 'options': [], 'state': {}, 'interfaces': [['Output 1', {'id': 'ni_16421655709877', 'value': None}]], 'position': {'x': -110.96319142010879, 'y': 354.1711813273622}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Splitter', 'id': 'node_16421655753058', 'name': 'Splitter', 'options': [], 'state': {}, 'interfaces': [['Input 1', {'id': 'ni_16421655753069', 'value': None}], ['Output 1', {'id': 'ni_164216557530610', 'value': None}], ['Output 2', {'id': 'ni_164216557530611', 'value': None}]], 'position': {'x': 160.08999419005372, 'y': 242.060177855096}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Mixer', 'id': 'node_164216557860312', 'name': 'Mixer',
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          'options': [], 'state': {}, 'interfaces': [['Input 1', {'id': 'ni_164216557860313', 'value': None}], ['Input 2', {'id': 'ni_164216557860314', 'value': None}], ['Output 1', {'id': 'ni_164216557860315', 'value': None}]], 'position': {'x': 428.30492654775384, 'y': 112.91965486805523}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Result', 'id': 'node_164216558728816', 'name': 'Result', 'options': [], 'state': {}, 'interfaces': [['Input 1', {'id': 'ni_164216558728817', 'value': None}]], 'position': {'x': 426.88579992152256, 'y': 335.7225351863563}, 'width': 200, 'twoColumn': False, 'customClasses': ''}], 'connections': [{'id': '164216559410520', 'from': 'ni_16421654445601', 'to': 'ni_164216557860313'}, {'id': '164216559592723', 'from': 'ni_164216557530610', 'to': 'ni_164216557860314'}, {'id': '164216559830026', 'from': 'ni_164216557530611', 'to': 'ni_164216558728817'}, {'id': '164216560187829', 'from': 'ni_16421655709877', 'to': 'ni_16421655753069'}], 'panning': {'x': 163.41400013998373, 'y': 110.67177791961308}, 'scaling': 0.7761150375278565}
-
-[editor_state, active_blocks, active_connections] = st_barfi(
-    blocks, load_data=editor_preset)
-
-st.write("Active blocks")
-st.write(active_blocks)
-st.write("Active connections")
-st.write(active_connections)
-st.markdown(editor_state)
+    
