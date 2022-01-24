@@ -13,3 +13,6 @@
 
 ## programiz
 - https://www.programiz.com/dsa/graph-adjacency-list
+
+## streamlit-pyvis
+- https://towardsdatascience.com/making-network-graphs-interactive-with-python-and-pyvis-b754c22c270

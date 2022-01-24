@@ -37,6 +37,12 @@ else:
 # our component's API: we can pre-process its input args, post-process its
 # output value, and add a docstring for users.
 
+# We use the special "key" argument to assign a fixed identity to this
+# component instance. By default, when a component's arguments change,
+# it is considered a new instance and will be re-mounted on the frontend
+# and lose its current state. In this case, we want to vary the component's
+# "name" argument without having it get recreated.
+
 
 def st_barfi(blocks, load_data=None, key=None):
     blocks_data = [block._export() for block in blocks]
@@ -71,10 +77,6 @@ def st_barfi(blocks, load_data=None, key=None):
 
     return [editor_state, active_blocks, active_connections]
 
-# We use the special "key" argument to assign a fixed identity to this
-# component instance. By default, when a component's arguments change,
-# it is considered a new instance and will be re-mounted on the frontend
-# and lose its current state. In this case, we want to vary the component's
-# "name" argument without having it get recreated.
+
 
     

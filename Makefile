@@ -9,4 +9,4 @@ serve:
 
 .PHONY: run
 run: 
-	cd tests && streamlit run app.py 
+	cd tests && streamlit run test_app.py 
