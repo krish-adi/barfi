@@ -74,7 +74,7 @@ if bool(editor_state):
         G.add_edge(from_node, to_node, edge_id=_connection['id'])
 
     if not nx.is_directed_acyclic_graph(G):
-        print('Cycle(s) detected. Not supported by `barfi` at the moment.')
+        raise('Cycle(s) detected. Not supported by `barfi` at the moment.')
     else:
         _compu_order = [node for node in nx.topological_sort(G)]
     
@@ -86,13 +86,29 @@ if bool(editor_state):
     st.write('### Computational order')
     st.write(_compu_order)
 
-    st.write('### Performing the computation')
-    st.write(active_blocks[_compu_order[0]]['block']._interface_value)
-    active_blocks[_compu_order[0]]['block']._on_calculate() 
+    st.write('### Performing the computation')           
+    # st.write(active_blocks[_compu_order[0]]['block']._interface_value)
+    # active_blocks[_compu_order[0]]['block']._on_calculate() 
+    # st.write(active_blocks[_compu_order[0]]['block']._interface_value)
 
-    for key, value in active_blocks[_compu_order[0]]['block']._interface_value.items():
-        find_to = _map_link_interface_id_from_to[value['id']]
-        find_to_block = _map_interface_id_block_id[find_to]
-        st.write(active_blocks[find_to_block])
-        active_blocks[find_to_block]['block'].set_interface(name=_map_interface_id_name[find_to], value=value['value'])
-        st.write(active_blocks[find_to_block])
+    # for key, value in active_blocks[_compu_order[0]]['block']._interface_value.items():
+    #     find_to = _map_link_interface_id_from_to[value['id']]
+    #     find_to_block = _map_interface_id_block_id[find_to]
+    #     st.write(active_blocks[find_to_block])
+    #     active_blocks[find_to_block]['block'].set_interface(name=_map_interface_id_name[find_to], value=value['value'])
+    #     st.write(active_blocks[find_to_block])
+    st.write('Before')  
+    st.write(active_blocks)
+    
+    for node in nx.topological_sort(G):        
+        active_blocks[node]['block']._on_calculate()      
+        for key, value in active_blocks[node]['block']._interface_value.items():
+            try:
+                find_to = _map_link_interface_id_from_to[value['id']]
+                find_to_block = _map_interface_id_block_id[find_to]        
+                active_blocks[find_to_block]['block'].set_interface(name=_map_interface_id_name[find_to], value=value['value'])
+            except:
+                pass
+
+    st.write('After')          
+    st.write(active_blocks)

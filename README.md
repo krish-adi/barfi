@@ -1,8 +1,8 @@
-# Streamlit Barfi
+# Barfi
 
-**Block and Link based graphical programming environment for performing simulations in Python using Streamlit.**
+**Block and Link based graphical programming environment for performing simulations in Python.**
 
-Streamlit component for a graphical programming environment to perform simulations.
+It provides a Streamlit component for a graphical programming environment to perform simulations.
 
 ## Development notes
 

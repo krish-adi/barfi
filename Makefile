@@ -1,5 +1,4 @@
 # Usage: $ make {command}
-# streamlit run st_barfi/__init__.py 
 
 .ONESHELL:
 
