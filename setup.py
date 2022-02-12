@@ -12,7 +12,8 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/krish-adi/barfi",
-    packages=setuptools.find_packages(),
+    package_dir={"": "barfi"},
+    packages=setuptools.find_packages(where="barfi"),
     include_package_data=True,
     classifiers=[
         'Development Status :: 3 - Alpha',

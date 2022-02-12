@@ -11,13 +11,13 @@ Following are the notes for working on the development of the component.
 ### Quickstart for development
 
 - In terminal 1
-```
+```shell
 $ cd st_barfi/frontend
 $ npm run serve
 ```
 
 - In terminal 2
-```
+```shell
 $ streamlit run st_barfi/__init__.py 
 ```
 
@@ -30,7 +30,7 @@ $ streamlit run st_barfi/__init__.py
 
 Create a new Python virtual environment:
 
-```
+```shell
 $ python3 -m venv venv  # create venv
 $ . venv/bin/activate   # activate venv
 $ pip install streamlit # install streamlit
@@ -38,7 +38,7 @@ $ pip install streamlit # install streamlit
 
 Run the components's Streamlit app:
 
-```
+```shell
 $ . venv/bin/activate  # activate the venv you created earlier
 $ streamlit run st_barfi/__init__.py  # run the root test
 ```
@@ -47,10 +47,17 @@ $ streamlit run st_barfi/__init__.py  # run the root test
 
 Install and initialize the component's frontend:
 
-```
+```shell
 $ cd st_barfi/frontend
 $ npm install    # Install npm dependencies
 $ npm run serve  # Start the dev server
 ```
 
+## Build and Deploy
+
+```shell
+pip isntall build twine
+python -m build 
+twine upload --verbose --skip-existing dist/*
+```
 
