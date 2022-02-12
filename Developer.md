@@ -55,3 +55,9 @@ python -m build
 twine upload --verbose --skip-existing dist/*
 ```
 
+## Resources
+
+- https://stackoverflow.com/questions/1301346/what-is-the-meaning-of-single-and-double-underscore-before-an-object-name
+- https://stackoverflow.com/questions/972/adding-a-method-to-an-existing-object-instance
+- https://stackoverflow.com/questions/52799985/python-change-bound-method-to-another-method
+- https://docs.python.org/3/tutorial/classes.html

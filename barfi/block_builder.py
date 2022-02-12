@@ -4,20 +4,16 @@ from .option_builder import build_option
 
 
 class Block(object):
-    """
-
-    """
-
     _interfaceVariables = ['name']
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, name: str = 'Block') -> None:
         # Initialise the Block object
 
         # To set the name of the Block, default = Block
         # Reference to the type of the Block
-        self._type = kwargs.get('name', 'Block')
+        self._type = name
         # Title of the block on the editor
-        self._name = kwargs.get('name', 'Block')
+        self._name = name
 
         # To set the defaults for inputs, outputs, options
         self._inputs = []
@@ -28,7 +24,7 @@ class Block(object):
 
     def __repr__(self) -> str:
         return f"<barfi.Block of type '{self._type}' at {hex(id(self))}>"
-    
+
     def __str__(self) -> str:
         line_1 = f"barfi.Block of type '{self._type}' with name '{self._name}'\n"
         inputs_name = [input['name'] for input in self._inputs]
@@ -118,7 +114,7 @@ class Block(object):
 
     def _export(self):
         return {'name': self._name, 'inputs': self._inputs, 'outputs': self._outputs, 'options': self._options}
-    
+
     def get_interface(self, name):
         return self._interface_value[name]['value']
 

@@ -1,13 +1,14 @@
 import sys
 sys.path.append('../')
-from test_blocks import feed, result, mixer, splitter
-import streamlit as st
-from barfi import st_barfi
-from matplotlib import pyplot as plt
-import networkx as nx
 import copy
+import networkx as nx
+from matplotlib import pyplot as plt
+from barfi import st_barfi, ComputeEngine
+import streamlit as st
+from test_blocks import feed, result, mixer, splitter
 
 blocks = [feed, result, mixer, splitter]
+ce = ComputeEngine(blocks=blocks)
 
 editor_preset = {'nodes': [{'type': 'Feed', 'id': 'node_16421654445600', 'name': 'Feed-1', 'options': [], 'state': {}, 'interfaces': [['Output 1', {'id': 'ni_16421654445601', 'value': None}]], 'position': {'x': 53.10270771798835, 'y': 103.53598351788409}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Feed', 'id': 'node_16421655709876', 'name': 'Feed-2', 'options': [], 'state': {}, 'interfaces': [['Output 1', {'id': 'ni_16421655709877', 'value': None}]], 'position': {'x': -110.96319142010879, 'y': 354.1711813273622}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Splitter', 'id': 'node_16421655753058', 'name': 'Splitter-1', 'options': [], 'state': {}, 'interfaces': [['Input 1', {'id': 'ni_16421655753069', 'value': None}], ['Output 1', {'id': 'ni_164216557530610', 'value': None}], ['Output 2', {'id': 'ni_164216557530611', 'value': None}]], 'position': {'x': 160.08999419005372, 'y': 242.060177855096}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Mixer', 'id': 'node_164216557860312', 'name': 'Mixer-1',
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 'options': [], 'state': {}, 'interfaces': [['Input 1', {'id': 'ni_164216557860313', 'value': None}], ['Input 2', {'id': 'ni_164216557860314', 'value': None}], ['Output 1', {'id': 'ni_164216557860315', 'value': None}]], 'position': {'x': 428.30492654775384, 'y': 112.91965486805523}, 'width': 200, 'twoColumn': False, 'customClasses': ''}, {'type': 'Result', 'id': 'node_164216558728816', 'name': 'Result-1', 'options': [], 'state': {}, 'interfaces': [['Input 1', {'id': 'ni_164216558728817', 'value': None}]], 'position': {'x': 426.88579992152256, 'y': 335.7225351863563}, 'width': 200, 'twoColumn': False, 'customClasses': ''}], 'connections': [{'id': '164216559410520', 'from': 'ni_16421654445601', 'to': 'ni_164216557860313'}, {'id': '164216559592723', 'from': 'ni_164216557530610', 'to': 'ni_164216557860314'}, {'id': '164216559830026', 'from': 'ni_164216557530611', 'to': 'ni_164216558728817'}, {'id': '164216560187829', 'from': 'ni_16421655709877', 'to': 'ni_16421655753069'}], 'panning': {'x': 163.41400013998373, 'y': 110.67177791961308}, 'scaling': 0.7761150375278565}
@@ -77,8 +78,9 @@ if bool(editor_state):
     if not nx.is_directed_acyclic_graph(G):
         raise('Cycle(s) detected. Not supported by `barfi` at the moment.')
     else:
-        _compu_order = [_map_block_id_name[node] for node in nx.topological_sort(G)]
-        
+        _compu_order = [_map_block_id_name[node]
+                        for node in nx.topological_sort(G)]
+
     st.write('### DAG Graph of the computational block-link')
     fig, ax = plt.subplots(figsize=(12, 6))
     nx.draw(G, with_labels=True, node_color='lightblue',
@@ -124,7 +126,8 @@ if bool(editor_state):
                                  'type': block['type'],
                                  'interfaces': {}}
         for link_id, link in block['interfaces'].items():
-            result[block['name']]['interfaces'][link_id] = {'value': link['value']}
+            result[block['name']]['interfaces'][link_id] = {
+                'value': link['value']}
             _interface_id = link['id']
 
             if _interface_id in _map_link_interface_id_from_to:
@@ -134,7 +137,8 @@ if bool(editor_state):
                 to_name = _map_interface_id_name[to_id]
                 to_block_id = _map_interface_id_block_id[to_id]
                 to_block_name = _map_block_id_name[to_block_id]
-                result[block['name']]['interfaces'][link_id]['to'][to_block_name] = to_name
+                result[block['name']
+                       ]['interfaces'][link_id]['to'][to_block_name] = to_name
 
             if _interface_id in _map_link_interface_id_to_from:
                 result[block['name']]['interfaces'][link_id]['type'] = 'intput'
@@ -143,6 +147,7 @@ if bool(editor_state):
                 from_name = _map_interface_id_name[from_id]
                 from_block_id = _map_interface_id_block_id[from_id]
                 from_block_name = _map_block_id_name[from_block_id]
-                result[block['name']]['interfaces'][link_id]['from'][from_block_name] = from_name
-    
+                result[block['name']
+                       ]['interfaces'][link_id]['from'][from_block_name] = from_name
+
     st.write(result)

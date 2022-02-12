@@ -2,8 +2,9 @@ import streamlit as st
 import streamlit.components.v1 as components
 import networkx as nx
 
-# import block_builder as bb # feed = bb.Block()
+# import barfi components
 from .block_builder import Block
+from .compute_engine import ComputeEngine
 
 import os
 
