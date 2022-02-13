@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release dates are in YYYY-MM-DD
 
+## [0.2.0] - 2022-02-13
+
+- ComputeEnginge class, with execute method
+- Client has Menu to Save and List schemas into a db.
+- Functions for managing save/load schemas
+
 ## [0.1.0] - 2022-02-12
 
 - Initial release.
