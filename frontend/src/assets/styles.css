@@ -806,3 +806,38 @@
 .overlay {
     z-index: 100;
 }
+.node-editor .background {
+    border-radius: 2px;
+}
+.execute-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+.save-button {
+    position: absolute;
+    top: 1rem;
+    left: 6.5rem;
+}
+.load-button {
+    position: absolute;
+    top: 1rem;
+    left: 10.7rem;
+}
+.control-button {
+    font-weight: 500 !important;
+    font-size: small !important;
+    background: rgba(75, 75, 75, 1);
+    border: 2px solid rgba(75, 75, 75, 1);
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.8));
+    transition: box-shadow 0.1s linear, filter 0.1s linear;
+    color: var(--node-text);
+    border-radius: 3px;
+    padding: 1px 7px;
+    cursor: pointer;
+    outline: inherit;
+}
+.control-button:hover {
+    background: rgba(75, 75, 75, 0.4);
+    border: 2px solid rgba(75, 75, 75, 0.4);
+}

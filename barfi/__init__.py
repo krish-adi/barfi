@@ -1,10 +1,11 @@
-import streamlit as st
 import streamlit.components.v1 as components
-import networkx as nx
+from typing import List, Dict
+import pickle
 
 # import barfi components
 from .block_builder import Block
 from .compute_engine import ComputeEngine
+from .manage_schema import load_schema_name, load_schemas, save_schema
 
 import os
 
@@ -45,39 +46,30 @@ else:
 # "name" argument without having it get recreated.
 
 
-def st_barfi(blocks, load_data=None, key=None):
-    blocks_data = [block._export() for block in blocks]
-    editor_state = _component_func(
-        blocks=blocks_data, load_data=load_data, key=key, default={})
+def st_barfi(base_blocks: List[Block], compute_engine: ComputeEngine = None, load_data: Dict = None, load_schema: str = None, key=None):
+    if load_schema:
+        editor_schema = load_schema_name(load_schema)
 
-    active_blocks = []
-    active_connections = []
+    schemas_in_db = load_schemas()
+    schema_names_in_db = schemas_in_db['schema_names']
 
-    if bool(editor_state):
-        for block in editor_state['nodes']:
-            active_blocks.append({'name': block['type'], 'id': block['id'],
-                                  'title': block['name'], 'interfaces': block['interfaces']})
-        active_connections = editor_state['connections']
+    base_blocks_data = [block._export() for block in base_blocks]
+    _from_client = _component_func(
+        base_blocks=base_blocks_data, load_data=editor_schema, load_schema_names=schema_names_in_db, key=key, default={'command': 'skip', 'data': {}})
 
-    active_blocks = {}
-    block_label = {}  # Only for testing
-    interface_block_id = {}
-    active_connections = []
+    if _from_client['command'] == 'execute':
+        compute_engine.add_editor_state(_from_client['data'])
+        compute_engine.execute()
+        result = compute_engine.get_result()
+        return result
+    if _from_client['command'] == 'save':
+        save_schema(schema_name=_from_client['schema_name'], schema_data=_from_client['editor_state'])        
+    if _from_client['command'] == 'load':
+        editor_schema = load_schema_name(_from_client['schema_name'])        
+    else:
+        pass
+        # from inspect import getsourcefile
+        # from os.path import abspath
+        # return abspath(getsourcefile(lambda: 0))
 
-    if bool(editor_state):
-        for block in editor_state['nodes']:
-            interfaces = {}
-            for interface in block['interfaces']:
-                interface_block_id[interface[1]['id']] = block['id']
-                interfaces[interface[1]['id']] = interface[1]['value']
-            active_blocks[block['id']] = {
-                'type': block['type'], 'name': block['name'], 'interfaces': interfaces}
-            block_label[block['id']] = block['name']
-            # active_blocks[block['id']] = {'name': block['type'], 'id': block['id'], 'title': block['name'], 'interfaces': interfaces , 'interfaces_data': block['interfaces']}
-        active_connections = editor_state['connections']
-
-    return [editor_state, active_blocks, active_connections]
-
-
-
-    
+    return {}
