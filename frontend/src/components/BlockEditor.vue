@@ -1,34 +1,77 @@
 <template>
     <div id="editorCanvas">
-        <!-- Schema Modal -->
+        <!-- Menu Modal -->
         <div
             class="modal"
-            :style="schemaModal ? 'display: block;' : 'display: none;'"
+            :style="menuModal ? 'display: block;' : 'display: none;'"
         >
             <div class="modal-content">
-                <span class="close" @click="schemaModal = !schemaModal"
+                <span class="close" @click="menuModal = !menuModal"
                     >&times;</span
                 >
-                <label>List of saved schemas: </label>
-                <span v-for="(schema, index) in loadSchemas" :key="index">
-                    {{ schema }}
-                </span>
-                <label>Enter name to save schema as</label>
-                <input v-model="saveSchemaName" placeholder="Schema name" />
-                <button
-                    v-if="saveSchemaName !== ''"
-                    class="modal-button"
-                    @click="saveEditorData"
+
+                <div class="tab">
+                    <button
+                        class="tablinks"
+                        :class="listTab ? 'active' : ''"
+                        @click="activateTab('listTab')"
+                    >
+                        List
+                    </button>
+                    <button
+                        class="tablinks"
+                        :class="saveTab ? 'active' : ''"
+                        @click="activateTab('saveTab')"
+                    >
+                        Save
+                    </button>
+                </div>
+
+                <div
+                    class="tabcontent"
+                    :style="listTab ? 'display: block;' : 'display: none;'"
                 >
-                    Save
-                </button>
-                <button
-                    v-else
-                    class="modal-button-disabled"
-                    @click="saveEditorData"
+                    <label>List of saved schemas</label>
+
+                    <ul>
+                        <li v-for="(schema, index) in loadSchemas" :key="index">
+                            {{ schema }}
+                        </li>
+                    </ul>
+                    <p>
+                        Current schema:
+                        <span style="font-weight: 600">{{
+                            this.loadSchemaName
+                        }}</span>
+                    </p>
+                </div>
+
+                <div
+                    class="tabcontent"
+                    :style="saveTab ? 'display: block;' : 'display: none;'"
                 >
-                    Save
-                </button>
+                    <label>Enter name to save schema as</label>
+                    <input v-model="saveSchemaName" placeholder="Schema name" />
+                    <button
+                        v-if="saveSchemaName !== ''"
+                        class="modal-button"
+                        @click="saveEditorData"
+                    >
+                        Save
+                    </button>
+                    <button
+                        v-else
+                        class="modal-button modal-button-disabled"
+                        @click="saveEditorData"
+                    >
+                        Save
+                    </button>
+                    <p v-if="this.saveSchemaName === this.loadSchemaName">
+                        The entered schema name is similar to one already
+                        existing in the database, saving will override the data
+                        for the schema name.
+                    </p>
+                </div>
             </div>
         </div>
         <!-- Block Link Editor -->
@@ -41,9 +84,9 @@
         </button>
         <button
             class="schema-button control-button"
-            @click="schemaModal = !schemaModal"
+            @click="menuModal = !menuModal"
         >
-            Schema
+            Menu
         </button>
     </div>
 </template>
@@ -64,7 +107,9 @@ export default {
         return {
             editor: new Editor(),
             viewPlugin: new ViewPlugin(),
-            schemaModal: false,
+            menuModal: false,
+            listTab: true,
+            saveTab: false,
             saveSchemaName: "",
             loadSchemaName: "",
             loadSchemas: [],
@@ -118,7 +163,17 @@ export default {
                 editor_state: this.editor.save(),
             });
             this.saveSchemaName = "";
-            this.schemaModal = !this.schemaModal;
+            this.menuModal = !this.menuModal;
+        },
+        activateTab(tabName) {
+            if (tabName === "listTab") {
+                this.listTab = true;
+                this.saveTab = false;
+            }
+            if (tabName === "saveTab") {
+                this.listTab = false;
+                this.saveTab = true;
+            }
         },
     },
 };
@@ -130,6 +185,43 @@ export default {
     height: 85vw;
     width: 100vw;
 }
+.execute-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+.schema-button {
+    position: absolute;
+    top: 1rem;
+    left: 6.5rem;
+}
+.save-button {
+    position: absolute;
+    top: 1rem;
+    left: 6.5rem;
+}
+.load-button {
+    position: absolute;
+    top: 1rem;
+    left: 10.7rem;
+}
+.control-button {
+    font-weight: 500 !important;
+    font-size: small !important;
+    background: rgba(75, 75, 75, 1);
+    border: 2px solid rgba(75, 75, 75, 1);
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.8));
+    transition: box-shadow 0.1s linear, filter 0.1s linear;
+    color: var(--node-text);
+    border-radius: 3px;
+    padding: 1px 7px;
+    cursor: pointer;
+    outline: inherit;
+}
+.control-button:hover {
+    background: rgba(75, 75, 75, 0.4);
+    border: 2px solid rgba(75, 75, 75, 0.4);
+}
 .modal {
     position: fixed;
     z-index: 1;
@@ -139,17 +231,17 @@ export default {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 .modal-content {
     position: relative;
-    background-color: #f2f2f2;
+    background: #ffffff;
     margin: auto;
     padding: 20px;
     border: 0px solid #888;
     border-radius: 5px;
     width: 60%;
+    text-align: left;
 }
 label {
     display: block;
@@ -167,15 +259,15 @@ select {
     box-sizing: border-box;
 }
 .modal-button {
-    display: block;
-    margin: 0px auto;
+    display: inline-block;
+    margin-left: 1rem;
     font-weight: 500 !important;
     font-size: medium !important;
     background: rgba(75, 75, 75, 1);
     border: 0px solid rgba(75, 75, 75, 1);
     color: var(--node-text);
     border-radius: 3px;
-    padding: 3px 12px;
+    padding: 8px 12px;
     cursor: pointer;
     outline: inherit;
 }
@@ -183,18 +275,10 @@ select {
     background: rgba(75, 75, 75, 0.8);
 }
 .modal-button-disabled {
-    display: block;
-    margin: 0px auto;
-    font-weight: 500 !important;
-    font-size: medium !important;
     background: rgb(182, 182, 182);
     border: 0px solid rgb(182, 182, 182);
-    color: var(--node-text);
-    border-radius: 3px;
-    padding: 3px 12px;
     cursor: not-allowed;
     pointer-events: none;
-    outline: inherit;
 }
 .close {
     right: 13px;
@@ -209,5 +293,46 @@ select {
 .close:focus {
     color: #000;
     text-decoration: none;
+}
+.tab {
+    overflow: hidden;
+    padding: 0 20px;
+}
+.tablinks {
+    background: #ffffff;
+    color: #0d6efd;
+    float: left;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 0;
+    width: 60px;
+    margin: 0 5px;
+    transition: 0.3s;
+    font-size: 14px;
+}
+.tablinks:hover {
+    border-bottom: none;
+    background: #72aafe;
+    color: #ffffff;
+}
+.tablinks.active {
+    background: #0d6efd;
+    color: #ffffff;
+}
+.tabcontent {
+    padding: 20px 30px 5px 30px;
+    transition: 0.3s;
+}
+.tabcontent ul {
+    height: 73px;
+    margin: 5px 30px 5px 10px;
+    padding: 5px 40px;
+    background: #f2f2f2;
+}
+.tabcontent ul {
+    overflow: hidden;
+    overflow-y: scroll;
 }
 </style>

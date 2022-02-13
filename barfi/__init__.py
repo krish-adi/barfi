@@ -6,6 +6,7 @@ import pickle
 from .block_builder import Block
 from .compute_engine import ComputeEngine
 from .manage_schema import load_schema_name, load_schemas, save_schema
+from .manage_schema import editor_preset
 
 import os
 
@@ -60,7 +61,7 @@ def st_barfi(base_blocks: List[Block], compute_engine: ComputeEngine = None, loa
         base_blocks=base_blocks_data, load_editor_schema=editor_schema, load_schema_names=schema_names_in_db, load_schema_name=load_schema, key=key, default={'command': 'skip', 'data': {}})
 
     if _from_client['command'] == 'execute':
-        compute_engine.add_editor_state(_from_client['data'])
+        compute_engine.add_editor_state(_from_client['editor_state'])
         compute_engine.execute()
         result = compute_engine.get_result()
         return result
@@ -72,8 +73,5 @@ def st_barfi(base_blocks: List[Block], compute_engine: ComputeEngine = None, loa
         editor_schema = load_schema_name(load_schema)
     else:
         pass
-        # from inspect import getsourcefile
-        # from os.path import abspath
-        # return abspath(getsourcefile(lambda: 0))
 
-    return load_schema
+    return {}
