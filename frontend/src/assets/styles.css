@@ -814,6 +814,11 @@
     top: 1rem;
     left: 1rem;
 }
+.schema-button {
+    position: absolute;
+    top: 1rem;
+    left: 6.5rem;
+}
 .save-button {
     position: absolute;
     top: 1rem;

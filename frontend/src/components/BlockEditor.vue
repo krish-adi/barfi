@@ -1,14 +1,18 @@
 <template>
     <div id="editorCanvas">
-        <!-- Save Modal -->
+        <!-- Schema Modal -->
         <div
             class="modal"
-            :style="saveModal ? 'display: block;' : 'display: none;'"
+            :style="schemaModal ? 'display: block;' : 'display: none;'"
         >
             <div class="modal-content">
-                <span class="close" @click="saveModal = !saveModal"
+                <span class="close" @click="schemaModal = !schemaModal"
                     >&times;</span
                 >
+                <label>List of saved schemas: </label>
+                <span v-for="(schema, index) in loadSchemas" :key="index">
+                    {{ schema }}
+                </span>
                 <label>Enter name to save schema as</label>
                 <input v-model="saveSchemaName" placeholder="Schema name" />
                 <button
@@ -60,8 +64,14 @@
             Execute
         </button>
         <button
+            class="schema-button control-button"
+            @click="schemaModal = !schemaModal"
+        >
+            Schema
+        </button>
+        <!-- <button
             class="save-button control-button"
-            @click="saveModal = !saveModal"
+            @click="schemaModal = !schemaModal"
         >
             Save
         </button>
@@ -70,7 +80,7 @@
             @click="loadModal = !loadModal"
         >
             Load
-        </button>
+        </button> -->
     </div>
 </template>
 
@@ -90,6 +100,7 @@ export default {
         return {
             editor: new Editor(),
             viewPlugin: new ViewPlugin(),
+            schemaModal: false,
             saveModal: false,
             loadModal: false,
             saveSchemaName: "",
@@ -127,7 +138,7 @@ export default {
         if (this.args.load_editor_schema) {
             this.editor.load(this.args.load_editor_schema);
         }
-        this.loadSchemaName = this.args.load_schema_name
+        this.loadSchemaName = this.args.load_schema_name;
     },
     methods: {
         executeEditorData() {
@@ -145,7 +156,7 @@ export default {
                 editor_state: this.editor.save(),
             });
             this.saveSchemaName = "";
-            this.saveModal = !this.saveModal;
+            this.schemaModal = !this.schemaModal;
         },
         loadEditorData() {
             Streamlit.setComponentValue({
