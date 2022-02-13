@@ -55,6 +55,11 @@ python -m build
 twine upload --verbose --skip-existing dist/*
 ```
 
+## Before building new package, check for
+- [ ] Build the frontend: `cd frontend/` and run `npm run build`
+- [ ] Set `release = True` in */barfi/__init__.py*
+- [ ] Increase the version number in `setup.py`
+
 ## Resources
 
 - https://stackoverflow.com/questions/1301346/what-is-the-meaning-of-single-and-double-underscore-before-an-object-name
