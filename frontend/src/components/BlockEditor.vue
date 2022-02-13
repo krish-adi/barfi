@@ -123,10 +123,11 @@ export default {
             this.editor.registerNodeType(el.name, Block);
         });
 
-        // Load the editor data if load_data not equal to null.
-        if (this.args.load_data) {
-            this.editor.load(this.args.load_data);
+        // Load the editor data if load_editor_schema not equal to null.
+        if (this.args.load_editor_schema) {
+            this.editor.load(this.args.load_editor_schema);
         }
+        this.loadSchemaName = this.args.load_schema_name
     },
     methods: {
         executeEditorData() {
@@ -151,6 +152,7 @@ export default {
                 command: "load",
                 schema_name: this.loadSchemaName,
             });
+            this.loadModal = !this.loadModal;
         },
     },
 };

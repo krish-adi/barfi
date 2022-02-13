@@ -46,16 +46,18 @@ else:
 # "name" argument without having it get recreated.
 
 
-def st_barfi(base_blocks: List[Block], compute_engine: ComputeEngine = None, load_data: Dict = None, load_schema: str = None, key=None):
+def st_barfi(base_blocks: List[Block], compute_engine: ComputeEngine = None, load_schema: str = None, key=None):
     if load_schema:
         editor_schema = load_schema_name(load_schema)
+    else:
+        editor_schema = {}
 
     schemas_in_db = load_schemas()
     schema_names_in_db = schemas_in_db['schema_names']
 
     base_blocks_data = [block._export() for block in base_blocks]
     _from_client = _component_func(
-        base_blocks=base_blocks_data, load_data=editor_schema, load_schema_names=schema_names_in_db, key=key, default={'command': 'skip', 'data': {}})
+        base_blocks=base_blocks_data, load_editor_schema=editor_schema, load_schema_names=schema_names_in_db, load_schema_name=load_schema, key=key, default={'command': 'skip', 'data': {}})
 
     if _from_client['command'] == 'execute':
         compute_engine.add_editor_state(_from_client['data'])
@@ -63,13 +65,15 @@ def st_barfi(base_blocks: List[Block], compute_engine: ComputeEngine = None, loa
         result = compute_engine.get_result()
         return result
     if _from_client['command'] == 'save':
-        save_schema(schema_name=_from_client['schema_name'], schema_data=_from_client['editor_state'])        
+        save_schema(
+            schema_name=_from_client['schema_name'], schema_data=_from_client['editor_state'])
     if _from_client['command'] == 'load':
-        editor_schema = load_schema_name(_from_client['schema_name'])        
+        load_schema = _from_client['schema_name']
+        editor_schema = load_schema_name(load_schema)
     else:
         pass
         # from inspect import getsourcefile
         # from os.path import abspath
         # return abspath(getsourcefile(lambda: 0))
 
-    return {}
+    return load_schema
