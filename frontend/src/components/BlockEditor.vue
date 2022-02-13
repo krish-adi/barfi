@@ -31,30 +31,6 @@
                 </button>
             </div>
         </div>
-        <!-- Load Modal -->
-        <div
-            class="modal"
-            :style="loadModal ? 'display: block;' : 'display: none;'"
-        >
-            <div class="modal-content">
-                <span class="close" @click="loadModal = !loadModal"
-                    >&times;</span
-                >
-                <label>Select to load schema from list</label>
-                <select v-model="loadSchemaName">
-                    <option
-                        v-for="(option, index) in loadSchemas"
-                        :value="option"
-                        :key="index"
-                    >
-                        {{ option }}
-                    </option>
-                </select>
-                <button class="modal-button" @click="loadEditorData">
-                    Load
-                </button>
-            </div>
-        </div>
         <!-- Block Link Editor -->
         <baklava-editor :plugin="viewPlugin" />
         <button
@@ -69,18 +45,6 @@
         >
             Schema
         </button>
-        <!-- <button
-            class="save-button control-button"
-            @click="schemaModal = !schemaModal"
-        >
-            Save
-        </button>
-        <button
-            class="load-button control-button"
-            @click="loadModal = !loadModal"
-        >
-            Load
-        </button> -->
     </div>
 </template>
 
@@ -101,8 +65,6 @@ export default {
             editor: new Editor(),
             viewPlugin: new ViewPlugin(),
             schemaModal: false,
-            saveModal: false,
-            loadModal: false,
             saveSchemaName: "",
             loadSchemaName: "",
             loadSchemas: [],
@@ -157,13 +119,6 @@ export default {
             });
             this.saveSchemaName = "";
             this.schemaModal = !this.schemaModal;
-        },
-        loadEditorData() {
-            Streamlit.setComponentValue({
-                command: "load",
-                schema_name: this.loadSchemaName,
-            });
-            this.loadModal = !this.loadModal;
         },
     },
 };
