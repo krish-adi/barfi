@@ -1,42 +1,29 @@
-from dataclasses import dataclass
+class Link(object):
+    def __init__(self, name: str):
+        self._type = name
+        self._name = name
+        self._id = ''
+        self._value = None
 
-@dataclass
-class Link(object):    
-    def __init__(self, value: any, name: str, id: str):
-        self.id = id
-        self.name = name
-        self.value = value
+    def __repr__(self) -> str:
+        return f'<barfi.Link of type `{self._type}` at {hex(id(self))}>'
 
-    # def __repr__(self):
-    #     self_var_names = ','.join(list(self.__dict__.keys()))
-    #     return self.__class__.__name__+'(' + self_var_names + ')'    
+    def get_value(self):  
+        if self._value != None:      
+            return self._value
+        else:
+            raise ValueError(f'Value not set for Link(`{self._type}`) at {hex(id(self))}')
 
-    def get_value(self, var_name: str = 'value'):        
-        if var_name not in self.__dict__:
-            raise ValueError(f'`{var_name}` not present in Link.')
-        return self.__dict__.get(var_name)
-    
-    def set_value(self, value: any, var_name: str = 'value') -> None: 
-        if var_name not in self.__dict__:
-            raise ValueError(f'Field `{var_name}` is not not present in Link.')
-        self.__dict__[var_name] = value
+    def set_value(self, value: any) -> None:        
+        self._value = value
 
 if __name__ == '__main__':
-    a = Link('adi')
-    print(a)
-    print('a.get_value() is:', a.get_value())
-    b = Link('krish')
-    c = Link('krish')
-    print('b.get_value() is:', b.get_value(), 'at id: ', id(b))
-    print('c.get_value() is:', c.get_value(), 'at id: ', id(c))
-    print('is b == c ?', b == c)
-    a.set_value('cia')
-    print('a.set_value("cia")', a.get_value())
-
-    class IntLink(Link):
-        def __init__(self, data: int):
-            self.data = data
-
-    # @dataclass
-    # class IntLink(Link):        
-    #     data: int
+    link1 = Link(name='int')
+    print(link1)
+    link2 = Link(name='int')
+    print(link2)
+    link3 = link1
+    print(link3)
+    link4 = link1
+    print(link4)
+    

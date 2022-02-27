@@ -1,28 +1,19 @@
 import sys
 sys.path.append('../')
-from test_blocks import feed, result, mixer, splitter
-import streamlit as st
-from barfi import st_barfi, ComputeEngine
 from matplotlib import pyplot as plt
+from barfi import st_barfi, barfi_schemas
+import streamlit as st
+from test_blocks import feed, result, mixer, splitter
 
+base_blocks = [feed, result, mixer, splitter]
 
-blocks = [feed, result, mixer, splitter]
-ce = ComputeEngine(blocks=blocks)
+barfi_schema_name = st.selectbox(
+    'Select a saved schema to load:', barfi_schemas())
 
-result = st_barfi(base_blocks=blocks, compute_engine=ce, load_schema='schema-basic')
-st.write(result)
+compute_engine = st.checkbox('Activate barfi compute engine', value=False)
 
-# st.write('### DAG Graph of the computational block-link')
-# fig, ax = plt.subplots(figsize=(12, 6))
-# nx.draw(self._graph, with_labels=True, node_color='lightblue',
-#         node_size=500, labels=self._map_block_id_name)
-# st.pyplot(fig)
+schema_execution_result = st_barfi(
+    base_blocks=base_blocks, compute_engine=compute_engine, load_schema=barfi_schema_name)
 
-# st.write(_compu_order)
-
-# st.write(self._active_blocks)
-# st.write(self._map_block_id_name)
-# st.write(self._map_interface_id_block_id)
-# st.write(self._map_interface_id_name)
-# st.write(self._map_link_interface_id_from_to)
-# st.write(self._map_link_interface_id_to_from)
+if schema_execution_result:
+    st.write(schema_execution_result)

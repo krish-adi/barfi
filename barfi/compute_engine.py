@@ -38,7 +38,7 @@ class ComputeEngine(object):
         # return self._active_blocks
         return self._result
 
-    def execute(self):
+    def _map_block_link(self):
         if bool(self._editor_state):
 
             for _block in self._editor_state['nodes']:
@@ -73,8 +73,9 @@ class ComputeEngine(object):
             for _connection in self._editor_state['connections']:
                 from_node = self._map_interface_id_block_id[_connection['from']]
                 to_node = self._map_interface_id_block_id[_connection['to']]
-                self._map_link_interface_id_from_to[_connection['from']
-                                                    ] = _connection['to']
+                if _connection['from'] not in self._map_link_interface_id_from_to:
+                    self._map_link_interface_id_from_to[_connection['from']] = []
+                self._map_link_interface_id_from_to[_connection['from']].append(_connection['to'])
                 self._map_link_interface_id_to_from[_connection['to']
                                                     ] = _connection['from']
 
@@ -88,16 +89,22 @@ class ComputeEngine(object):
                 _compu_order = [self._map_block_id_name[node]
                                 for node in nx.topological_sort(self._graph)]
 
+    def _execute(self):
+        if bool(self._editor_state):
+            
             for node in nx.topological_sort(self._graph):
                 self._active_blocks[node]['block']._on_calculate()
                 for key, value in self._active_blocks[node]['block']._interface_value.items():
                     try:
-                        find_to = self._map_link_interface_id_from_to[value['id']]
-                        find_to_block = self._map_interface_id_block_id[find_to]
-                        self._active_blocks[find_to_block]['block'].set_interface(
-                            name=self._map_interface_id_name[find_to], value=value['value'])
+                        for find_to in self._map_link_interface_id_from_to[value['id']]:            
+                            find_to_block = self._map_interface_id_block_id[find_to]
+                            self._active_blocks[find_to_block]['block'].set_interface(
+                                name=self._map_interface_id_name[find_to], value=value['value'])
                     except:
                         pass
+    
+    def _map_result(self):
+        if bool(self._editor_state):
 
             for block_id, block in self._active_blocks.items():
                 self._result[block['name']] = {'block': block['block'],
@@ -113,12 +120,12 @@ class ComputeEngine(object):
                                      ]['interfaces'][link_id]['type'] = 'output'
                         self._result[block['name']
                                      ]['interfaces'][link_id]['to'] = {}
-                        to_id = self._map_link_interface_id_from_to[_interface_id]
-                        to_name = self._map_interface_id_name[to_id]
-                        to_block_id = self._map_interface_id_block_id[to_id]
-                        to_block_name = self._map_block_id_name[to_block_id]
-                        self._result[block['name']
-                                     ]['interfaces'][link_id]['to'][to_block_name] = to_name
+                        for to_id in self._map_link_interface_id_from_to[_interface_id]:
+                            to_name = self._map_interface_id_name[to_id]
+                            to_block_id = self._map_interface_id_block_id[to_id]
+                            to_block_name = self._map_block_id_name[to_block_id]
+                            self._result[block['name']
+                                        ]['interfaces'][link_id]['to'][to_block_name] = to_name
 
                     if _interface_id in self._map_link_interface_id_to_from:
                         self._result[block['name']

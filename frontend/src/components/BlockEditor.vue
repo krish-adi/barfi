@@ -76,18 +76,10 @@
         </div>
         <!-- Block Link Editor -->
         <baklava-editor :plugin="viewPlugin" />
-        <button
-            class="execute-button control-button"
-            @click="executeEditorData"
-        >
-            Execute
-        </button>
-        <button
-            class="schema-button control-button"
-            @click="menuModal = !menuModal"
-        >
-            Menu
-        </button>
+        <div class="button-menu">
+            <button @click="menuModal = !menuModal">Menu</button>
+            <button @click="executeEditorData">Execute</button>
+        </div>
     </div>
 </template>
 
@@ -96,6 +88,7 @@ import { Streamlit } from "streamlit-component-lib";
 import { Editor } from "@baklavajs/core";
 import { ViewPlugin } from "@baklavajs/plugin-renderer-vue";
 import { OptionPlugin } from "@baklavajs/plugin-options-vue";
+import { Engine } from "@baklavajs/plugin-engine";
 import { BlockBuilder } from "./BlockBuilder";
 
 export default {
@@ -107,6 +100,7 @@ export default {
         return {
             editor: new Editor(),
             viewPlugin: new ViewPlugin(),
+            engine: new Engine(true),
             menuModal: false,
             listTab: true,
             saveTab: false,
@@ -123,6 +117,9 @@ export default {
         this.editor.use(this.viewPlugin);
         // The option plugin provides some default option UI elements
         this.editor.use(new OptionPlugin());
+        // The engine plugin calculates the nodes in the graph in the
+        // correct order using the "calculate" methods of the nodes
+        this.editor.use(this.engine);
 
         // Show a minimap in the top right corner
         this.viewPlugin.enableMinimap = true;
@@ -185,27 +182,17 @@ export default {
     height: 85vw;
     width: 100vw;
 }
-.execute-button {
+.button-menu {
     position: absolute;
     top: 1rem;
     left: 1rem;
-}
-.schema-button {
-    position: absolute;
-    top: 1rem;
-    left: 6.5rem;
-}
-.save-button {
-    position: absolute;
-    top: 1rem;
-    left: 6.5rem;
 }
 .load-button {
     position: absolute;
     top: 1rem;
     left: 10.7rem;
 }
-.control-button {
+.button-menu button {
     font-weight: 500 !important;
     font-size: small !important;
     background: rgba(75, 75, 75, 1);
@@ -215,10 +202,11 @@ export default {
     color: var(--node-text);
     border-radius: 3px;
     padding: 1px 7px;
+    margin: 0 0.5rem;
     cursor: pointer;
     outline: inherit;
 }
-.control-button:hover {
+.button-menu button:hover {
     background: rgba(75, 75, 75, 0.4);
     border: 2px solid rgba(75, 75, 75, 0.4);
 }

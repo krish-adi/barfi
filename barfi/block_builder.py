@@ -23,16 +23,16 @@ class Block(object):
         self._interface_value = {}
 
     def __repr__(self) -> str:
-        return f"<barfi.Block of type '{self._type}' at {hex(id(self))}>"
+        return f'<barfi.Block of type `{self._type}` at {hex(id(self))}>'
 
-    def __str__(self) -> str:
-        line_1 = f"barfi.Block of type '{self._type}' with name '{self._name}'\n"
+    def __str__(self) -> str:        
         inputs_name = [input['name'] for input in self._inputs]
         outputs_name = [output['name'] for output in self._outputs]
         options_name = [option['name'] for option in self._options]
-        line_2 = f"Inputs: {inputs_name!r}\n"
-        line_3 = f"Outputs: {outputs_name!r}\n"
-        line_4 = f"Options: {options_name!r}"
+        line_1 = f'barfi.Block of type {self._type} with name {self._name} \n'
+        line_2 = f'Inputs: {inputs_name!r} \n'
+        line_3 = f'Outputs: {outputs_name!r} \n'
+        line_4 = f'Options: {options_name!r} '
         return line_1 + line_2 + line_3 + line_4
 
     def add_input(self, **kwargs) -> None:
