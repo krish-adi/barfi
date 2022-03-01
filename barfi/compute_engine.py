@@ -43,6 +43,13 @@ class ComputeEngine(object):
 
             for _block in self._editor_state['nodes']:
 
+                # Create a child block object for the active the block and associate with its id
+                _parent_block = next(
+                    _b for _b in self._blocks if _b._type == _block['type'])
+                # Create an independent deep copy of the parent block type
+                _child_block = copy.deepcopy(_parent_block)
+                _child_block._name = _block['name']
+
                 # Map the active block id to its name
                 self._map_block_id_name[_block['id']] = _block['name']
 
@@ -53,17 +60,13 @@ class ComputeEngine(object):
                                                     ['id']] = _block['id']
                     self._map_interface_id_name[_interface[1]
                                                 ['id']] = _interface[0]
+                    _child_block.set_interface(
+                        name=_interface[0], id=_interface[1]['id'])
                     _block_interfaces[_interface[0]] = _interface[1]
 
-                # Create a child block object for the active the block and associate with its id
-                _parent_block = next(
-                    _b for _b in self._blocks if _b._type == _block['type'])
-                # Create an independent deep copy of the parent block type
-                _child_block = copy.deepcopy(_parent_block)
-                _child_block._name = _block['name']
-                _child_block._interface_value = _block_interfaces
+                # _block_interfaces = {'Input 1': {'id': 'asdas', 'value': None}}
 
-                # Active blocks build from the base-blocks and editr-state
+                # Active blocks build from the base-blocks and editor-state
                 self._active_blocks[_block['id']] = {
                     'block': _child_block, 'interfaces': _block_interfaces, 'type': _block['type'], 'name': _block['name']}
 
@@ -74,8 +77,10 @@ class ComputeEngine(object):
                 from_node = self._map_interface_id_block_id[_connection['from']]
                 to_node = self._map_interface_id_block_id[_connection['to']]
                 if _connection['from'] not in self._map_link_interface_id_from_to:
-                    self._map_link_interface_id_from_to[_connection['from']] = []
-                self._map_link_interface_id_from_to[_connection['from']].append(_connection['to'])
+                    self._map_link_interface_id_from_to[_connection['from']] = [
+                    ]
+                self._map_link_interface_id_from_to[_connection['from']].append(
+                    _connection['to'])
                 self._map_link_interface_id_to_from[_connection['to']
                                                     ] = _connection['from']
 
@@ -89,30 +94,14 @@ class ComputeEngine(object):
                 _compu_order = [self._map_block_id_name[node]
                                 for node in nx.topological_sort(self._graph)]
 
-    def _execute(self):
-        if bool(self._editor_state):
-            
-            for node in nx.topological_sort(self._graph):
-                self._active_blocks[node]['block']._on_calculate()
-                for key, value in self._active_blocks[node]['block']._interface_value.items():
-                    try:
-                        for find_to in self._map_link_interface_id_from_to[value['id']]:            
-                            find_to_block = self._map_interface_id_block_id[find_to]
-                            self._active_blocks[find_to_block]['block'].set_interface(
-                                name=self._map_interface_id_name[find_to], value=value['value'])
-                    except:
-                        pass
-    
-    def _map_result(self):
-        if bool(self._editor_state):
-
+            # TODO morph _result to _active_blocks and have only one of them.
+            # TODO add the interface info to the block
             for block_id, block in self._active_blocks.items():
                 self._result[block['name']] = {'block': block['block'],
                                                'type': block['type'],
                                                'interfaces': {}}
                 for link_id, link in block['interfaces'].items():
-                    self._result[block['name']]['interfaces'][link_id] = {
-                        'value': link['value']}
+                    self._result[block['name']]['interfaces'][link_id] = {}
                     _interface_id = link['id']
 
                     if _interface_id in self._map_link_interface_id_from_to:
@@ -125,7 +114,7 @@ class ComputeEngine(object):
                             to_block_id = self._map_interface_id_block_id[to_id]
                             to_block_name = self._map_block_id_name[to_block_id]
                             self._result[block['name']
-                                        ]['interfaces'][link_id]['to'][to_block_name] = to_name
+                                         ]['interfaces'][link_id]['to'][to_block_name] = to_name
 
                     if _interface_id in self._map_link_interface_id_to_from:
                         self._result[block['name']
@@ -138,3 +127,17 @@ class ComputeEngine(object):
                         from_block_name = self._map_block_id_name[from_block_id]
                         self._result[block['name']
                                      ]['interfaces'][link_id]['from'][from_block_name] = from_name
+
+    def _execute_compute(self):
+        if bool(self._editor_state):
+
+            for node in nx.topological_sort(self._graph):
+                self._active_blocks[node]['block']._on_calculate()
+                for key, value in self._active_blocks[node]['block']._outputs.items():
+                    try:
+                        for find_to in self._map_link_interface_id_from_to[value['id']]:
+                            find_to_block = self._map_interface_id_block_id[find_to]
+                            self._active_blocks[find_to_block]['block'].set_interface(
+                                name=self._map_interface_id_name[find_to], value=value['value'])
+                    except:
+                        pass

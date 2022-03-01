@@ -1,1 +1,1 @@
-recursive-include package/barfi/client *
+recursive-include barfi/client *

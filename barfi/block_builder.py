@@ -4,7 +4,6 @@ from .option_builder import build_option
 
 
 class Block(object):
-    _interfaceVariables = ['name']
 
     def __init__(self, name: str = 'Block') -> None:
         # Initialise the Block object
@@ -16,11 +15,9 @@ class Block(object):
         self._name = name
 
         # To set the defaults for inputs, outputs, options
-        self._inputs = []
-        self._outputs = []
+        self._inputs = {}
+        self._outputs = {}
         self._options = []
-
-        self._interface_value = {}
 
     def __repr__(self) -> str:
         return f'<barfi.Block of type `{self._type}` at {hex(id(self))}>'
@@ -35,57 +32,47 @@ class Block(object):
         line_4 = f'Options: {options_name!r} '
         return line_1 + line_2 + line_3 + line_4
 
-    def add_input(self, **kwargs) -> None:
+    def add_input(self, name: str = None, value = None) -> None:
         """
         A function defined to add an Input interface to the Block
 
         Use as:
-            self.addInput(**kwargs)
+            self.addInput(name='Input Name')
 
         Interface options:
             name (str)  : The name of the Input interface.
+            value (any)  : The default value for this input interface.
         """
-
-        input = {}
-        if not bool(kwargs):
-            in_nos = len(self._inputs)
-            input['name'] = 'Input ' + str(in_nos + 1)
+        # TODO check if name already does not exist in outputs and inputs, 
+        # raise value error, must be unique for input and output
+        if name:
+            self._inputs[name] = {'value': value, 'id': None}
         else:
-            for arg in kwargs:
-                if arg not in list(self._interfaceVariables):
-                    raise(
-                        'Error: Argument passed not in the list of Input interface parameters.')
-                arg_val = kwargs.get(arg)
-                input[arg] = arg_val
+            in_nos = len(self._inputs)
+            input_name = 'Input ' + str(in_nos + 1)
+            self._inputs[input_name] = {'value': value, 'id': None}
 
-        self._inputs.append(input)
-
-    def add_output(self, **kwargs) -> None:
+    def add_output(self, name: str = None, value = None) -> None:
         """
         A function defined to add an Output interface to the Block
 
         Use as:
-            self.addOutput(**kwargs)
+            self.addOutput(name='Output Name')
 
         Interface options:
             name (str)  : The name of the Output interface.
+            value (any)  : The default value for this output interface.
         """
-
-        output = {}
-        if not bool(kwargs):
-            in_nos = len(self._outputs)
-            output['name'] = 'Output ' + str(in_nos + 1)
+        # TODO check if name already does not exist in outputs and inputs, 
+        # raise value error, must be unique for input and output
+        if name:
+            self._outputs[name] = {'value': value, 'id': None}
         else:
-            for arg in kwargs:
-                if arg not in list(self._interfaceVariables):
-                    raise(
-                        'Error: Argument passed not in the list of Input interface parameters.')
-                arg_val = kwargs.get(arg)
-                output[arg] = arg_val
+            out_nos = len(self._outputs)
+            output_name = 'Output ' + str(out_nos + 1)
+            self._outputs[output_name] = {'value': value, 'id': None}
 
-        self._outputs.append(output)
-
-    def add_option(self, name: str, type: str, **kwargs) -> None:
+    def _add_option(self, name: str, type: str, **kwargs) -> None:
         """
         A function defined to add interactive Option interface to the Block
 
@@ -113,13 +100,37 @@ class Block(object):
         self._options.append(_option)
 
     def _export(self):
-        return {'name': self._name, 'inputs': self._inputs, 'outputs': self._outputs, 'options': self._options}
+        _inputs_export = []
+        _outputs_export = []
+        for key, _ in self._inputs.items():
+            _inputs_export.append({'name': key})
+        for key, _ in self._outputs.items():
+            _outputs_export.append({'name': key})
 
-    def get_interface(self, name):
-        return self._interface_value[name]['value']
+        return {'name': self._name, 'inputs': _inputs_export, 'outputs': _outputs_export, 'options': self._options}
 
-    def set_interface(self, name, value) -> None:
-        self._interface_value[name]['value'] = value
+    def get_interface(self, name: str):
+        
+        if name in self._inputs:
+            return self._inputs[name]['value']  
+        elif name in self._outputs:
+            return self._outputs[name]['value']    
+        else:
+            return None    
+
+    def set_interface(self, name: str, **kwargs) -> None:
+        if name in self._inputs:
+            for arg, value in kwargs.items():
+                if arg in ['value', 'id']:
+                    self._inputs[name][arg] = value
+                else:
+                    raise ValueError
+        elif name in self._outputs:
+            for arg, value in kwargs.items():
+                if arg in ['value', 'id']:
+                    self._outputs[name][arg] = value
+                else:
+                    raise ValueError        
 
     def _on_calculate():
         pass

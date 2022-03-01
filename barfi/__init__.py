@@ -9,7 +9,7 @@ from .manage_schema import editor_preset
 
 import os
 
-_RELEASE = False
+_RELEASE = True
 
 # Declare a Streamlit component. `declare_component` returns a function
 # that is used to create instances of the component. We're naming this
@@ -29,7 +29,7 @@ if not _RELEASE:
     )
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
-    build_dir = os.path.join(parent_dir, "frontend/dist")
+    build_dir = os.path.join(parent_dir, "client")
     _component_func = components.declare_component(
         "st_barfi", path=build_dir)
 
@@ -50,7 +50,7 @@ def st_barfi(base_blocks: List[Block], load_schema: str = None, compute_engine: 
     if load_schema:
         editor_schema = load_schema_name(load_schema)
     else:
-        editor_schema = {}
+        editor_schema = None
 
     schemas_in_db = load_schemas()
     schema_names_in_db = schemas_in_db['schema_names']
@@ -67,17 +67,13 @@ def st_barfi(base_blocks: List[Block], load_schema: str = None, compute_engine: 
             _ce = ComputeEngine(blocks=base_blocks)
             _ce.add_editor_state(_from_client['editor_state'])
             _ce._map_block_link()
-            _ce._execute()
-            _ce._map_result()
-            result = _ce.get_result()
-            return result  
+            _ce._execute_compute()
+            return _ce.get_result()
         else:
             _ce = ComputeEngine(blocks=base_blocks)
             _ce.add_editor_state(_from_client['editor_state'])
-            _ce._map_block_link()            
-            _ce._map_result()
-            result = _ce.get_result()
-            return result                    
+            _ce._map_block_link()                      
+            return _ce.get_result()
     if _from_client['command'] == 'save':
         save_schema(
             schema_name=_from_client['schema_name'], schema_data=_from_client['editor_state'])

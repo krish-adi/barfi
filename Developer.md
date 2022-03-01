@@ -50,7 +50,7 @@ $ npm run serve  # Start the dev server
 # Build and Deploy
 
 ```shell
-pip isntall build twine
+pip install build twine
 python -m build 
 twine upload --verbose --skip-existing dist/*
 ```
