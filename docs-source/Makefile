@@ -9,6 +9,8 @@ SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
+BUILDDIRHTML  = build/html/
+HTMLCOPYDIR   = ../docs
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -31,7 +33,7 @@ livehtml:
 
 .PHONY: build
 build:	
-	make html
+	make html && cp -r $(BUILDDIRHTML) $(HTMLCOPYDIR)
 
 .PHONY: live-build
 live-build:		
