@@ -55,10 +55,17 @@ python -m build
 twine upload --verbose --skip-existing dist/*
 ```
 
-## Before building new package, check for
+## Checklist before building new package
 - [ ] Build the frontend: `cd frontend/` and run `npm run build`
 - [ ] Set `release = True` in */barfi/__init__.py*
-- [ ] Increase the version number in `setup.py`
+- [ ] Bump version number in `setup.py`
+- [ ] Build package: `python -m build`
+- [ ] Bump version number in `docs/source/conf.py` 
+- [ ] Update docs if required.
+- [ ] Build docs `cd docs` and `make build`
+- [ ] Upload to twine using `twine upload --verbose --skip-existing dist/*`
+- [ ] Change Set `release = False` in */barfi/__init__.py*
+- [ ] Commit the repository with the version number `v 0.4.2`
 
 ## Resources
 

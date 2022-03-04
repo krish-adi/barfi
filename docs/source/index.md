@@ -16,18 +16,10 @@ Each barfi-Block has come properties that makes this possible. Firstly, each Blo
 
 In general, Barfi is an abstraction of the Graphical Programming, Flow Based Programming or Node programming. Where the Block is synonymous to Node, and a Link is synonymous to an Edge. There are many ways to call this, each serving a specific need or a philosophy. For, Barfi I've kept it simple, so that it can be customized to different use-cases and philosophy. 
 
-## Widget
+```{toctree}
+:hidden:
 
-To make sure Barfi is integratable into existing workflows, the following are provided.
-
-- Barfi provides a Streamlit component with the API `st_barfi`. 
-
-- Plans are on way to build a Jupyter notebok widget. 
-
-## Quickstart
-
-## Documentation
-
-## Under the hood
-
-The frontend client is built using Vue and BaklavaJS. Some of the implemented backend logic are borrowed from BaklavaJS.
+self
+quickstart
+demo
+```
