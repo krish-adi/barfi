@@ -76,6 +76,14 @@ html_theme_options = {
     "navigation_with_keys": True,
 }
 
+# Footer configuration
+# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+html_show_sphinx = False
+
+# If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
+html_show_copyright = True
+
+
 ##### TODO: Set these #####
 # # Logo
 # html_logo = "logo.png"
