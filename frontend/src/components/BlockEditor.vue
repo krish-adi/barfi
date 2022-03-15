@@ -107,6 +107,7 @@ export default {
             saveSchemaName: "",
             loadSchemaName: "",
             loadSchemas: [],
+            BlockNameID: {},
         };
     },
     created() {
@@ -136,6 +137,7 @@ export default {
             // register the nodes we have defined, so they can be
             // added by the user as well as saved & loaded.
             this.editor.registerNodeType(el.name, Block);
+            this.BlockNameID[el.name] = 1;
         });
 
         // Load the editor data if load_editor_schema not equal to null.
@@ -143,6 +145,15 @@ export default {
             this.editor.load(this.args.load_editor_schema);
         }
         this.loadSchemaName = this.args.load_schema_name;
+
+        // Change name of the added node to get a unique name. 
+        this.editor.events.addNode.addListener(this, (data) => {
+            this.editor._nodes.forEach((node) => {
+                if (node.id === data.id) {
+                    node.name = node.name + "-" + this.BlockNameID[data.name]++;
+                }
+            });
+        });
     },
     methods: {
         executeEditorData() {
