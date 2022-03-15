@@ -9,3 +9,7 @@ serve:
 .PHONY: run
 run: 
 	cd tests && streamlit run test_app.py 
+
+.PHONY: upload
+upload: 
+	twine upload -u "__token__" -p "$(PYPI_BARFI_API)" --skip-existing --verbose dist/*

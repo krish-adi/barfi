@@ -110,8 +110,7 @@ export default {
             BlockNameID: {},
         };
     },
-    created() {
-        console.log(this.args);
+    created() {        
         this.loadSchemas = this.args.load_schema_names;
         // Register the plugins
         // The view plugin is used for rendering the nodes
