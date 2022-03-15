@@ -6,7 +6,7 @@ Existing visual Flow Based Programming (FBP) libraries in Python run in their ow
 
 Barfi aims to bridge that. And, hope to add domain specific use-cases. 
 
-![Demo GIF](/demo/demo.gif)
+![Demo GIF](/docs/source/_static/demo.gif)
 
 ## Introduction
 
