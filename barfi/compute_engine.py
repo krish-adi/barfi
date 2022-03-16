@@ -132,7 +132,7 @@ class ComputeEngine(object):
         if bool(self._editor_state):
 
             for node in nx.topological_sort(self._graph):
-                self._active_blocks[node]['block']._on_calculate()
+                self._active_blocks[node]['block']._on_compute()
                 for key, value in self._active_blocks[node]['block']._outputs.items():
                     try:
                         for find_to in self._map_link_interface_id_from_to[value['id']]:

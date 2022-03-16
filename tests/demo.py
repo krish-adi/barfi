@@ -1,4 +1,8 @@
-from barfi import Block
+import sys
+sys.path.append('../')
+
+from barfi import st_barfi, barfi_schemas, Block
+import streamlit as st
 
 feed = Block(name='Feed')
 feed.add_output()
@@ -34,3 +38,12 @@ def result_func(self):
     in_1 = self.get_interface(name='Input 1')
 result.add_compute(result_func)
 
+load_schema = st.selectbox('Select a saved schema:', barfi_schemas())
+
+compute_engine = st.checkbox('Activate barfi compute engine', value=False)
+
+barfi_result = st_barfi(base_blocks=[feed, result, mixer, splitter],
+                    compute_engine=compute_engine, load_schema=load_schema)
+
+if barfi_result:
+    st.write(barfi_result)

@@ -117,8 +117,8 @@ export default {
         this.editor.use(this.viewPlugin);
         // The option plugin provides some default option UI elements
         this.editor.use(new OptionPlugin());
-        // The engine plugin calculates the nodes in the graph in the
-        // correct order using the "calculate" methods of the nodes
+        // The engine plugin computes the nodes in the graph in the
+        // correct order using the "compute" methods of the nodes
         this.editor.use(this.engine);
 
         // Show a minimap in the top right corner
@@ -153,6 +153,8 @@ export default {
                 }
             });
         });
+
+        console.log(this)
     },
     methods: {
         executeEditorData() {

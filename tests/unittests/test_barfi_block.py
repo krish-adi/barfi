@@ -1,7 +1,7 @@
-import unittest
-from barfi import Block
 import sys
 sys.path.append('../../')
+import unittest
+from barfi import Block
 
 
 class TestBarfiBlock(unittest.TestCase):
@@ -65,7 +65,7 @@ class TestBarfiBlock(unittest.TestCase):
         block_1.set_interface(name='Input 1', value=5)
         self.assertEqual(block_1.get_interface(name='Input 1'), 5)
 
-    def test_block_calculate(self):
+    def test_block_compute(self):
         block_1 = Block(name='block_1')
         block_1.add_input(name='input_1')
         block_1.add_output(name='output_1')
@@ -75,8 +75,8 @@ class TestBarfiBlock(unittest.TestCase):
             in_1 = self.get_interface(name='input_1')
             out_1 = (in_1/2)
             self.set_interface(name='output_1', value=out_1)
-        block_1.add_calculate(block_1_func)
-        block_1._on_calculate()
+        block_1.add_compute(block_1_func)
+        block_1._on_compute()
         self.assertEqual(block_1.get_interface(name='input_1'), 5)
         self.assertEqual(block_1.get_interface(name='output_1'), 2.5)
 

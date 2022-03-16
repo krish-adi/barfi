@@ -132,8 +132,8 @@ class Block(object):
                 else:
                     raise ValueError        
 
-    def _on_calculate():
+    def _on_compute():
         pass
 
-    def add_calculate(self, _func: Callable):
-        self._on_calculate = types.MethodType(_func, self)
+    def add_compute(self, _func: Callable):
+        self._on_compute = types.MethodType(_func, self)
