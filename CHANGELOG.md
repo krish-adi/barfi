@@ -6,6 +6,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release dates are in YYYY-MM-DD
 
+## [0.4.4] - 2022-03-16
+
+- Change barfo.Block method references from `calculate` to `compute`
+
+## [0.4.3] - 2022-03-15
+
+- Change the frontend BlockEditor.vue to make use of listeners to make the unique names of the Blocks.
+
+## [0.4.2] - 2022-02-27
+
+- Change add_input and add_output for the Block. TO provide ease of linting and checks.
+- Change the structure of the compute engine.
+- Add unittest
+- Add documentation and structure to the docs to be deployed to readthedocs.org
+
+## [0.4.2] - 2022-02-27
+
+- Change add_input and add_output for the Block. TO provide ease of linting and checks.
+- Change the structure of the compute engine.
+- Add unittest
+- Add documentation and structure to the docs to be deployed to readthedocs.org
+
+## [0.4.0] - 2022-02-27
+
+- Implement compute engine checks 
+- Change menu for computation, load, save of schema
+
 ## [0.2.0] - 2022-02-13
 
 - ComputeEnginge class, with execute method
