@@ -1,10 +1,8 @@
 # Barfi
 
-**A visual Flow Based Programming widget library that integrates into your existing workflow.**
+**A visual Flow Based Programming library that integrates into your existing workflow.**
 
-Existing visual Flow Based Programming (FBP) libraries in Python run in their own/separate environment. They are not integratable into existing workflows, nor can they be used as a component in your existing scripts. The other main limitation for the existing Python libraries is the lack of domain specific components. 
-
-Barfi aims to bridge these limitation. And, will aim to add domain specific components. 
+Barfi is a Flow Based Programming environment that provides a graphical programming interface. It is integratable into your existing Python workflows. A schema is built using `barfi.Block`s. Then the schema is executed with `barfi.ComputeEngine`.
 
 ![Demo GIF](/_static/demo.gif)
 

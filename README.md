@@ -6,7 +6,7 @@
 
 **Documentation** : [find it here](barfi.readthedocs.io)
 
-Barfi is a Flow Based Programming environment that provides a graphical programming environment. It can be integrated into your existing workflows. A schema is built using `barfi.Block`s. The `barfi.ComputeEngine` then executes the schema.. 
+Barfi is a Flow Based Programming environment that provides a graphical programming interface. It is integratable into your existing Python workflows. A schema is built using `barfi.Block`s. Then the schema is executed with `barfi.ComputeEngine`.
 
 Each `barfi.Block` has some properties that enable the FBP and schema building. Firstly, each Block has Input and Output interfaces that link to other Blocks. Each Block can carry an executable function, that is specified by the user. This function can access/get data from the Input interface, perform computations or calculations and set the Output interface. 
 
@@ -34,4 +34,4 @@ pip install barfi
 
 ## Under the hood
 
-The frontend client is built using Vue and BaklavaJS. Some of the implemented backend logic are borrowed from BaklavaJS.
+The frontend is built using Vue and [BaklavaJS](https://github.com/newcat/baklavajs). Some of the implemented backend logic are borrowed from [BaklavaJS](https://github.com/newcat/baklavajs).
