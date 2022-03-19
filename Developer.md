@@ -66,6 +66,7 @@ twine upload --verbose --skip-existing dist/*
 - [ ] Update docs if required.
 - [ ] Upload to twine using `make upload`
 - [ ] Change Set `release = False` in */barfi/__init__.py*
+- [ ] Update CHANGELOG
 - [ ] Commit the repository with the version number `v 0.4.2`
 
 ## Resources

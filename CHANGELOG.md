@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release dates are in YYYY-MM-DD
 
+## [0.5.0] - 2022-03-19
+
+- Add Block option.
+- Add tests for Block option and update tests for interfaces.
+- Add get, set for option to be used inside compute_engine and update compute_engine to handle option value from frontend
+
 ## [0.4.4] - 2022-03-16
 
 - Change barfo.Block method references from `calculate` to `compute`
