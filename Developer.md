@@ -64,7 +64,6 @@ twine upload --verbose --skip-existing dist/*
 - [ ] Build package: `python -m build`
 - [ ] Bump version number in `docs/source/conf.py` 
 - [ ] Update docs if required.
-- [ ] Build docs `cd docs` and `make build`
 - [ ] Upload to twine using `make upload`
 - [ ] Change Set `release = False` in */barfi/__init__.py*
 - [ ] Commit the repository with the version number `v 0.4.2`
