@@ -110,7 +110,7 @@ export default {
             BlockNameID: {},
         };
     },
-    created() {        
+    created() {       
         this.loadSchemas = this.args.load_schema_names;
         // Register the plugins
         // The view plugin is used for rendering the nodes
@@ -152,9 +152,7 @@ export default {
                     node.name = node.name + "-" + this.BlockNameID[data.name]++;
                 }
             });
-        });
-
-        console.log(this)
+        });        
     },
     methods: {
         executeEditorData() {

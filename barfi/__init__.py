@@ -73,7 +73,8 @@ def st_barfi(base_blocks: List[Block], load_schema: str = None, compute_engine: 
             _ce = ComputeEngine(blocks=base_blocks)
             _ce.add_editor_state(_from_client['editor_state'])
             _ce._map_block_link()                      
-            return _ce.get_result()
+            # return _ce.get_result()
+            return _from_client
     if _from_client['command'] == 'save':
         save_schema(
             schema_name=_from_client['schema_name'], schema_data=_from_client['editor_state'])

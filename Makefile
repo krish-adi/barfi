@@ -12,7 +12,7 @@ run:
 
 .PHONY: test
 test: 
-	cd tests/unittests && python test_barfi_block.py
+	cd tests/unittests && python -m unittest discover
 
 .PHONY: upload
 upload: 

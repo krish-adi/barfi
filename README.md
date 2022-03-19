@@ -1,6 +1,6 @@
 # Barfi
 
-**A visual Flow Based Programming library that integrates into your existing workflow.**
+**A Python visual Flow Based Programming library that integrates into your existing workflow.**
 
 ![Demo GIF](/docs/source/_static/demo.gif)
 

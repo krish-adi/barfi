@@ -60,11 +60,12 @@ class ComputeEngine(object):
                                                     ['id']] = _block['id']
                     self._map_interface_id_name[_interface[1]
                                                 ['id']] = _interface[0]
-                    _child_block.set_interface(
+                    _child_block._set_interface_id(
                         name=_interface[0], id=_interface[1]['id'])
-                    _block_interfaces[_interface[0]] = _interface[1]
+                    _block_interfaces[_interface[0]] = _interface[1]                
 
-                # _block_interfaces = {'Input 1': {'id': 'asdas', 'value': None}}
+                for _option in _block['options']:                    
+                    _child_block.set_option(name=_option[0], value=_option[1])                    
 
                 # Active blocks build from the base-blocks and editor-state
                 self._active_blocks[_block['id']] = {

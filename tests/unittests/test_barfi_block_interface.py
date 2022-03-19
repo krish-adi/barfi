@@ -25,7 +25,9 @@ class TestBarfiBlock(unittest.TestCase):
         block_1.add_input(name='some input')
         self.assertEqual(block_1._inputs, {'Input 1': {
                          'value': None, 'id': None}, 'some input': {'value': None, 'id': None}})
-        # TODO check for value error for existing name
+        with self.assertRaises(ValueError):
+            block_1.add_input(name='Input 1')
+            block_1.add_output(name='Input 1')
 
     def test_block_outputs(self):
         block_1 = Block()
@@ -35,29 +37,26 @@ class TestBarfiBlock(unittest.TestCase):
         block_1.add_output(name='some output')
         self.assertEqual(block_1._outputs, {'Output 1': {
                          'value': None, 'id': None}, 'some output': {'value': None, 'id': None}})
-        # TODO check for value error for existing name
-
-    def test_block_options(self):
-        # TODO After the implementation of options
-        pass
-
+        with self.assertRaises(ValueError):
+            block_1.add_input(name='Output 1')
+            block_1.add_output(name='Output 1')
+    
     def test_set_interface(self):
         block_1 = Block()
         block_1.add_input()
         block_1.set_interface(name='Input 1', value=5)
         self.assertEqual(block_1._inputs, {
                          'Input 1': {'value': 5, 'id': None}})
-        block_1.set_interface(name='Input 1', id=123456)
+        block_1._set_interface_id(name='Input 1', id=123456)
         self.assertEqual(block_1._inputs, {
                          'Input 1': {'value': 5, 'id': 123456}})
         block_1.add_output()
         block_1.set_interface(name='Output 1', value=5)
         self.assertEqual(block_1._outputs, {
                          'Output 1': {'value': 5, 'id': None}})
-        block_1.set_interface(name='Output 1', id=123456)
+        block_1._set_interface_id(name='Output 1', id=123456)
         self.assertEqual(block_1._outputs, {
                          'Output 1': {'value': 5, 'id': 123456}})
-        # TODO check ValueError for not in ['value', 'id']
 
     def test_get_interface(self):
         block_1 = Block()
@@ -65,7 +64,7 @@ class TestBarfiBlock(unittest.TestCase):
         block_1.set_interface(name='Input 1', value=5)
         self.assertEqual(block_1.get_interface(name='Input 1'), 5)
 
-    def test_block_compute(self):
+    def test_block_compute_with_interface(self):
         block_1 = Block(name='block_1')
         block_1.add_input(name='input_1')
         block_1.add_output(name='output_1')
@@ -79,7 +78,6 @@ class TestBarfiBlock(unittest.TestCase):
         block_1._on_compute()
         self.assertEqual(block_1.get_interface(name='input_1'), 5)
         self.assertEqual(block_1.get_interface(name='output_1'), 2.5)
-
 
 if __name__ == '__main__':
     unittest.main()
