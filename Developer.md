@@ -1,6 +1,6 @@
 # Development notes
 
-Following are the notes for working on the development of the component.
+Following are the notes for working on the development of the barfi.
 
 ## Quickstart for development
 
@@ -57,7 +57,7 @@ twine upload --verbose --skip-existing dist/*
 
 ## Checklist before building new package
 - [ ] Run unittest by running `make test`
-- [ ] Change `Node` to `Block` here `barfi/frontend/node_modules/@baklavajs/plugin-renderer-vue/dist/index.js`
+- [ ] Change `Node` to `Block` here `barfi/frontend/node_modules/@baklavajs/plugin-renderer-vue/dist/index.js` @ `this.contextMenu.items`
 - [ ] Build the frontend: `cd frontend/` and run `npm run build`
 - [ ] Set `release = True` in */barfi/__init__.py*
 - [ ] Bump version number in `setup.py`

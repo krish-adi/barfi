@@ -1,5 +1,5 @@
 import streamlit.components.v1 as components
-from typing import List, Dict
+from typing import List, Dict, Union
 
 # import barfi components
 from .block_builder import Block
@@ -46,7 +46,7 @@ else:
 # "name" argument without having it get recreated.
 
 
-def st_barfi(base_blocks: List[Block], load_schema: str = None, compute_engine: bool = True, key=None):
+def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, compute_engine: bool = True, key=None):
     if load_schema:
         editor_schema = load_schema_name(load_schema)
     else:
@@ -55,12 +55,30 @@ def st_barfi(base_blocks: List[Block], load_schema: str = None, compute_engine: 
     schemas_in_db = load_schemas()
     schema_names_in_db = schemas_in_db['schema_names']
 
-    editor_setting = {'compute_engine': compute_engine} 
+    editor_setting = {'compute_engine': compute_engine}
 
-    base_blocks_data = [block._export() for block in base_blocks]
-    _from_client = _component_func(base_blocks=base_blocks_data, load_editor_schema=editor_schema, 
-                load_schema_names=schema_names_in_db, load_schema_name=load_schema, editor_setting = editor_setting,
-                key=key, default={'command': 'skip', 'editor_state': {}})
+    # base_blocks_data = [block._export() for block in base_blocks]
+
+    if isinstance(base_blocks, List):
+        base_blocks_data = [block._export() for block in base_blocks]
+    elif isinstance(base_blocks, Dict):
+        base_blocks_data = []
+        for category, block_list in base_blocks.items():
+            if isinstance(block_list, List):
+                for block in block_list:
+                    block_data = block._export()
+                    block_data['category'] = category
+                    base_blocks_data.append(block_data)
+            else:
+                raise TypeError(
+                    'Invalid type for base_blocks passed to the st_barfi component.')
+    else:
+        raise TypeError(
+            'Invalid type for base_blocks passed to the st_barfi component.')
+
+    _from_client = _component_func(base_blocks=base_blocks_data, load_editor_schema=editor_schema,
+                                   load_schema_names=schema_names_in_db, load_schema_name=load_schema, editor_setting=editor_setting,
+                                   key=key, default={'command': 'skip', 'editor_state': {}})
 
     if _from_client['command'] == 'execute':
         if compute_engine:
@@ -72,7 +90,7 @@ def st_barfi(base_blocks: List[Block], load_schema: str = None, compute_engine: 
         else:
             _ce = ComputeEngine(blocks=base_blocks)
             _ce.add_editor_state(_from_client['editor_state'])
-            _ce._map_block_link()                      
+            _ce._map_block_link()
             # return _ce.get_result()
             return _from_client
     if _from_client['command'] == 'save':
@@ -86,8 +104,9 @@ def st_barfi(base_blocks: List[Block], load_schema: str = None, compute_engine: 
 
     return {}
 
+
 def barfi_schemas():
-    schemas_in_db = load_schemas()   
-    schema_names_in_db = schemas_in_db['schema_names'] 
-    
+    schemas_in_db = load_schemas()
+    schema_names_in_db = schemas_in_db['schema_names']
+
     return schema_names_in_db

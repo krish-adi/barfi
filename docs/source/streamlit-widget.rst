@@ -26,9 +26,9 @@ API Reference
    :header-rows: 0
 
    * - **Parameters**
-     - **base_blocks** : *list of barfi.Block*
+     - **base_blocks** : *List of barfi.Block, Dict*
    * - 
-     - A list of the base *barfi.Block* s built using the barfi.Block class. Refer to the *barfi.Block* here, :doc:`block`.
+     - A list of the base *barfi.Block* s built using the barfi.Block class. Or, a Dictionary (key, value pairs) with key refereing to categories (which will be used in the submenu in the frontend/client) and value with the list of barfi.Blocks. Refer to the *barfi.Block* here, :doc:`block`.
    * - 
      - **compute_engine** : *bool, default False*
    * - 
@@ -49,10 +49,12 @@ API Reference
 
   from barfi import st_barfi, Block
 
-  feed = Block(name='Feed')
-  feed.add_input()
-  result = Block(name='Result')
-  result.add_output()
+  add = Block(name='Addition') 
+  sub = Block(name='Subtraction')
+  mul = Block(name='Multiplication')
+  div = Block(name='Division')
 
-  barfi_result = st_barfi(base_blocks= [feed, result])
+  barfi_result = st_barfi(base_blocks= [add, sub, mul, div])
+  # or if you want to use a category to organise them in the frontend sub-menu
+  barfi_result = st_barfi(base_blocks= {'Op 1': [add, sub], 'Op 2': [mul, div]})
 

@@ -3,7 +3,7 @@ sys.path.append('../')
 from matplotlib import pyplot as plt
 from barfi import st_barfi, barfi_schemas
 import streamlit as st
-from test_blocks import base_blocks
+from test_blocks import base_blocks, base_blocks_category
 
 barfi_schema_name = st.selectbox(
     'Select a saved schema to load:', barfi_schemas())

@@ -68,3 +68,4 @@ slider.add_option(name='display-option', type='display', value='This is a Block 
 slider.add_option(name='slider-option', type='slider', min=0, max=10)
 
 base_blocks = [feed, result, mixer, splitter, checkbox, input, integer, number, selecto, slider]
+base_blocks_category = {'process': [feed, result, mixer, splitter], 'options':[checkbox, input, integer, number, selecto, slider]}

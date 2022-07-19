@@ -110,7 +110,7 @@ export default {
             BlockNameID: {},
         };
     },
-    created() {       
+    created() {
         this.loadSchemas = this.args.load_schema_names;
         // Register the plugins
         // The view plugin is used for rendering the nodes
@@ -124,6 +124,7 @@ export default {
         // Show a minimap in the top right corner
         this.viewPlugin.enableMinimap = true;
 
+        console.log(this.args);
         // Read the infos on the node passed in from Streamlit
         // and register them.
         this.args.base_blocks.forEach((el) => {
@@ -134,8 +135,16 @@ export default {
                 Options: el.options,
             });
             // register the nodes we have defined, so they can be
-            // added by the user as well as saved & loaded.
-            this.editor.registerNodeType(el.name, Block);
+            // added by the user as well as saved & loaded. Add a
+            // category to it if it exists.
+
+            if (Object.prototype.hasOwnProperty.call(el, "category")) {
+                this.editor.registerNodeType(el.name, Block, el.category);
+            } else {
+                this.editor.registerNodeType(el.name, Block);
+            }
+
+            // this.editor.registerNodeType(el.name, Block);
             this.BlockNameID[el.name] = 1;
         });
 
@@ -145,14 +154,14 @@ export default {
         }
         this.loadSchemaName = this.args.load_schema_name;
 
-        // Change name of the added node to get a unique name. 
+        // Change name of the added node to get a unique name.
         this.editor.events.addNode.addListener(this, (data) => {
             this.editor._nodes.forEach((node) => {
                 if (node.id === data.id) {
                     node.name = node.name + "-" + this.BlockNameID[data.name]++;
                 }
             });
-        });        
+        });
     },
     methods: {
         executeEditorData() {
