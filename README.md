@@ -4,7 +4,7 @@
 
 ![Demo GIF](/docs/source/_static/demo.gif)
 
-**Documentation** : [find it here](barfi.readthedocs.io)
+**Documentation** : [find it here](https://barfi.readthedocs.io/en/latest/)
 
 Barfi is a Flow Based Programming environment that provides a graphical programming interface. It is integratable into your existing Python workflows. A schema is built using `barfi.Block`s. Then the schema is executed with `barfi.ComputeEngine`.
 
