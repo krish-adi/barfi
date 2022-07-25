@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release dates are in YYYY-MM-DD
 
+## [0.6.1] - 2022-07-25
+
+- Fix base_blocks_list passed to the compute engine. 
+
 ## [0.6.0] - 2022-07-19
 
 - Add option to categories the Blocks with a category in a sub-menu in the context menu on right-click>add-node. 

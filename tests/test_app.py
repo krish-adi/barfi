@@ -10,7 +10,7 @@ barfi_schema_name = st.selectbox(
 
 compute_engine = st.checkbox('Activate barfi compute engine', value=False)
 
-barfi_result = st_barfi(base_blocks=base_blocks, compute_engine=compute_engine, 
+barfi_result = st_barfi(base_blocks=base_blocks_category, compute_engine=compute_engine, 
 load_schema=barfi_schema_name)
 
 if barfi_result:

@@ -43,7 +43,7 @@ class ComputeEngine(object):
 
             for _block in self._editor_state['nodes']:
 
-                # Create a child block object for the active the block and associate with its id
+                # Create a child block object for the active block and associate with its id
                 _parent_block = next(
                     _b for _b in self._blocks if _b._type == _block['type'])
                 # Create an independent deep copy of the parent block type

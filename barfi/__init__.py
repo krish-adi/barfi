@@ -61,11 +61,14 @@ def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, com
 
     if isinstance(base_blocks, List):
         base_blocks_data = [block._export() for block in base_blocks]
+        base_blocks_list = base_blocks
     elif isinstance(base_blocks, Dict):
         base_blocks_data = []
+        base_blocks_list = []
         for category, block_list in base_blocks.items():
             if isinstance(block_list, List):
                 for block in block_list:
+                    base_blocks_list.append(block)
                     block_data = block._export()
                     block_data['category'] = category
                     base_blocks_data.append(block_data)
@@ -82,13 +85,13 @@ def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, com
 
     if _from_client['command'] == 'execute':
         if compute_engine:
-            _ce = ComputeEngine(blocks=base_blocks)
+            _ce = ComputeEngine(blocks=base_blocks_list)
             _ce.add_editor_state(_from_client['editor_state'])
             _ce._map_block_link()
             _ce._execute_compute()
             return _ce.get_result()
         else:
-            _ce = ComputeEngine(blocks=base_blocks)
+            _ce = ComputeEngine(blocks=base_blocks_list)
             _ce.add_editor_state(_from_client['editor_state'])
             _ce._map_block_link()
             # return _ce.get_result()
