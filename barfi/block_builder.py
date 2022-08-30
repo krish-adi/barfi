@@ -1,5 +1,5 @@
 import types
-from typing import Callable
+from typing import Callable, Any
 from .option_builder import build_option
 
 
@@ -18,12 +18,13 @@ class Block(object):
         self._inputs = {}
         self._outputs = {}
         self._options = {}
+        self._state = {'info': None}
         self._interface_names = []
 
     def __repr__(self) -> str:
         return f'<barfi.Block of type `{self._type}` at {hex(id(self))}>'
 
-    def __str__(self) -> str:        
+    def __str__(self) -> str:
         inputs_name = [input['name'] for input in self._inputs]
         outputs_name = [output['name'] for output in self._outputs]
         options_name = [option['name'] for option in self._options]
@@ -33,7 +34,7 @@ class Block(object):
         line_4 = f'Options: {options_name!r} '
         return line_1 + line_2 + line_3 + line_4
 
-    def add_input(self, name: str = None, value = None) -> None:
+    def add_input(self, name: str = None, value=None) -> None:
         """
         A function defined to add an Input interface to the Block
 
@@ -43,18 +44,20 @@ class Block(object):
         Interface options:
             name (str)  : The name of the Input interface.
             value (any)  : The default value for this input interface.
-        """        
+        """
         if name:
-            if name in self._interface_names: raise ValueError(f'name: {name} already exists as an interface to the Block.')
+            if name in self._interface_names:
+                raise ValueError(
+                    f'name: {name} already exists as an interface to the Block.')
             self._inputs[name] = {'value': value, 'id': None}
             self._interface_names.append(name)
         else:
             in_nos = len(self._inputs)
             name = 'Input ' + str(in_nos + 1)
-            self._inputs[name] = {'value': value, 'id': None}  
-            self._interface_names.append(name)      
+            self._inputs[name] = {'value': value, 'id': None}
+            self._interface_names.append(name)
 
-    def add_output(self, name: str = None, value = None) -> None:
+    def add_output(self, name: str = None, value=None) -> None:
         """
         A function defined to add an Output interface to the Block
 
@@ -66,9 +69,11 @@ class Block(object):
             value (any)  : The default value for this output interface.
         """
         if name:
-            if name in self._interface_names: raise ValueError(f'name: {name} already exists as an interface to the Block.')
+            if name in self._interface_names:
+                raise ValueError(
+                    f'name: {name} already exists as an interface to the Block.')
             self._outputs[name] = {'value': value, 'id': None}
-            self._interface_names.append(name)      
+            self._interface_names.append(name)
         else:
             out_nos = len(self._outputs)
             name = 'Output ' + str(out_nos + 1)
@@ -76,30 +81,43 @@ class Block(object):
             self._interface_names.append(name)
 
     def get_interface(self, name: str):
-        
+
         if name in self._inputs:
-            return self._inputs[name]['value']  
+            return self._inputs[name]['value']
         elif name in self._outputs:
-            return self._outputs[name]['value']    
+            return self._outputs[name]['value']
         else:
-            raise ValueError(f'No interface with name: {name} found for Block')   
-            return None
+            raise ValueError(f'No interface with name: {name} found for Block')
 
     def set_interface(self, name: str, value) -> None:
         if name in self._inputs:
-            self._inputs[name]['value'] = value            
+            self._inputs[name]['value'] = value
         elif name in self._outputs:
             self._outputs[name]['value'] = value
         else:
-            raise ValueError(f'No interface with name: {name} found for Block')   
+            raise ValueError(f'No interface with name: {name} found for Block')
 
     def _set_interface_id(self, name: str, id: str) -> None:
         if name in self._inputs:
             self._inputs[name]['id'] = id
-        elif name in self._outputs:            
+        elif name in self._outputs:
             self._outputs[name]['id'] = id
         else:
-            raise ValueError(f'No interface with name: {name} found for Block')   
+            raise ValueError(f'No interface with name: {name} found for Block')
+
+    def set_state(self, key: str, value: Any) -> None:
+        reserved_state_keys = ['info']
+        if key in reserved_state_keys:
+            raise ValueError(
+                f'Key: {key} used for setting state of block is reserved. Use another key.')
+        else:
+            self._state[key] = value
+
+    def get_state(self, key: str) -> Any:
+        if key in self._state:
+            return self._state[key]
+        else:
+            raise ValueError(f'Key: {key} does not exist in state.')
 
     def add_option(self, name: str, type: str, **kwargs) -> None:
         """
@@ -125,30 +143,33 @@ class Block(object):
                         'display'], 'Error: Option "type" is not of standard Option interface parameter.'
 
         if name in self._options:
-            raise ValueError(f'Option with name: {name} aready exists in Block.')
+            raise ValueError(
+                f'Option with name: {name} aready exists in Block.')
 
         _option = build_option(name, type, kwargs)
 
         self._options[_option['name']] = _option
 
-    def set_option(self, name: str, **kwargs): 
-        # Can only set the 'value' property for now. 
+    def set_option(self, name: str, **kwargs):
+        # Can only set the 'value' property for now.
         if name in self._options:
             for arg, value in kwargs.items():
                 if arg in self._options[name]:
                     if arg in ['value']:
                         self._options[name][arg] = value
                     else:
-                        raise ValueError(f'Cannot set or invalid property: {arg} for Block option.')
+                        raise ValueError(
+                            f'Cannot set or invalid property: {arg} for Block option.')
                 else:
-                    raise ValueError(f'Property: {arg} is not a valid option property for {name}.')
-        else: 
+                    raise ValueError(
+                        f'Property: {arg} is not a valid option property for {name}.')
+        else:
             raise ValueError(f'Option name: {name} does not exist in Block.')
 
-    def get_option(self, name: str): 
+    def get_option(self, name: str):
         if name in self._options:
             return self._options[name]['value']
-        else: 
+        else:
             raise ValueError(f'Option name: {name} does not exist in Block.')
 
     def _export(self):

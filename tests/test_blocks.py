@@ -24,7 +24,7 @@ mixer = Block(name='Mixer')
 mixer.add_input()
 mixer.add_input()
 mixer.add_output()
-def mixer_func(self):
+def mixer_func(self):    
     in_1 = self.get_interface(name='Input 1')
     in_2 = self.get_interface(name='Input 2')
     value = (in_1 + in_2)

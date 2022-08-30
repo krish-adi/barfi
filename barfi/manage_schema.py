@@ -37,3 +37,20 @@ def load_schema_name(schema_name: str) -> Dict:
     else:
         raise ValueError(
             f'Schema :{schema_name}: not found in the saved schemas')
+
+
+def delete_schema(schema_name: str):
+    try:
+        with open('schemas.barfi', 'rb') as handle_read:
+            schemas = pickle.load(handle_read)
+    except FileNotFoundError:
+        schemas = {}
+
+    if schema_name in schemas:
+        del schemas[schema_name]
+    else:
+        raise ValueError(
+            f'Schema :{schema_name}: not found in the saved schemas')
+    
+    with open('schemas.barfi', 'wb') as handle_write:
+        pickle.dump(schemas, handle_write, protocol=pickle.HIGHEST_PROTOCOL)

@@ -62,10 +62,10 @@ class ComputeEngine(object):
                                                 ['id']] = _interface[0]
                     _child_block._set_interface_id(
                         name=_interface[0], id=_interface[1]['id'])
-                    _block_interfaces[_interface[0]] = _interface[1]                
+                    _block_interfaces[_interface[0]] = _interface[1]
 
-                for _option in _block['options']:                    
-                    _child_block.set_option(name=_option[0], value=_option[1])                    
+                for _option in _block['options']:
+                    _child_block.set_option(name=_option[0], value=_option[1])
 
                 # Active blocks build from the base-blocks and editor-state
                 self._active_blocks[_block['id']] = {
@@ -131,14 +131,35 @@ class ComputeEngine(object):
 
     def _execute_compute(self):
         if bool(self._editor_state):
-
+            skip_node = set()
+            descendant_set = {}
             for node in nx.topological_sort(self._graph):
-                self._active_blocks[node]['block']._on_compute()
-                for key, value in self._active_blocks[node]['block']._outputs.items():
+                if node not in skip_node:
                     try:
-                        for find_to in self._map_link_interface_id_from_to[value['id']]:
-                            find_to_block = self._map_interface_id_block_id[find_to]
-                            self._active_blocks[find_to_block]['block'].set_interface(
-                                name=self._map_interface_id_name[find_to], value=value['value'])
-                    except:
-                        pass
+                        self._active_blocks[node]['block']._on_compute()
+                        self._active_blocks[node]['block']._state['info'] = {
+                            'status': 'Computed'}
+
+                        for _, value in self._active_blocks[node]['block']._outputs.items():
+                            try:
+                                for find_to in self._map_link_interface_id_from_to[value['id']]:
+                                    find_to_block = self._map_interface_id_block_id[find_to]
+                                    self._active_blocks[find_to_block]['block'].set_interface(
+                                        name=self._map_interface_id_name[find_to], value=value['value'])
+                            except:
+                                pass
+
+                    except Exception as e:
+                        self._active_blocks[node]['block']._state['info'] = {
+                            'status': 'Errored', 'exception': e.args}
+                        node_desc = nx.descendants(self._graph, node)
+                        descendant_set[self._active_blocks[node]
+                                       ['name']] = node_desc
+                        skip_node = skip_node.union(node_desc)
+
+                else:
+                    for parent, child_set in descendant_set.items():
+                        if node in child_set:
+                            break
+                    self._active_blocks[node]['block']._state['info'] = {
+                        'status': 'Errored', 'message': 'Parent block errored', 'parent': parent}

@@ -6,13 +6,12 @@ Following are the notes for working on the development of the barfi.
 
 - In terminal 1
 ```shell
-$ cd st_barfi/frontend
-$ npm run serve
+make serve
 ```
 
 - In terminal 2
 ```shell
-$ streamlit run st_barfi/__init__.py 
+make run
 ```
 
 ## Requirements
@@ -34,7 +33,7 @@ Run the components's Streamlit app:
 
 ```shell
 $ . venv/bin/activate  # activate the venv you created earlier
-$ streamlit run st_barfi/__init__.py  # run the root test
+$ streamlit run barfi/__init__.py  # run the root test
 ```
 
 ## Node environment
@@ -42,7 +41,7 @@ $ streamlit run st_barfi/__init__.py  # run the root test
 Install and initialize the component's frontend:
 
 ```shell
-$ cd st_barfi/frontend
+$ cd barfi/frontend
 $ npm install    # Install npm dependencies
 $ npm run serve  # Start the dev server
 ```

@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release dates are in YYYY-MM-DD
 
+## [0.7.0] - 2022-08-30
+
+- Add Block state to store data private to the block. Using block.get_state('key'), block.set_state('key').
+- Block state also stores execution status and errors. Using block.get_state('info'), block.set_state('info'). Note: 'info' is a reserved key.
+- When a block fails on its compute function, its descendants are skipped and the rest of the blocks are computed.
+- Add delete schema function. (@zabrewer)
+
 ## [0.6.1] - 2022-07-25
 
 - Fix base_blocks_list passed to the compute engine. 

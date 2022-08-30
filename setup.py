@@ -9,7 +9,7 @@ It provides a Streamlit component for a graphical programming environment to per
 
 setuptools.setup(
     name="barfi",
-    version="0.6.1",
+    version="0.7.0",
     author="Adithya Krishnan",
     author_email="krishsandeep@gmail.com",
     description="Framework for a graphical programming environment.",
