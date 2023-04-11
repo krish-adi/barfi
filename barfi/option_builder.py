@@ -123,7 +123,7 @@ def build_option(name: str, type: str, kwargs):
         option['type'] = "TextOption"
         value = kwargs.get('value', "null display")
         assert isinstance(
-            value, str), "Error: For text option, 'value' must be of type string."
+            value, str), "Error: For display option, 'value' must be of type string."
         option['value'] = value
 
     else:
