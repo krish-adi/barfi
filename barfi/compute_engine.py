@@ -119,7 +119,7 @@ class ComputeEngine(object):
 
                     if _interface_id in self._map_link_interface_id_to_from:
                         self._result[block['name']
-                                     ]['interfaces'][link_id]['type'] = 'intput'
+                                     ]['interfaces'][link_id]['type'] = 'input'
                         self._result[block['name']
                                      ]['interfaces'][link_id]['from'] = {}
                         from_id = self._map_link_interface_id_to_from[_interface_id]
