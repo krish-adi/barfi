@@ -247,8 +247,6 @@ def load_schemas():
     try:
         prefix = os.environ.get("BARFI_BASE_PATH", "")
         schema_file = f"{prefix}/schemas.barfi"
-        if not os.path.isfile(schema_file):
-            raise ValueError(f"Invalid folder for schema file {prefix}")
 
         with open(schema_file, "rb") as handle_read:
             schemas = pickle.load(handle_read)
@@ -263,8 +261,6 @@ def save_schema(schema_name: str, schema_data: Dict):
     try:
         prefix = os.environ.get("BARFI_BASE_PATH", "")
         schema_file = f"{prefix}/schemas.barfi"
-        if not os.path.isfile(schema_file):
-            raise ValueError(f"Invalid folder for schema file {prefix}")
 
         with open(schema_file, "rb") as handle_read:
             schemas = pickle.load(handle_read)
@@ -290,8 +286,6 @@ def delete_schema(schema_name: str):
     try:
         prefix = os.environ.get("BARFI_BASE_PATH", "")
         schema_file = f"{prefix}/schemas.barfi"
-        if not os.path.isfile(schema_file):
-            raise ValueError(f"Invalid folder for schema file {prefix}")
 
         with open(schema_file, "rb") as handle_read:
             schemas = pickle.load(handle_read)
