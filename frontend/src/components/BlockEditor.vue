@@ -1,5 +1,6 @@
 <template>
     <div id="editorCanvas">
+
         <!-- Menu Modal -->
         <div
             class="modal"
@@ -162,6 +163,9 @@ export default {
                 }
             });
         });
+
+        // Apply custom css
+        document.head.innerHTML += "<style>" + this.args.style + "</style>";
     },
     methods: {
         executeEditorData() {

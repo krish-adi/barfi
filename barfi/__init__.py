@@ -46,7 +46,7 @@ else:
 # "name" argument without having it get recreated.
 
 
-def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, compute_engine: bool = True, key=None):
+def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, compute_engine: bool = True, key=None, style:str=""):
     if load_schema:
         editor_schema = load_schema_name(load_schema)
     else:
@@ -81,7 +81,7 @@ def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, com
 
     _from_client = _component_func(base_blocks=base_blocks_data, load_editor_schema=editor_schema,
                                    load_schema_names=schema_names_in_db, load_schema_name=load_schema, editor_setting=editor_setting,
-                                   key=key, default={'command': 'skip', 'editor_state': {}})
+                                   key=key, style=style, default={'command': 'skip', 'editor_state': {}})
 
     if _from_client['command'] == 'execute':
         if compute_engine:
