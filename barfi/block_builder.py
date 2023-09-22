@@ -128,7 +128,7 @@ class Block(object):
 
         Interactive options interface:
             name (str)  : The name of the Option interface.
-            type (str)  : The type of the Option interface. 'checkbox', 'input', 'integer', 'number', 'select', 'slider', 'text'.
+            type (str)  : The type of the Option interface. 'checkbox', 'input', 'integer', 'number', 'select', 'slider', 'display'.
             value       : The default value for the option. Depends on the option chosen.
 
             Additional properties depending on the type of Option interface.
