@@ -3,6 +3,8 @@ import copy
 from .block_builder import Block
 from typing import List, Dict
 
+class CyclicConnectionError(RecursionError, NotImplementedError):
+    pass
 
 class ComputeEngine(object):
     def __init__(self, blocks: List[Block] = [], **kwargs) -> None:
@@ -90,7 +92,7 @@ class ComputeEngine(object):
                                      edge_id=_connection['id'])
 
             if not nx.is_directed_acyclic_graph(self._graph):
-                raise('Cycle(s) detected. Not supported by `barfi` at the moment.')
+                raise CyclicConnectionError('Cycle(s) detected. Not supported by Barfi at the moment.')
             else:
                 _compu_order = [self._map_block_id_name[node]
                                 for node in nx.topological_sort(self._graph)]
