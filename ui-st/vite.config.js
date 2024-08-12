@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
     plugins: [react()],
     build: {
-        outDir: "../src/barfi/st_ui_client",
+        outDir: "../src/barfi/static/ui-st",
     },
     base: "",
     server: {
