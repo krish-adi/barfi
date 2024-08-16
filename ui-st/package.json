@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@xyflow/react": "^12.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "streamlit-component-lib": "^2.0.0",
