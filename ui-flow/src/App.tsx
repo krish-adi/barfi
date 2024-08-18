@@ -1,5 +1,11 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { withStreamlitConnection, Streamlit } from "streamlit-component-lib";
+import {
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuTrigger,
+} from "@/components/ui/context-menu";
 import {
     ReactFlow,
     Background,
@@ -11,10 +17,12 @@ import {
     addEdge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import PanelContextMenuContent from "./components/flow/panel-context-menu-content";
 import { initialEdges, initialNodes } from "./utils";
 
 export function App({ args }) {
     // const { title, input_schema } = args;
+    const hiddenTriggerRef = useRef(null);
 
     const proOptions = { hideAttribution: true };
 
@@ -36,39 +44,59 @@ export function App({ args }) {
         []
     );
 
-    const onPaneClick = useCallback((e) => {
-        e.preventDefault();
-        console.log(e);
-    }, []);
+    // const onPanelContextClick = useCallback((e: React.MouseEvent) => {
+    //     e.preventDefault();
+    //     console.log(e);
+    //     if (hiddenTriggerRef.current) {
+    //         const contextMenuEvent = new MouseEvent("contextmenu", {
+    //             bubbles: true,
+    //             clientX: e.clientX,
+    //             clientY: e.clientY,
+    //         });
+    //         (hiddenTriggerRef.current as HTMLElement).dispatchEvent(
+    //             contextMenuEvent
+    //         );
+    //     }
+    //     // // https://github.com/radix-ui/primitives/issues/1307
+    //     // trigger.current.dispatchEvent(
+    //     //     new MouseEvent("contextmenu", {
+    //     //         bubbles: true,
+    //     //         clientX: button.current.getBoundingClientRect().x,
+    //     //         clientY: button.current.getBoundingClientRect().y,
+    //     //     })
+    //     // );
+    // }, []);
 
     return (
-        <>
-            <div className="border rounded-md w-full h-[36rem]">
-                <ReactFlow
-                    nodes={nodes}
-                    edges={edges}
-                    onNodesChange={onNodesChange}
-                    onEdgesChange={onEdgesChange}
-                    onConnect={onConnect}
-                    // onPaneClick={onPaneClick}
-                    // onDoubleClick={onPaneClick}
-                    onContextMenu={onPaneClick}
-                    fitView={true}
-                    proOptions={proOptions}
-                    nodesDraggable
-                    minZoom={0}
-                >
-                    <Background color="#aaa" gap={16} />
-                    <MiniMap />
-                    <Controls />
-                    <Panel position="top-left">
-                        <button className="" onClick={onClick}>
-                            Run!
-                        </button>
-                    </Panel>
-                </ReactFlow>
-            </div>
-        </>
+        <div className="border rounded-md w-full h-[36rem]">
+            <ContextMenu>
+                <ContextMenuTrigger asChild>
+                    {/* <div ref={hiddenTriggerRef} /> */}
+                    <ReactFlow
+                        nodes={nodes}
+                        edges={edges}
+                        onNodesChange={onNodesChange}
+                        onEdgesChange={onEdgesChange}
+                        onConnect={onConnect}
+                        // onContextMenu={onPanelContextClick}
+                        fitView={true}
+                        proOptions={proOptions}
+                        nodesDraggable
+                        minZoom={0}
+                    >
+                        <Background color="#aaa" gap={16} />
+                        <MiniMap />
+                        <Controls />
+                        <Panel position="top-left">
+                            <button className="" onClick={onClick}>
+                                Run!
+                            </button>
+                        </Panel>
+                    </ReactFlow>
+                </ContextMenuTrigger>
+                <PanelContextMenuContent />
+            </ContextMenu>
+        </div>
     );
 }
 
