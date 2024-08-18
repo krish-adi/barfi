@@ -1,11 +1,6 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback } from "react";
 import { withStreamlitConnection, Streamlit } from "streamlit-component-lib";
-import {
-    ContextMenu,
-    ContextMenuContent,
-    ContextMenuItem,
-    ContextMenuTrigger,
-} from "@/components/ui/context-menu";
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
 import {
     ReactFlow,
     Background,
@@ -85,11 +80,14 @@ export function App({ args }) {
                         minZoom={0}
                     >
                         <Background color="#aaa" gap={16} />
-                        <MiniMap />
+                        <MiniMap position="top-right" />
                         <Controls />
-                        <Panel position="top-left">
-                            <button className="" onClick={onClick}>
-                                Run!
+                        <Panel position="bottom-right">
+                            <button
+                                className="border rounded-sm border-black px-2 py-0.5"
+                                onClick={onClick}
+                            >
+                                Run <span className="ml-2">🚀</span>{" "}
                             </button>
                         </Panel>
                     </ReactFlow>
