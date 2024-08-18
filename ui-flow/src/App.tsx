@@ -1,7 +1,8 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { withStreamlitConnection, Streamlit } from "streamlit-component-lib";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
 import {
+    ReactFlowProvider,
     ReactFlow,
     Background,
     useNodesState,
@@ -12,14 +13,18 @@ import {
     addEdge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import PanelContextMenuContent from "./components/flow/panel-context-menu-content";
+import PanelContextMenu from "./components/flow/panel-context-menu";
+import PanelRun from "./components/flow/panel-run";
 import { initialEdges, initialNodes } from "./utils";
+// import nodeTypes from "./components/nodes";
+import { useFlowUIStore } from "./components/flow/flowState";
 
 export function App({ args }) {
     // const { title, input_schema } = args;
     // const hiddenTriggerRef = useRef(null);
 
     const proOptions = { hideAttribution: true };
+    // const nodeTypes = useMemo(() => nodeTypes, []);
 
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -39,61 +44,59 @@ export function App({ args }) {
         []
     );
 
-    // const onPanelContextClick = useCallback((e: React.MouseEvent) => {
-    //     e.preventDefault();
-    //     console.log(e);
-    //     if (hiddenTriggerRef.current) {
-    //         const contextMenuEvent = new MouseEvent("contextmenu", {
-    //             bubbles: true,
-    //             clientX: e.clientX,
-    //             clientY: e.clientY,
-    //         });
-    //         (hiddenTriggerRef.current as HTMLElement).dispatchEvent(
-    //             contextMenuEvent
-    //         );
-    //     }
-    //     // // https://github.com/radix-ui/primitives/issues/1307
-    //     // trigger.current.dispatchEvent(
-    //     //     new MouseEvent("contextmenu", {
-    //     //         bubbles: true,
-    //     //         clientX: button.current.getBoundingClientRect().x,
-    //     //         clientY: button.current.getBoundingClientRect().y,
-    //     //     })
-    //     // );
-    // }, []);
+    const setContextLocation = useFlowUIStore(
+        (state) => state.setContextLocation
+    );
+
+    const onPanelContextClick = useCallback((e: React.MouseEvent) => {
+        // e.preventDefault();
+        // console.log(e);
+        console.log("event", e.clientX, e.clientY);
+        setContextLocation(e.clientX, e.clientY);
+        // // https://github.com/radix-ui/primitives/issues/1307
+        // if (hiddenTriggerRef.current) {
+        //     const contextMenuEvent = new MouseEvent("contextmenu", {
+        //         bubbles: true,
+        //         clientX: e.clientX,
+        //         clientY: e.clientY,
+        //     });
+        //     (hiddenTriggerRef.current as HTMLElement).dispatchEvent(
+        //         contextMenuEvent
+        //     );
+        // }
+    }, []);
 
     return (
         <div className="border rounded-md w-full h-[36rem]">
-            <ContextMenu>
-                <ContextMenuTrigger asChild>
-                    {/* <div ref={hiddenTriggerRef} /> */}
-                    <ReactFlow
-                        nodes={nodes}
-                        edges={edges}
-                        onNodesChange={onNodesChange}
-                        onEdgesChange={onEdgesChange}
-                        onConnect={onConnect}
-                        // onContextMenu={onPanelContextClick}
-                        fitView={true}
-                        proOptions={proOptions}
-                        nodesDraggable
-                        minZoom={0}
-                    >
-                        <Background color="#aaa" gap={16} />
-                        <MiniMap position="top-right" />
-                        <Controls />
-                        <Panel position="bottom-right">
-                            <button
-                                className="border rounded-sm border-black px-2 py-0.5"
-                                onClick={onClick}
-                            >
-                                Run <span className="ml-2">🚀</span>{" "}
-                            </button>
-                        </Panel>
-                    </ReactFlow>
-                </ContextMenuTrigger>
-                <PanelContextMenuContent />
-            </ContextMenu>
+            <ReactFlowProvider>
+                <ContextMenu>
+                    <ContextMenuTrigger asChild>
+                        {/* <div ref={hiddenTriggerRef} /> */}
+                        <ReactFlow
+                            // nodeTypes={nodeTypes}
+                            nodes={nodes}
+                            edges={edges}
+                            onNodesChange={onNodesChange}
+                            onEdgesChange={onEdgesChange}
+                            onConnect={onConnect}
+                            onContextMenu={onPanelContextClick}
+                            fitView={true}
+                            fitViewOptions={{ padding: 0.75 }}
+                            proOptions={proOptions}
+                            nodesDraggable
+                            minZoom={0}
+                        >
+                            <Background color="#aaa" gap={16} />
+                            <MiniMap position="top-right" />
+                            <Controls />
+                            <Panel position="bottom-right">
+                                <PanelRun onClick={onClick} />
+                            </Panel>
+                        </ReactFlow>
+                    </ContextMenuTrigger>
+                    <PanelContextMenu />
+                </ContextMenu>
+            </ReactFlowProvider>
         </div>
     );
 }
