@@ -22,7 +22,7 @@ import { initialEdges, initialNodes } from "./utils";
 
 export function App({ args }) {
     // const { title, input_schema } = args;
-    const hiddenTriggerRef = useRef(null);
+    // const hiddenTriggerRef = useRef(null);
 
     const proOptions = { hideAttribution: true };
 
