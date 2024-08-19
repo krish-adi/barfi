@@ -51,7 +51,6 @@ export function App({ args }) {
     const onPanelContextClick = useCallback((e: React.MouseEvent) => {
         // e.preventDefault();
         // console.log(e);
-        console.log("event", e.clientX, e.clientY);
         setContextLocation(e.clientX, e.clientY);
         // // https://github.com/radix-ui/primitives/issues/1307
         // if (hiddenTriggerRef.current) {

@@ -11,8 +11,11 @@ import { useReactFlow } from "@xyflow/react";
 import { useFlowUIStore } from "./flowState";
 
 export default function PanelContextMenu() {
-    const { addNodes } = useReactFlow();
+    const { addNodes, screenToFlowPosition } = useReactFlow();
     const contextLocation = useFlowUIStore((state) => state.contextLocation);
+    const setContextLocation = useFlowUIStore(
+        (state) => state.setContextLocation
+    );
     return (
         <ContextMenuContent>
             <ContextMenuLabel>Add Node</ContextMenuLabel>
@@ -35,18 +38,22 @@ export default function PanelContextMenu() {
             </ContextMenuSub>
             <ContextMenuItem
                 onClick={() => {
-                    console.log("event trickle", contextLocation);
+                    const flowPos = screenToFlowPosition({
+                        x: contextLocation.x || 0,
+                        y: contextLocation.y || 0,
+                    });
                     addNodes([
                         {
                             id: `${Math.random()}`,
                             type: "default",
                             data: { label: "Simple Node" },
                             position: {
-                                x: contextLocation.x,
-                                y: contextLocation.y,
+                                x: flowPos.x,
+                                y: flowPos.y,
                             },
                         },
                     ]);
+                    setContextLocation(undefined, undefined);
                 }}
             >
                 Add Simple Node
