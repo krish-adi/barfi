@@ -16,7 +16,7 @@ import "@xyflow/react/dist/style.css";
 import PanelContextMenu from "./components/flow/panel-context-menu";
 import PanelRun from "./components/flow/panel-run";
 import { initialEdges, initialNodes } from "./utils";
-// import nodeTypes from "./components/nodes";
+import nodeTypes from "./components/nodes";
 import { useFlowUIStore } from "./components/flow/flowState";
 
 export function App({ args }) {
@@ -72,7 +72,7 @@ export function App({ args }) {
                     <ContextMenuTrigger asChild>
                         {/* <div ref={hiddenTriggerRef} /> */}
                         <ReactFlow
-                            // nodeTypes={nodeTypes}
+                            nodeTypes={nodeTypes}
                             nodes={nodes}
                             edges={edges}
                             onNodesChange={onNodesChange}
@@ -87,7 +87,7 @@ export function App({ args }) {
                         >
                             <Background color="#aaa" gap={16} />
                             <MiniMap position="top-right" />
-                            <Controls />
+                            <Controls position="top-left" />
                             <Panel position="bottom-right">
                                 <PanelRun onClick={onClick} />
                             </Panel>

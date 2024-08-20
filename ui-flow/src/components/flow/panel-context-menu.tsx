@@ -45,7 +45,7 @@ export default function PanelContextMenu() {
                     addNodes([
                         {
                             id: `${Math.random()}`,
-                            type: "default",
+                            type: "textInput",
                             data: { label: "Simple Node" },
                             position: {
                                 x: flowPos.x,

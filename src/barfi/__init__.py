@@ -9,7 +9,7 @@ from .manage_schema import editor_preset
 
 import os
 
-_RELEASE = False
+_RELEASE = True
 
 # Declare a Streamlit component. `declare_component` returns a function
 # that is used to create instances of the component. We're naming this
@@ -29,7 +29,7 @@ if not _RELEASE:
     )
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
-    build_dir = os.path.join(parent_dir, "static/ui-st")
+    build_dir = os.path.join(parent_dir, "static/baklava")
     _component_func = components.declare_component(
         "st_barfi", path=build_dir)
 

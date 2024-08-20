@@ -81,10 +81,17 @@ def multiplication_func(self):
     self.set_interface(name='Output 1', value=value)    
 multiplication.add_compute(multiplication_func)
 
-division = Block(name='Addition')
+division = Block(name='Division')
 division.add_input()
 division.add_input()
 division.add_output()
+division.add_option(name='checkbox_1', type='checkbox')
+division.add_option(name='input_1', type='input')
+division.add_option(name='integer_1', type='integer')
+division.add_option(name='number_1', type='number')
+division.add_option(name='select_1', type='select', items=['item_1', 'item_2'])
+division.add_option(name='slider_1', type='slider', min=0, max=10)
+division.add_option(name='display_1', type='display')
 def division_func(self):
     in_1 = self.get_interface(name='Input 1')
     in_2 = self.get_interface(name='Input 2')
