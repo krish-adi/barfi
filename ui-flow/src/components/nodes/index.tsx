@@ -1,5 +1,5 @@
-import TextInputNode from "./text-updater";
+import CustomNode from "./custom-node";
 
-const nodeTypes = { textInput: TextInputNode };
+const nodeTypes = { custom: CustomNode };
 
 export default nodeTypes;

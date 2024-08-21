@@ -15,7 +15,6 @@ import {
 import "@xyflow/react/dist/style.css";
 import PanelContextMenu from "./components/flow/panel-context-menu";
 import PanelRun from "./components/flow/panel-run";
-import { initialEdges, initialNodes } from "./utils";
 import nodeTypes from "./components/nodes";
 import { useFlowUIStore } from "./components/flow/flowState";
 
@@ -26,17 +25,12 @@ export function App({ args }) {
     const proOptions = { hideAttribution: true };
     // const nodeTypes = useMemo(() => nodeTypes, []);
 
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [nodes, setNodes, onNodesChange] = useNodesState([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     useEffect(() => {
         Streamlit.setFrameHeight();
     });
-
-    const onClick = () => {
-        console.log(args);
-        // Streamlit.setComponentValue(values);
-    };
 
     const onConnect = useCallback(
         (params) =>
@@ -89,11 +83,11 @@ export function App({ args }) {
                             <MiniMap position="top-right" />
                             <Controls position="top-left" />
                             <Panel position="bottom-right">
-                                <PanelRun onClick={onClick} />
+                                <PanelRun />
                             </Panel>
                         </ReactFlow>
                     </ContextMenuTrigger>
-                    <PanelContextMenu />
+                    <PanelContextMenu baseBlocks={args["base_blocks"]} />
                 </ContextMenu>
             </ReactFlowProvider>
         </div>
