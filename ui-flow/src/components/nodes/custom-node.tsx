@@ -1,6 +1,11 @@
 import { memo } from "react";
 import { Handle, Position } from "@xyflow/react";
 import { BaseBlock } from "../../types";
+import { FlowCheckbox } from "../ui/checkbox";
+import { FlowInput } from "../ui/input";
+import { FlowNumber } from "../ui/input";
+import { FlowSelect } from "../ui/select";
+import { FlowSlider } from "../ui/slider";
 
 const CustomNode = memo(
     ({
@@ -28,6 +33,34 @@ const CustomNode = memo(
                             {input.name}
                         </p>
                     ))}
+                    <div className="my-3 grid gap-3 w-full max-w-48">
+                        <FlowCheckbox
+                            id="terms"
+                            label={"Accept terms and conditions"}
+                        />
+                        <FlowInput id="text_input" placeholder="Text yeah..." />
+                        <FlowNumber
+                            id="number_input"
+                            placeholder="Phone number"
+                        />
+                        <FlowSelect
+                            label="Select a fruit..."
+                            options={{
+                                apple: "Apple",
+                                banana: "Banana",
+                                orange: "Orange",
+                            }}
+                        />
+                        <FlowSlider
+                            defaultValue={[50]}
+                            max={100}
+                            min={30}
+                            step={1}
+                            // onValueChange={(e) => console.log(e)}
+                            label="Slider"
+                            // title="asdasd"
+                        />
+                    </div>
                     {data.blockData.outputs.map((output, idx) => (
                         <p className="text-[12px] my-0.5 text-right" key={idx}>
                             {output.name}
