@@ -47,7 +47,7 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
 }
 
 const PanelContextMenu = memo(({ baseBlocks }: { baseBlocks: BaseBlock[] }) => {
-    console.log(baseBlocks);
+    // console.log(baseBlocks);
     return (
         <ContextMenuContent>
             <ContextMenuLabel>Add a node</ContextMenuLabel>

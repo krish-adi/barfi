@@ -151,19 +151,29 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 const FlowSelect = ({
     label,
     options,
+    defaultValue,
+    value,
+    onValueChange,
 }: {
     label: string;
-    options: Record<string, string>;
+    options: string[];
+    defaultValue?: string;
+    value?: string;
+    onValueChange?: (value: string) => void;
 }) => {
     return (
-        <Select>
+        <Select
+            defaultValue={defaultValue}
+            value={value}
+            onValueChange={onValueChange}
+        >
             <SelectTrigger className="max-w-48 text-[12px] px-2 py-0.5 h-7">
                 <SelectValue placeholder={label} />
             </SelectTrigger>
             <SelectContent>
-                {Object.entries(options).map(([value, label]) => (
-                    <SelectItem key={value} value={value}>
-                        {label}
+                {options.map((option) => (
+                    <SelectItem key={option} value={option}>
+                        {option}
                     </SelectItem>
                 ))}
             </SelectContent>

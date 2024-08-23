@@ -1,11 +1,77 @@
 import { memo } from "react";
 import { Handle, Position } from "@xyflow/react";
-import { BaseBlock } from "../../types";
+import { BaseBlock, BlockOptionType } from "../../types";
 import { FlowCheckbox } from "../ui/checkbox";
 import { FlowInput } from "../ui/input";
 import { FlowNumber } from "../ui/input";
 import { FlowSelect } from "../ui/select";
 import { FlowSlider } from "../ui/slider";
+
+// create function with a switch statement to render the correct input type
+// based on the option type
+const renderOption = (option: BlockOptionType, idx: number) => {
+    switch (option.type) {
+        case "CheckboxOption":
+            return (
+                <FlowCheckbox
+                    key={idx}
+                    id={option.name}
+                    label={option.name}
+                    defaultChecked={option.value}
+                />
+            );
+        case "InputOption":
+            return (
+                <FlowInput
+                    key={idx}
+                    id={option.name}
+                    placeholder={option.name}
+                    defaultValue={option?.value ?? undefined}
+                />
+            );
+        case "NumberOption":
+            return (
+                <FlowNumber
+                    key={idx}
+                    id={option.name}
+                    placeholder={option.name}
+                    defaultValue={option?.value ?? undefined}
+                />
+            );
+        case "IntegerOption":
+            return (
+                <FlowNumber
+                    key={idx}
+                    id={option.name}
+                    placeholder={option.name}
+                    defaultValue={option?.value ?? undefined}
+                />
+            );
+        case "SelectOption":
+            return (
+                <FlowSelect
+                    key={idx}
+                    label={option.name}
+                    options={option.items}
+                    defaultValue={option?.value ?? undefined}
+                />
+            );
+        case "SliderOption":
+            return (
+                <FlowSlider
+                    key={idx}
+                    id={option.name}
+                    label={option.name}
+                    defaultValue={option?.value ? [option?.value] : undefined}
+                    max={option?.max ?? undefined}
+                    min={option?.min ?? undefined}
+                    step={option?.step ?? undefined}
+                />
+            );
+        default:
+            return null;
+    }
+};
 
 const CustomNode = memo(
     ({
@@ -20,7 +86,7 @@ const CustomNode = memo(
         return (
             <div className="min-w-40">
                 <div
-                    className="bg-zinc-700 w-full rounded-t border-zinc-700 px-2 py-0.5"
+                    className="bg-zinc-700 w-full rounded-t border-zinc-700 px-2 py-1"
                     style={{ borderBottom: "none" }}
                 >
                     <p className="text-white text-[12px]">
@@ -34,32 +100,9 @@ const CustomNode = memo(
                         </p>
                     ))}
                     <div className="my-3 grid gap-3 w-full max-w-48">
-                        <FlowCheckbox
-                            id="terms"
-                            label={"Accept terms and conditions"}
-                        />
-                        <FlowInput id="text_input" placeholder="Text yeah..." />
-                        <FlowNumber
-                            id="number_input"
-                            placeholder="Phone number"
-                        />
-                        <FlowSelect
-                            label="Select a fruit..."
-                            options={{
-                                apple: "Apple",
-                                banana: "Banana",
-                                orange: "Orange",
-                            }}
-                        />
-                        <FlowSlider
-                            defaultValue={[50]}
-                            max={100}
-                            min={30}
-                            step={1}
-                            // onValueChange={(e) => console.log(e)}
-                            label="Slider"
-                            // title="asdasd"
-                        />
+                        {data.blockData.options.map((optionData, idx) =>
+                            renderOption(optionData, idx)
+                        )}
                     </div>
                     {data.blockData.outputs.map((output, idx) => (
                         <p className="text-[12px] my-0.5 text-right" key={idx}>

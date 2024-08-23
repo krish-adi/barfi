@@ -29,19 +29,22 @@ type FlowCheckboxProps = React.ComponentPropsWithoutRef<
     typeof CheckboxPrimitive.Root
 > & {
     label: string;
+    defaultChecked?: boolean;
+    onCheckedChange?: (checked: boolean) => void;
 };
 
 const FlowCheckbox = React.forwardRef<
     React.ElementRef<typeof CheckboxPrimitive.Root>,
     FlowCheckboxProps
->(({ className, label, ...props }, ref) => (
-    <div className="flex items-center space-x-2">
+>(({ className, label, defaultChecked, ...props }, ref) => (
+    <div className="flex items-center space-x-2 pl-0.5">
         <CheckboxPrimitive.Root
             ref={ref}
             className={cn(
                 "peer h-4 w-4 shrink-0 rounded border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
                 className
             )}
+            defaultChecked={defaultChecked}
             {...props}
         >
             <CheckboxPrimitive.Indicator
