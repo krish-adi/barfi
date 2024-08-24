@@ -4,39 +4,43 @@ import { BaseBlock, BlockOptionType } from "@/types";
 
 type NodeDataState = {
     nodes: Record<string, BaseBlock>;
-    nodeOptionData: Record<string, Record<string, BlockOptionType>>;
+    nodesOptionData: Record<string, Record<string, BlockOptionType>>;
 };
 
-type NodeDataActions = {
+export type NodeDataActions = {
     addNode: (nodeId: string, nodeblock: BaseBlock) => void;
     getNodes: () => Record<string, BaseBlock>;
+    getNodesOptionData: () => Record<string, Record<string, BlockOptionType>>;
     mutateNodeData: (
         nodeId: string,
         optionId: string,
-        value: string | number
+        value: string | number | boolean
     ) => void;
 };
 
 const useNodeDataStore = create<NodeDataState & NodeDataActions>()(
     immer((set, get) => ({
         nodes: {},
-        nodeOptionData: {},
+        nodesOptionData: {},
         addNode: (nodeId, nodeblock) => {
             set((state) => {
                 state.nodes[nodeId] = nodeblock;
-                state.nodeOptionData[nodeId] = {};
+                state.nodesOptionData[nodeId] = {};
                 nodeblock.options.forEach((option) => {
-                    state.nodeOptionData[nodeId][option.name] = option;
+                    state.nodesOptionData[nodeId][option.name] = option;
                 });
             });
         },
         getNodes: () => {
             return get().nodes;
         },
+        getNodesOptionData: () => {
+            return get().nodesOptionData;
+        },
         mutateNodeData: (nodeId, optionId, value) => {
             set((state) => {
-                if (state.nodeOptionData[nodeId]) {
-                    state.nodeOptionData[nodeId][optionId].value = value;
+                if (state.nodesOptionData[nodeId]) {
+                    state.nodesOptionData[nodeId][optionId].value = value;
                 }
             });
         },

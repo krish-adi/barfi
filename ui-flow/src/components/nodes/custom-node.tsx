@@ -1,15 +1,27 @@
 import { memo } from "react";
 import { Handle, Position } from "@xyflow/react";
-import { BaseBlock, BlockOptionType } from "../../types";
-import { FlowCheckbox } from "../ui/checkbox";
-import { FlowInput } from "../ui/input";
-import { FlowNumber } from "../ui/input";
-import { FlowSelect } from "../ui/select";
-import { FlowSlider } from "../ui/slider";
+import { BaseBlock, BlockOptionType } from "@/types";
+import { FlowCheckbox } from "@/components/ui/checkbox";
+import { FlowInput } from "@/components/ui/input";
+import { FlowNumber } from "@/components/ui/input";
+import { FlowSelect } from "@/components/ui/select";
+import { FlowSlider } from "@/components/ui/slider";
+import {
+    useNodeDataStore,
+    NodeDataActions,
+} from "@/components/nodes/nodeStore";
 
 // create function with a switch statement to render the correct input type
 // based on the option type
-const renderOption = (option: BlockOptionType, idx: number) => {
+const renderOption = (
+    nodeId: string,
+    option: BlockOptionType,
+    mutateNodeData: NodeDataActions["mutateNodeData"],
+    idx: number
+) => {
+    const handleChange = (newValue: string | number | boolean) => {
+        mutateNodeData(nodeId, option.name, newValue);
+    };
     switch (option.type) {
         case "CheckboxOption":
             return (
@@ -18,6 +30,7 @@ const renderOption = (option: BlockOptionType, idx: number) => {
                     id={option.name}
                     label={option.name}
                     defaultChecked={option.value}
+                    onCheckedChange={handleChange}
                 />
             );
         case "InputOption":
@@ -27,6 +40,7 @@ const renderOption = (option: BlockOptionType, idx: number) => {
                     id={option.name}
                     placeholder={option.name}
                     defaultValue={option?.value ?? undefined}
+                    onChange={(e) => handleChange(e.target.value)}
                 />
             );
         case "NumberOption":
@@ -36,6 +50,7 @@ const renderOption = (option: BlockOptionType, idx: number) => {
                     id={option.name}
                     placeholder={option.name}
                     defaultValue={option?.value ?? undefined}
+                    onChange={(e) => handleChange(e.target.value)}
                 />
             );
         case "IntegerOption":
@@ -45,6 +60,7 @@ const renderOption = (option: BlockOptionType, idx: number) => {
                     id={option.name}
                     placeholder={option.name}
                     defaultValue={option?.value ?? undefined}
+                    onChange={(e) => handleChange(e.target.value)}
                 />
             );
         case "SelectOption":
@@ -54,6 +70,7 @@ const renderOption = (option: BlockOptionType, idx: number) => {
                     label={option.name}
                     options={option.items}
                     defaultValue={option?.value ?? undefined}
+                    onValueChange={handleChange}
                 />
             );
         case "SliderOption":
@@ -66,6 +83,7 @@ const renderOption = (option: BlockOptionType, idx: number) => {
                     max={option?.max ?? undefined}
                     min={option?.min ?? undefined}
                     step={option?.step ?? undefined}
+                    onValueChange={(e) => handleChange(e[0])}
                 />
             );
         default:
@@ -75,14 +93,21 @@ const renderOption = (option: BlockOptionType, idx: number) => {
 
 const CustomNode = memo(
     ({
+        id: nodeId,
         data,
+        selected,
         isConnectable,
     }: {
+        id: string;
         data: {
             blockData: BaseBlock;
         };
+        selected: boolean;
         isConnectable: boolean;
     }) => {
+        const mutateNodeData = useNodeDataStore(
+            (state) => state.mutateNodeData
+        );
         return (
             <div className="min-w-40">
                 <div
@@ -101,7 +126,12 @@ const CustomNode = memo(
                     ))}
                     <div className="my-3 grid gap-3 w-full max-w-48">
                         {data.blockData.options.map((optionData, idx) =>
-                            renderOption(optionData, idx)
+                            renderOption(
+                                nodeId,
+                                optionData,
+                                mutateNodeData,
+                                idx
+                            )
                         )}
                     </div>
                     {data.blockData.outputs.map((output, idx) => (
