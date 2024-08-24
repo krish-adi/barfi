@@ -11,15 +11,16 @@ import {
 } from "@/components/ui/context-menu";
 import { useReactFlow } from "@xyflow/react";
 import { useFlowUIStore } from "./flowState";
-import { BaseBlock } from "../../types";
+import { BaseBlock } from "@/types";
+import { useNodeDataStore } from "@/components/nodes/nodeStore";
 
 function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
-    // console.log(blockData);
     const { addNodes, screenToFlowPosition } = useReactFlow();
     const contextLocation = useFlowUIStore((state) => state.contextLocation);
     const setContextLocation = useFlowUIStore(
         (state) => state.setContextLocation
     );
+    const addNodeToStore = useNodeDataStore((state) => state.addNode);
     return (
         <ContextMenuItem
             onClick={() => {
@@ -27,9 +28,10 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
                     x: contextLocation.x || 0,
                     y: contextLocation.y || 0,
                 });
+                const nodeId = uuid();
                 addNodes([
                     {
-                        id: uuid(),
+                        id: nodeId,
                         type: "custom",
                         data: { blockData },
                         position: {
@@ -38,6 +40,7 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
                         },
                     },
                 ]);
+                addNodeToStore(nodeId, blockData);
                 setContextLocation(undefined, undefined);
             }}
         >
@@ -62,11 +65,7 @@ const PanelContextMenu = memo(({ baseBlocks }: { baseBlocks: BaseBlock[] }) => {
             </ContextMenuSub> */}
 
             {baseBlocks.map((blockData) => (
-                <ContextMenuNodeItem
-                    blockData={blockData}
-                    // key={`${Math.random()}`}
-                    key={uuid()}
-                />
+                <ContextMenuNodeItem blockData={blockData} key={uuid()} />
             ))}
         </ContextMenuContent>
     );
