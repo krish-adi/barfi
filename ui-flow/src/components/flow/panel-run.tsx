@@ -62,15 +62,30 @@ function constructFlowState(
             targetHandle: edge.targetHandle,
         };
     });
-    console.log({
+    return {
         nodes: flowStateNodes,
         edges: flowStateEdges,
         connections: flowStateEdges,
         viewport: viewport,
-    });
+    };
 }
 
-export default function PanelRun() {
+export default function PanelRun({
+    onClickRun,
+}: {
+    onClickRun: ({
+        command,
+        editor_state,
+    }: {
+        command: string;
+        editor_state: {
+            nodes: FlowStateNode[];
+            edges: FlowStateEdge[];
+            connections: FlowStateEdge[];
+            viewport: Viewport;
+        };
+    }) => void;
+}) {
     const { getNodes, getEdges, getViewport } = useReactFlow();
     const getNodesOptionDataFromStore = useNodeDataStore(
         (state) => state.getNodesOptionData
@@ -79,12 +94,15 @@ export default function PanelRun() {
         <button
             className="border rounded-sm border-black px-2 py-0.5"
             onClick={() => {
-                constructFlowState(
-                    getNodes(),
-                    getEdges(),
-                    getViewport(),
-                    getNodesOptionDataFromStore()
-                );
+                onClickRun({
+                    command: "execute",
+                    editor_state: constructFlowState(
+                        getNodes(),
+                        getEdges(),
+                        getViewport(),
+                        getNodesOptionDataFromStore()
+                    ),
+                });
             }}
         >
             Run <span className="ml-2">🚀</span>{" "}

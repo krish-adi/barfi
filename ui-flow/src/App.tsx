@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useMemo } from "react";
+import { useEffect, useCallback } from "react";
 import { withStreamlitConnection, Streamlit } from "streamlit-component-lib";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
 import {
@@ -31,6 +31,8 @@ export function App({ args }) {
     useEffect(() => {
         Streamlit.setFrameHeight();
     });
+
+
 
     const onConnect = useCallback(
         (params) =>
@@ -83,7 +85,7 @@ export function App({ args }) {
                             <MiniMap position="top-right" />
                             <Controls position="top-left" />
                             <Panel position="bottom-right">
-                                <PanelRun />
+                                <PanelRun onClickRun={Streamlit.setComponentValue}/>
                             </Panel>
                         </ReactFlow>
                     </ContextMenuTrigger>
