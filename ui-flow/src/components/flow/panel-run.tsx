@@ -22,7 +22,7 @@ function constructFlowState(
         return {
             id: node.id,
             type: blockData.name,
-            name: blockData.name,
+            name: blockData.label,
             options: blockData.options.map((option) => [
                 option.name,
                 nodesOptionData[node.id][option.name].value,

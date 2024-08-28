@@ -13,6 +13,6 @@ barfi_result = st_barfi(
     base_blocks=math_blocks, compute_engine=compute_engine, load_schema=barfi_schema_name)
 
 if barfi_result:
-    st.write(barfi_result['Result']
+    st.write(barfi_result['Result 1']
              ['block'].get_interface(name='Input 1'))
     st.write(barfi_result)

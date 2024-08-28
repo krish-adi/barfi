@@ -3,6 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import { BaseBlock, BlockOptionType } from "@/types";
 
 type NodeDataState = {
+    nodeBaseBlockCount: Record<string, number>;
     nodes: Record<string, BaseBlock>;
     nodesOptionData: Record<string, Record<string, BlockOptionType>>;
 };
@@ -16,11 +17,13 @@ export type NodeDataActions = {
         optionId: string,
         value: string | number | boolean
     ) => void;
+    setNodeBaseBlockCount: (nodeName: string) => number;
 };
 
 const useNodeDataStore = create<NodeDataState & NodeDataActions>()(
     immer((set, get) => ({
         nodes: {},
+        nodeBaseBlockCount: {},
         nodesOptionData: {},
         addNode: (nodeId, nodeblock) => {
             set((state) => {
@@ -43,6 +46,16 @@ const useNodeDataStore = create<NodeDataState & NodeDataActions>()(
                     state.nodesOptionData[nodeId][optionId].value = value;
                 }
             });
+        },
+        setNodeBaseBlockCount: (nodeName) => {
+            set((state) => {
+                if (!(nodeName in state.nodeBaseBlockCount)) {
+                    state.nodeBaseBlockCount[nodeName] = 1;
+                } else {
+                    state.nodeBaseBlockCount[nodeName]++;
+                }
+            });
+            return get().nodeBaseBlockCount[nodeName];
         },
     }))
 );

@@ -21,9 +21,20 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
         (state) => state.setContextLocation
     );
     const addNodeToStore = useNodeDataStore((state) => state.addNode);
+    const setNodeBaseBlockCount = useNodeDataStore(
+        (state) => state.setNodeBaseBlockCount
+    );
     return (
         <ContextMenuItem
             onClick={() => {
+                // create a new block data with the label
+                const newBlockData = {
+                    ...blockData,
+                    label: `${blockData.name} ${setNodeBaseBlockCount(
+                        blockData.name
+                    )}`,
+                };
+
                 const flowPos = screenToFlowPosition({
                     x: contextLocation.x || 0,
                     y: contextLocation.y || 0,
@@ -33,7 +44,7 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
                     {
                         id: nodeId,
                         type: "custom",
-                        data: { blockData },
+                        data: { blockData: newBlockData },
                         position: {
                             x: flowPos.x,
                             y: flowPos.y,

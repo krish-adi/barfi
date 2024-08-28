@@ -1,5 +1,6 @@
 export type BaseBlock = {
     name: string;
+    label: string | null;
     inputs: { name: string }[];
     outputs: { name: string }[];
     options: BlockOptionType[];

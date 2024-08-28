@@ -115,7 +115,7 @@ const CustomNode = memo(
                     style={{ borderBottom: "none" }}
                 >
                     <p className="text-white text-[12px]">
-                        {data.blockData.name}
+                        {data.blockData.label}
                     </p>
                 </div>
                 <div className="rounded-b border border-zinc-700 bg-white flex flex-col relative p-2">
