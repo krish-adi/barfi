@@ -109,7 +109,7 @@ const CustomNode = memo(
             (state) => state.mutateNodeData
         );
         return (
-            <div className={`min-w-40 ${selected ? "shadow-lg" : ""}`}>
+            <div className={`min-w-40 ${selected ? "shadow-md" : ""}`}>
                 <div
                     className="bg-zinc-700 w-full rounded-t border-zinc-700 px-2 py-1"
                     style={{ borderBottom: "none" }}
