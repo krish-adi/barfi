@@ -1,6 +1,6 @@
 from barfi import Block
 
-number_10 = Block(name='Number 10')
+number_10 = Block(name='Number')
 number_10.add_output()
 
 
@@ -10,7 +10,7 @@ def number_10_func(self):
 
 number_10.add_compute(number_10_func)
 
-number_5 = Block(name='Number 5')
+number_5 = Block(name='Number')
 number_5.add_output()
 
 
