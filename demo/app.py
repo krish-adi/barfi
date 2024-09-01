@@ -6,7 +6,7 @@ from test_blocks import math_blocks
 barfi_schema_name = st.selectbox(
     'Select a saved schema to load:', barfi_schemas())
 
-st.write(load_schemas())
+# st.write(load_schemas())
 compute_engine = st.checkbox('Activate barfi compute engine', value=True)
 
 barfi_result = st_barfi(

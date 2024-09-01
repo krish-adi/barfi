@@ -1,6 +1,7 @@
 import { memo } from "react";
+import { NodeProps } from "@xyflow/react";
 import { Handle, Position } from "@xyflow/react";
-import { BaseBlock, BlockOptionType } from "@/types";
+import { BaseBlock, BlockOption } from "@/types";
 import { FlowCheckbox } from "@/components/ui/checkbox";
 import { FlowInput } from "@/components/ui/input";
 import { FlowNumber } from "@/components/ui/input";
@@ -15,7 +16,7 @@ import {
 // based on the option type
 const renderOption = (
     nodeId: string,
-    option: BlockOptionType,
+    option: BlockOption,
     mutateNodeData: NodeDataActions["mutateNodeData"],
     idx: number
 ) => {
@@ -91,7 +92,7 @@ const renderOption = (
     }
 };
 
-const CustomNode = memo(
+const CustomNodeBase = memo(
     ({
         id: nodeId,
         data,
@@ -172,6 +173,14 @@ const CustomNode = memo(
             </div>
         );
     }
+);
+
+const CustomNode = (props: NodeProps) => (
+    <CustomNodeBase
+        {...props}
+        selected={props.selected || false}
+        data={{ blockData: props.data as BaseBlock }}
+    />
 );
 
 export default CustomNode;

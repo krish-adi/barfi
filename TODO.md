@@ -17,6 +17,15 @@
     -   [ ] add schema version to the schema saved and sent from ui-flow
 -   [ ] custom actions on react flow -> node store
     -   [ ] delete node on ui -> del node in
+- [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
+- [ ] migrate the TextOption to a display option with display as text 
+```
+interface TextOption {
+    name: string;
+    type: "TextOption";
+    value: string;
+}
+```
 
 ## P1
 

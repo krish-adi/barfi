@@ -1,17 +1,17 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { BaseBlock, BlockOptionType } from "@/types";
+import { BaseBlock, BlockOption } from "@/types";
 
 type NodeDataState = {
     nodeBaseBlockCount: Record<string, number>;
     nodes: Record<string, BaseBlock>;
-    nodesOptionData: Record<string, Record<string, BlockOptionType>>;
+    nodesOptionData: Record<string, Record<string, BlockOption>>;
 };
 
 export type NodeDataActions = {
     addNode: (nodeId: string, nodeblock: BaseBlock) => void;
     getNodes: () => Record<string, BaseBlock>;
-    getNodesOptionData: () => Record<string, Record<string, BlockOptionType>>;
+    getNodesOptionData: () => Record<string, Record<string, BlockOption>>;
     mutateNodeData: (
         nodeId: string,
         optionId: string,

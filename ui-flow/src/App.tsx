@@ -15,10 +15,11 @@ import {
 import "@xyflow/react/dist/style.css";
 import PanelContextMenu from "./components/flow/panel-context-menu";
 import PanelRun from "./components/flow/panel-run";
-import nodeTypes from "./components/nodes";
+import { CustomNode } from "./components/nodes";
 import { useFlowUIStore } from "./components/flow/flowState";
+import { BarfiState, BaseBlock } from "@/types";
 
-export function App({ args }) {
+export function App({ args }: { args: BarfiState }) {
     // const { title, input_schema } = args;
     // const hiddenTriggerRef = useRef(null);
 
@@ -31,8 +32,6 @@ export function App({ args }) {
     useEffect(() => {
         Streamlit.setFrameHeight();
     });
-
-
 
     const onConnect = useCallback(
         (params) =>
@@ -68,7 +67,7 @@ export function App({ args }) {
                     <ContextMenuTrigger asChild>
                         {/* <div ref={hiddenTriggerRef} /> */}
                         <ReactFlow
-                            nodeTypes={nodeTypes}
+                            nodeTypes={{ custom: CustomNode }}
                             nodes={nodes}
                             edges={edges}
                             onNodesChange={onNodesChange}
@@ -85,7 +84,9 @@ export function App({ args }) {
                             <MiniMap position="top-right" />
                             <Controls position="top-left" />
                             <Panel position="bottom-right">
-                                <PanelRun onClickRun={Streamlit.setComponentValue}/>
+                                <PanelRun
+                                    onClickRun={Streamlit.setComponentValue}
+                                />
                             </Panel>
                         </ReactFlow>
                     </ContextMenuTrigger>

@@ -2,7 +2,7 @@ import { useReactFlow, Node, Edge, Viewport } from "@xyflow/react";
 import { useNodeDataStore } from "@/components/nodes/nodeStore";
 import {
     BaseBlock,
-    BlockOptionType,
+    BlockOption,
     FlowStateNode,
     FlowStateEdge,
 } from "@/types";
@@ -11,7 +11,7 @@ function constructFlowState(
     nodes: Node[],
     edges: Edge[],
     viewport: Viewport,
-    nodesOptionData: Record<string, Record<string, BlockOptionType>>
+    nodesOptionData: Record<string, Record<string, BlockOption>>
 ) {
     console.log(nodes);
     console.log(edges);

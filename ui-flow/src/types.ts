@@ -1,12 +1,18 @@
+import { Viewport } from "@xyflow/react";
+
 export type BaseBlock = {
     name: string;
     label: string | null;
-    inputs: { name: string }[];
-    outputs: { name: string }[];
-    options: BlockOptionType[];
+    inputs: BlockInterface[];
+    outputs: BlockInterface[];
+    options: BlockOption[];
 };
 
-export type BlockOptionType =
+interface BlockInterface {
+    name: string;
+}
+
+export type BlockOption =
     | CheckboxOption
     | InputOption
     | NumberOption
@@ -111,4 +117,38 @@ export type FlowStateEdge = {
     target: string;
     sourceHandle: string;
     targetHandle: string;
+};
+
+export type TextOption = {
+    name: string;
+    type: "TextOption";
+    value: string;
+};
+
+export type BarfiState = {
+    key: string | number | null;
+    base_blocks: BaseBlock[];
+    default: {
+        command: string;
+        editor_state: {
+            nodes: FlowStateNode[];
+            // edges: FlowStateEdge[];
+            connections: FlowStateEdge[];
+            viewport: Viewport;
+        };
+    };
+    editor_setting: {
+        compute_engine: boolean;
+    };
+    load_schema_name: string;
+    load_schema_names: string[];
+    load_editor_schema: {
+        nodes: FlowStateNode[];
+        connections: FlowStateEdge[];
+        panning: {
+            x: number;
+            y: number;
+        };
+        scaling: number;
+    };
 };
