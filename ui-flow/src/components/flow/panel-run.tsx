@@ -1,11 +1,6 @@
 import { useReactFlow, Node, Edge, Viewport } from "@xyflow/react";
 import { useNodeDataStore } from "@/components/nodes/nodeStore";
-import {
-    BaseBlock,
-    BlockOption,
-    FlowStateNode,
-    FlowStateEdge,
-} from "@/types";
+import { BaseBlock, BlockOption, FlowStateNode, FlowStateEdge } from "@/types";
 
 function constructFlowState(
     nodes: Node[],
@@ -19,47 +14,48 @@ function constructFlowState(
     // const flowState = [];
     const flowStateNodes: FlowStateNode[] = nodes.map((node) => {
         const blockData = node.data.blockData as BaseBlock;
+        const inputInterfaces: [string, { id: string; value: null }][] = [];
+        const outputInterfaces: [string, { id: string; value: null }][] = [];
+        blockData.inputs.forEach((input) => {
+            inputInterfaces.push([
+                input.name,
+                {
+                    id: `${node.id}__${input.name}`,
+                    value: null,
+                },
+            ]);
+        });
+        blockData.outputs.forEach((output) => {
+            outputInterfaces.push([
+                output.name,
+                {
+                    id: `${node.id}__${output.name}`,
+                    value: null,
+                },
+            ]);
+        });
         return {
             id: node.id,
             type: blockData.name,
-            name: blockData.label,
+            name: blockData.label || "",
             options: blockData.options.map((option) => [
                 option.name,
                 nodesOptionData[node.id][option.name].value,
             ]),
-            interfaces: [
-                ...blockData.inputs.map((input) => {
-                    return [
-                        input.name,
-                        {
-                            id: `${node.id}__${input.name}`,
-                            value: null,
-                        },
-                    ];
-                }),
-                ...blockData.outputs.map((output) => {
-                    return [
-                        output.name,
-                        {
-                            id: `${node.id}__${output.name}`,
-                            value: null,
-                        },
-                    ];
-                }),
-            ],
+            interfaces: [...inputInterfaces, ...outputInterfaces],
             position: node.position,
-            measured: node.measured,
+            measured: node.measured || { width: 0, height: 0 },
         };
     });
     const flowStateEdges: FlowStateEdge[] = edges.map((edge) => {
         return {
             id: edge.id,
-            from: `${edge.source}__${edge.sourceHandle}`,
-            to: `${edge.target}__${edge.targetHandle}`,
+            from: `${edge.source}__${edge.sourceHandle ?? ""}`,
+            to: `${edge.target}__${edge.targetHandle ?? ""}`,
             source: edge.source,
             target: edge.target,
-            sourceHandle: edge.sourceHandle,
-            targetHandle: edge.targetHandle,
+            sourceHandle: edge.sourceHandle ?? "",
+            targetHandle: edge.targetHandle ?? "",
         };
     });
     return {

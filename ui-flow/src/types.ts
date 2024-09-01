@@ -104,8 +104,8 @@ export interface FlowStateNode {
         y: number;
     };
     measured: {
-        width: number;
-        height: number;
+        width?: number | undefined;
+        height?: number | undefined;
     };
 }
 

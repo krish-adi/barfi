@@ -17,7 +17,7 @@ import PanelContextMenu from "./components/flow/panel-context-menu";
 import PanelRun from "./components/flow/panel-run";
 import { CustomNode } from "./components/nodes";
 import { useFlowUIStore } from "./components/flow/flowState";
-import { BarfiState, BaseBlock } from "@/types";
+import { BarfiState } from "@/types";
 
 export function App({ args }: { args: BarfiState }) {
     // const { title, input_schema } = args;
@@ -26,6 +26,7 @@ export function App({ args }: { args: BarfiState }) {
     const proOptions = { hideAttribution: true };
     // const nodeTypes = useMemo(() => nodeTypes, []);
 
+    // @ts-ignore
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
@@ -34,8 +35,10 @@ export function App({ args }: { args: BarfiState }) {
     });
 
     const onConnect = useCallback(
+        // @ts-ignore
         (params) =>
-            setEdges((els) => addEdge({ ...params, animated: true }, els)),
+            // @ts-ignore
+            setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
         []
     );
 

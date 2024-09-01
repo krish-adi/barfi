@@ -105,7 +105,7 @@ const CustomNodeBase = memo(
         };
         selected: boolean;
         isConnectable: boolean;
-    }) => {
+    }) => {        
         const mutateNodeData = useNodeDataStore(
             (state) => state.mutateNodeData
         );
@@ -179,7 +179,7 @@ const CustomNode = (props: NodeProps) => (
     <CustomNodeBase
         {...props}
         selected={props.selected || false}
-        data={{ blockData: props.data as BaseBlock }}
+        data={{ blockData: props.data.blockData as BaseBlock }}
     />
 );
 
