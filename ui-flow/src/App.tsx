@@ -20,7 +20,8 @@ import { useFlowUIStore } from "./components/flow/flowState";
 import { BarfiState } from "@/types";
 
 export function App({ args }: { args: BarfiState }) {
-    // const { title, input_schema } = args;
+    console.log(args.base_blocks);
+    console.log(args.load_editor_schema);
     // const hiddenTriggerRef = useRef(null);
 
     const proOptions = { hideAttribution: true };
@@ -47,9 +48,9 @@ export function App({ args }: { args: BarfiState }) {
     );
 
     const onPanelContextClick = useCallback((e: React.MouseEvent) => {
+        setContextLocation(e.clientX, e.clientY);
         // e.preventDefault();
         // console.log(e);
-        setContextLocation(e.clientX, e.clientY);
         // // https://github.com/radix-ui/primitives/issues/1307
         // if (hiddenTriggerRef.current) {
         //     const contextMenuEvent = new MouseEvent("contextmenu", {
