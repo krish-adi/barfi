@@ -93,14 +93,9 @@ export interface FlowStateNode {
     id: string; // id from the node created upon creation on flow
     type: string; // type from the blockData type from the user
     name: string; // name that is displayed on node in ui flow, can be changed in the future
+    inputs: [string, string | number | boolean | null][];
+    outputs: [string, string | number | boolean | null][];
     options: [string, string | number | boolean | null][];
-    interfaces: [
-        string,
-        {
-            id: string;
-            value: string | number | boolean | null;
-        }
-    ][];
     position: {
         x: number;
         y: number;
@@ -113,8 +108,6 @@ export interface FlowStateNode {
 
 export type FlowStateConnection = {
     id: string;
-    from: string;
-    to: string;
     source: string;
     target: string;
     sourceHandle: string;

@@ -7,79 +7,12 @@ import {
     FlowStateConnection,
 } from "@/types";
 
-function constructFlowStateOld(
-    nodes: Node[],
-    edges: Edge[],
-    viewport: Viewport,
-    nodesOptionData: Record<string, Record<string, BlockOption>>
-) {
-    console.log("nodes", nodes);
-    console.log("edges", edges);
-    console.log(nodesOptionData);
-    // const flowState = [];
-    const flowStateNodes: FlowStateNode[] = nodes.map((node) => {
-        const blockData = node.data.blockData as BaseBlock;
-        const inputInterfaces: [string, { id: string; value: null }][] = [];
-        blockData.inputs.forEach((input) => {
-            inputInterfaces.push([
-                input.name,
-                {
-                    id: `${node.id}__${input.name}`,
-                    value: null,
-                },
-            ]);
-        });
-        const outputInterfaces: [string, { id: string; value: null }][] = [];
-        blockData.outputs.forEach((output) => {
-            outputInterfaces.push([
-                output.name,
-                {
-                    id: `${node.id}__${output.name}`,
-                    value: null,
-                },
-            ]);
-        });
-        return {
-            id: node.id,
-            type: blockData.name,
-            name: blockData.label || "",
-            options: blockData.options.map((option) => [
-                option.name,
-                nodesOptionData[node.id][option.name].value,
-            ]),
-            interfaces: [...inputInterfaces, ...outputInterfaces],
-            position: node.position,
-            measured: node.measured || { width: 0, height: 0 },
-        };
-    });
-    const flowStateConnections: FlowStateConnection[] = edges.map((edge) => {
-        return {
-            id: edge.id,
-            from: `${edge.source}__${edge.sourceHandle ?? ""}`,
-            to: `${edge.target}__${edge.targetHandle ?? ""}`,
-            source: edge.source,
-            target: edge.target,
-            sourceHandle: edge.sourceHandle ?? "",
-            targetHandle: edge.targetHandle ?? "",
-        };
-    });
-    return {
-        nodes: flowStateNodes,
-        connections: flowStateConnections,
-        viewport: viewport,
-    };
-}
-
 function constructFlowState(
     nodes: Node[],
     edges: Edge[],
     viewport: Viewport,
     nodesOptionData: Record<string, Record<string, BlockOption>>
 ) {
-    console.log("nodes", nodes);
-    console.log("edges", edges);
-    console.log(nodesOptionData);
-    // const flowState = [];
     const flowStateNodes: FlowStateNode[] = nodes.map((node) => {
         const blockData = node.data.blockData as BaseBlock;
         return {
@@ -98,7 +31,7 @@ function constructFlowState(
     });
     const flowStateConnections: FlowStateConnection[] = edges.map((edge) => {
         return {
-            id: edge.id,            
+            id: edge.id,
             source: edge.source,
             target: edge.target,
             sourceHandle: edge.sourceHandle ?? "",
