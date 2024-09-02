@@ -2,7 +2,7 @@
 This module contains functions for migrating data from old versions of Barfi to new versions.
 """
 
-from typing import List, Dict
+from typing import List, Dict, Any
 from copy import deepcopy
 
 
@@ -69,3 +69,64 @@ def migrate_nodes_to_ui(nodes: List[Dict], base_blocks: List[Dict]):
         )
 
     return _return_nodes
+
+
+def migrate_state_from_ui(
+    base_blocks: List[Dict],
+    nodes: List[Dict[str, Any]],
+    connections: List[Dict[str, Any]],
+) -> Dict[str, Any]:
+    block_data_map = {base_block["name"]: base_block for base_block in base_blocks}
+
+    flow_state_nodes = []
+    for node in nodes:
+        block_data = block_data_map[node["type"]]
+        _node_inputs_map = {_input[0]: _input[1] for _input in node["inputs"]}
+        _node_outputs_map = {_output[0]: _output[1] for _output in node["outputs"]}
+        input_interfaces = [
+            (
+                item["name"],
+                {
+                    "id": f'{node["id"]}__{item["name"]}',
+                    "value": _node_inputs_map[item["name"]],
+                },
+            )
+            for item in block_data["inputs"]
+        ]
+        output_interfaces = [
+            (
+                item["name"],
+                {
+                    "id": f'{node["id"]}__{item["name"]}',
+                    "value": _node_outputs_map[item["name"]],
+                },
+            )
+            for item in block_data["outputs"]
+        ]
+
+        flow_state_nodes.append(
+            {
+                "id": node["id"],
+                "type": node["type"],
+                "name": node["name"],
+                "options": node["options"],
+                "interfaces": input_interfaces + output_interfaces,
+                "position": node["position"],
+                "measured": node["measured"],
+            }
+        )
+
+    flow_state_connections = [
+        {
+            "id": conn["id"],
+            "from": f'{conn["source"]}__{conn["sourceHandle"]}',
+            "to": f'{conn["target"]}__{conn["targetHandle"]}',
+            "source": conn["source"],
+            "target": conn["target"],
+            "sourceHandle": conn["sourceHandle"],
+            "targetHandle": conn["targetHandle"],
+        }
+        for conn in connections
+    ]
+
+    return {"nodes": flow_state_nodes, "connections": flow_state_connections}

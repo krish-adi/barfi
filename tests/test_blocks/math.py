@@ -5,7 +5,7 @@ def number_10_func(self):
     self.set_interface(name="Output 1", value=10)
 
 
-number_10 = Block(name="Number")
+number_10 = Block(name="Number 10")
 number_10.add_output()
 number_10.add_compute(number_10_func)
 
@@ -14,7 +14,7 @@ def number_5_func(self):
     self.set_interface(name="Output 1", value=5)
 
 
-number_5 = Block(name="Number")
+number_5 = Block(name="Number 5")
 number_5.add_output()
 number_5.add_compute(number_5_func)
 

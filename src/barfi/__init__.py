@@ -5,7 +5,11 @@ from typing import List, Dict, Union
 from .block_builder import Block
 from .compute_engine import ComputeEngine
 from .manage_schema import load_schema_name, load_schemas, save_schema
-from .utils.migration import migrate_connections_to_ui, migrate_nodes_to_ui
+from .utils.migration import (
+    migrate_connections_to_ui,
+    migrate_nodes_to_ui,
+    migrate_state_from_ui,
+)
 import os
 
 _RELEASE = False
@@ -81,7 +85,7 @@ def st_barfi(
             editor_schema["nodes"], base_blocks_data
         )
     else:
-        editor_schema = None
+        editor_schema = {"nodes": [], "connections": []}
 
     schemas_in_db = load_schemas()
     schema_names_in_db = schemas_in_db["schema_names"]
@@ -100,31 +104,37 @@ def st_barfi(
         default={"command": "skip", "editor_state": {}},
     )
 
-    if _from_client["command"] == "execute":
-        if compute_engine:
-            _ce = ComputeEngine(blocks=base_blocks_list)
-            _ce.add_editor_state(_from_client["editor_state"])
-            _ce._map_block_link()
-            _ce._execute_compute()
-            return _ce.get_result()
-        else:
-            _ce = ComputeEngine(blocks=base_blocks_list)
-            _ce.add_editor_state(_from_client["editor_state"])
-            _ce._map_block_link()
-            # return _ce.get_result()
-            return _from_client
-    if _from_client["command"] == "save":
-        save_schema(
-            schema_name=_from_client["schema_name"],
-            schema_data=_from_client["editor_state"],
+    if _from_client["command"] != "skip":
+        _editor_state_from_client = migrate_state_from_ui(
+            base_blocks_data,
+            _from_client["editor_state"]["nodes"],
+            _from_client["editor_state"]["connections"],
         )
-    if _from_client["command"] == "load":
-        load_schema = _from_client["schema_name"]
-        editor_schema = load_schema_name(load_schema)
-    else:
-        pass
+        _editor_state_from_client["viewport"] = _from_client["editor_state"]["viewport"]
 
-    return {}
+        if _from_client["command"] == "execute":
+            if compute_engine:
+                _ce = ComputeEngine(blocks=base_blocks_list)
+                _ce.add_editor_state(_editor_state_from_client)
+                _ce._map_block_link()
+                _ce._execute_compute()
+                return _ce.get_result()
+            else:
+                _ce = ComputeEngine(blocks=base_blocks_list)
+                _ce.add_editor_state(_editor_state_from_client)
+                _ce._map_block_link()
+                # return _ce.get_result()
+                return {"command": "execute", "editor_state": _editor_state_from_client}
+        if _from_client["command"] == "save":
+            save_schema(
+                schema_name=_from_client["schema_name"],
+                schema_data=_editor_state_from_client,
+            )
+        if _from_client["command"] == "load":
+            load_schema = _from_client["schema_name"]
+            editor_schema = load_schema_name(load_schema)
+    else:
+        return {}
 
 
 def barfi_schemas():

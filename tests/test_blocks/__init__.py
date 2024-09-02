@@ -7,5 +7,5 @@ base_blocks = process_blocks
 base_blocks_category = {
     "process": process_blocks,
     "options": options_blocks,
-    "calculator": math_blocks,
+    "math": math_blocks,
 }
