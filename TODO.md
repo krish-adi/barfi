@@ -5,17 +5,18 @@
 -   [x] migrate to poetry for better deps management and local dev experience
 -   [x] test the static files build in src
 -   [x] migrate frontend client to react
--   [ ] migrate to using react-flow
+-   [x] migrate to using react-flow
     -   [x] add react-flow to the frontend src
     -   [x] custom nodes based on what was available from baklava.js, cutom design from the examples given
     -   [x] investigate the schema that react-flow generates
     -   [x] react-flow to barfi schema
     -   [x] test is the schema + compute engine works
     -   [x] test for naming multiple nodes of same type (add a number generator to increase it incrementally)
-    -   [ ] investigate schema sent from python st.client to the ui-client for making the migration possible
-    -   [ ] able to construct the graph given a schema
-    -   [ ] add schema version to the schema saved and sent from ui-flow
--   [] change custom node to base block node
+    -   [x] investigate schema sent from python st.client to the ui-client for making the migration possible
+    -   [x] able to construct the graph given a schema
+-   [ ] make export in ui simple and handle migrations in the backend
+-   [ ] add schema version to the schema saved and sent from ui-flow
+-   [ ] change custom node to base block node
 -   [ ] custom actions on react flow -> node store
     -   [ ] delete node on ui -> del node in
 -   [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
