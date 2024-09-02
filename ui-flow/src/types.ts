@@ -8,8 +8,10 @@ export type BaseBlock = {
     options: BlockOption[];
 };
 
-interface BlockInterface {
+export interface BlockInterface {
+    id: string | null;
     name: string;
+    value: string | number | boolean | null;
 }
 
 export type BlockOption =
@@ -109,7 +111,7 @@ export interface FlowStateNode {
     };
 }
 
-export type FlowStateEdge = {
+export type FlowStateConnection = {
     id: string;
     from: string;
     to: string;
@@ -132,8 +134,7 @@ export type BarfiState = {
         command: string;
         editor_state: {
             nodes: FlowStateNode[];
-            // edges: FlowStateEdge[];
-            connections: FlowStateEdge[];
+            connections: FlowStateConnection[];
             viewport: Viewport;
         };
     };
@@ -144,7 +145,7 @@ export type BarfiState = {
     load_schema_names: string[];
     load_editor_schema: {
         nodes: FlowStateNode[];
-        connections: FlowStateEdge[];
+        connections: FlowStateConnection[];
         panning: {
             x: number;
             y: number;

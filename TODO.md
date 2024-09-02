@@ -15,10 +15,13 @@
     -   [ ] investigate schema sent from python st.client to the ui-client for making the migration possible
     -   [ ] able to construct the graph given a schema
     -   [ ] add schema version to the schema saved and sent from ui-flow
+-   [] change custom node to base block node
 -   [ ] custom actions on react flow -> node store
     -   [ ] delete node on ui -> del node in
-- [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
-- [ ] migrate the TextOption to a display option with display as text 
+-   [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
+    -   [ ] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
+-   [ ] migrate the TextOption to a display option with display as text
+
 ```
 interface TextOption {
     name: string;

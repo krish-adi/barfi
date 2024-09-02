@@ -28,8 +28,12 @@ export function App({ args }: { args: BarfiState }) {
     // const nodeTypes = useMemo(() => nodeTypes, []);
 
     // @ts-ignore
-    const [nodes, setNodes, onNodesChange] = useNodesState([]);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [nodes, setNodes, onNodesChange] = useNodesState([
+        ...args.load_editor_schema.nodes,
+    ]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([
+        ...args.load_editor_schema.connections,
+    ]);
 
     useEffect(() => {
         Streamlit.setFrameHeight();

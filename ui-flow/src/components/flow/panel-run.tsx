@@ -1,6 +1,11 @@
 import { useReactFlow, Node, Edge, Viewport } from "@xyflow/react";
 import { useNodeDataStore } from "@/components/nodes/nodeStore";
-import { BaseBlock, BlockOption, FlowStateNode, FlowStateEdge } from "@/types";
+import {
+    BaseBlock,
+    BlockOption,
+    FlowStateNode,
+    FlowStateConnection,
+} from "@/types";
 
 function constructFlowState(
     nodes: Node[],
@@ -8,8 +13,8 @@ function constructFlowState(
     viewport: Viewport,
     nodesOptionData: Record<string, Record<string, BlockOption>>
 ) {
-    console.log(nodes);
-    console.log(edges);
+    console.log("nodes", nodes);
+    console.log("edges", edges);
     console.log(nodesOptionData);
     // const flowState = [];
     const flowStateNodes: FlowStateNode[] = nodes.map((node) => {
@@ -47,7 +52,7 @@ function constructFlowState(
             measured: node.measured || { width: 0, height: 0 },
         };
     });
-    const flowStateEdges: FlowStateEdge[] = edges.map((edge) => {
+    const flowStateConnections: FlowStateConnection[] = edges.map((edge) => {
         return {
             id: edge.id,
             from: `${edge.source}__${edge.sourceHandle ?? ""}`,
@@ -60,8 +65,7 @@ function constructFlowState(
     });
     return {
         nodes: flowStateNodes,
-        edges: flowStateEdges,
-        connections: flowStateEdges,
+        connections: flowStateConnections,
         viewport: viewport,
     };
 }
@@ -76,8 +80,7 @@ export default function PanelRun({
         command: string;
         editor_state: {
             nodes: FlowStateNode[];
-            edges: FlowStateEdge[];
-            connections: FlowStateEdge[];
+            connections: FlowStateConnection[];
             viewport: Viewport;
         };
     }) => void;

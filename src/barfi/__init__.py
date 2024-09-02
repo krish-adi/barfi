@@ -5,8 +5,7 @@ from typing import List, Dict, Union
 from .block_builder import Block
 from .compute_engine import ComputeEngine
 from .manage_schema import load_schema_name, load_schemas, save_schema
-from .manage_schema import editor_preset
-
+from .utils.migration import migrate_connections_to_ui, migrate_nodes_to_ui
 import os
 
 _RELEASE = False
@@ -30,8 +29,7 @@ if not _RELEASE:
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "static/baklava")
-    _component_func = components.declare_component(
-        "st_barfi", path=build_dir)
+    _component_func = components.declare_component("st_barfi", path=build_dir)
 
 # Create a wrapper function for the component. This is an optional
 # best practice - we could simply expose the component function returned by
@@ -46,19 +44,12 @@ else:
 # "name" argument without having it get recreated.
 
 
-def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, compute_engine: bool = True, key=None):
-    if load_schema:
-        editor_schema = load_schema_name(load_schema)
-    else:
-        editor_schema = None
-
-    schemas_in_db = load_schemas()
-    schema_names_in_db = schemas_in_db['schema_names']
-
-    editor_setting = {'compute_engine': compute_engine}
-
-    # base_blocks_data = [block._export() for block in base_blocks]
-
+def st_barfi(
+    base_blocks: Union[List[Block], Dict],
+    load_schema: str = None,
+    compute_engine: bool = True,
+    key=None,
+):
     if isinstance(base_blocks, List):
         base_blocks_data = [block._export() for block in base_blocks]
         base_blocks_list = base_blocks
@@ -70,37 +61,65 @@ def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, com
                 for block in block_list:
                     base_blocks_list.append(block)
                     block_data = block._export()
-                    block_data['category'] = category
+                    block_data["category"] = category
                     base_blocks_data.append(block_data)
             else:
                 raise TypeError(
-                    'Invalid type for base_blocks passed to the st_barfi component.')
+                    "Invalid type for base_blocks passed to the st_barfi component."
+                )
     else:
         raise TypeError(
-            'Invalid type for base_blocks passed to the st_barfi component.')
+            "Invalid type for base_blocks passed to the st_barfi component."
+        )
 
-    _from_client = _component_func(base_blocks=base_blocks_data, load_editor_schema=editor_schema,
-                                   load_schema_names=schema_names_in_db, load_schema_name=load_schema, editor_setting=editor_setting,
-                                   key=key, default={'command': 'skip', 'editor_state': {}})
+    if load_schema:
+        editor_schema = load_schema_name(load_schema)
+        editor_schema["connections"] = migrate_connections_to_ui(
+            editor_schema["nodes"], editor_schema["connections"]
+        )
+        editor_schema["nodes"] = migrate_nodes_to_ui(
+            editor_schema["nodes"], base_blocks_data
+        )
+    else:
+        editor_schema = None
 
-    if _from_client['command'] == 'execute':
+    schemas_in_db = load_schemas()
+    schema_names_in_db = schemas_in_db["schema_names"]
+
+    editor_setting = {"compute_engine": compute_engine}
+
+    # base_blocks_data = [block._export() for block in base_blocks]
+
+    _from_client = _component_func(
+        base_blocks=base_blocks_data,
+        load_editor_schema=editor_schema,
+        load_schema_names=schema_names_in_db,
+        load_schema_name=load_schema,
+        editor_setting=editor_setting,
+        key=key,
+        default={"command": "skip", "editor_state": {}},
+    )
+
+    if _from_client["command"] == "execute":
         if compute_engine:
             _ce = ComputeEngine(blocks=base_blocks_list)
-            _ce.add_editor_state(_from_client['editor_state'])
+            _ce.add_editor_state(_from_client["editor_state"])
             _ce._map_block_link()
             _ce._execute_compute()
             return _ce.get_result()
         else:
             _ce = ComputeEngine(blocks=base_blocks_list)
-            _ce.add_editor_state(_from_client['editor_state'])
+            _ce.add_editor_state(_from_client["editor_state"])
             _ce._map_block_link()
             # return _ce.get_result()
             return _from_client
-    if _from_client['command'] == 'save':
+    if _from_client["command"] == "save":
         save_schema(
-            schema_name=_from_client['schema_name'], schema_data=_from_client['editor_state'])
-    if _from_client['command'] == 'load':
-        load_schema = _from_client['schema_name']
+            schema_name=_from_client["schema_name"],
+            schema_data=_from_client["editor_state"],
+        )
+    if _from_client["command"] == "load":
+        load_schema = _from_client["schema_name"]
         editor_schema = load_schema_name(load_schema)
     else:
         pass
@@ -110,6 +129,6 @@ def st_barfi(base_blocks: Union[List[Block], Dict], load_schema: str = None, com
 
 def barfi_schemas():
     schemas_in_db = load_schemas()
-    schema_names_in_db = schemas_in_db['schema_names']
+    schema_names_in_db = schemas_in_db["schema_names"]
 
     return schema_names_in_db
