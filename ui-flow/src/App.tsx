@@ -15,7 +15,7 @@ import {
 import "@xyflow/react/dist/style.css";
 import PanelContextMenu from "./components/flow/panel-context-menu";
 import PanelRun from "./components/flow/panel-run";
-import { CustomNode } from "./components/nodes";
+import { BaseBlockNode } from "./components/nodes";
 import { useFlowUIStore } from "./components/flow/flowState";
 import { BarfiState } from "@/types";
 
@@ -75,7 +75,7 @@ export function App({ args }: { args: BarfiState }) {
                     <ContextMenuTrigger asChild>
                         {/* <div ref={hiddenTriggerRef} /> */}
                         <ReactFlow
-                            nodeTypes={{ custom: CustomNode }}
+                            nodeTypes={{ baseBlock: BaseBlockNode }}
                             nodes={nodes}
                             edges={edges}
                             onNodesChange={onNodesChange}

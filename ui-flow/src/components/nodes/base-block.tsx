@@ -92,7 +92,7 @@ const renderOption = (
     }
 };
 
-const CustomNodeBase = memo(
+const BaseBlockNodeComponent = memo(
     ({
         id: nodeId,
         data,
@@ -175,12 +175,12 @@ const CustomNodeBase = memo(
     }
 );
 
-const CustomNode = (props: NodeProps) => (
-    <CustomNodeBase
+const BaseBlockNode = (props: NodeProps) => (
+    <BaseBlockNodeComponent
         {...props}
         selected={props.selected || false}
         data={{ blockData: props.data.blockData as BaseBlock }}
     />
 );
 
-export default CustomNode;
+export default BaseBlockNode;

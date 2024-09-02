@@ -50,7 +50,7 @@ def migrate_nodes_to_ui(nodes: List[Dict], base_blocks: List[Dict]):
         _return_nodes.append(
             {
                 "id": node["id"],
-                "type": "custom",
+                "type": "baseBlock",
                 "data": {
                     "blockData": {
                         # TODO: resolve name type label conflict

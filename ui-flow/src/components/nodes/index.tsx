@@ -1,3 +1,3 @@
-import CustomNode from "./custom-node";
+import BaseBlockNode from "./base-block";
 
-export { CustomNode };
+export { BaseBlockNode };

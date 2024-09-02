@@ -43,7 +43,7 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
                 addNodes([
                     {
                         id: nodeId,
-                        type: "custom",
+                        type: "baseBlock",
                         data: { blockData: newBlockData },
                         position: {
                             x: flowPos.x,

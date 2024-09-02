@@ -92,8 +92,7 @@ result.add_input()
 
 
 def result_func(self):
-    in_1 = self.get_interface(name="Input 1")
-    print(in_1)
+    _ = self.get_interface(name="Input 1")
 
 
 result.add_compute(result_func)

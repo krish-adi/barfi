@@ -76,8 +76,7 @@ division.add_compute(division_func)
 
 
 def result_func(self):
-    in_1 = self.get_interface(name="Input 1")
-    print(in_1)
+    _ = self.get_interface(name="Input 1")
 
 
 result = Block(name="Result")

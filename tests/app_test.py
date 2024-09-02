@@ -11,9 +11,9 @@ st.write(barfi_schemas())
 compute_engine = st.checkbox("Activate barfi compute engine", value=True)
 
 barfi_result = st_barfi(
-    base_blocks=base_blocks_category["math"],
+    base_blocks=base_blocks_category["process"],
     compute_engine=compute_engine,
-    # load_schema="schema-basic",
+    load_schema="schema-basic",
 )
 
 if barfi_result:

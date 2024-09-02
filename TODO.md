@@ -14,9 +14,9 @@
     -   [x] test for naming multiple nodes of same type (add a number generator to increase it incrementally)
     -   [x] investigate schema sent from python st.client to the ui-client for making the migration possible
     -   [x] able to construct the graph given a schema
--   [ ] make export in ui simple and handle migrations in the backend
+-   [x] make export in ui simple and handle migrations in the backend
+-   [x] change custom node to base block node
 -   [ ] add schema version to the schema saved and sent from ui-flow
--   [ ] change custom node to base block node
 -   [ ] custom actions on react flow -> node store
     -   [ ] delete node on ui -> del node in
 -   [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
