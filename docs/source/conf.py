@@ -17,38 +17,42 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Barfi'
-copyright = '2022, Adithya Krishnan'
-author = 'Adithya Krishnan'
+project = "Barfi"
+copyright = "2022, Adithya Krishnan"
+author = "Adithya Krishnan"
 
 # The short X.Y version.
-version = '0.7.0'
+version = "0.7.0"
 # The full version, including alpha/beta/rc tags.
-release = 'alpha'
+release = "alpha"
 
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.duration", "sphinx.ext.autodoc",
-                "myst_parser", "sphinx_copybutton"]
+extensions = [
+    "sphinx.ext.duration",
+    "sphinx.ext.autodoc",
+    "myst_parser",
+    "sphinx_copybutton",
+]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-# The file extensions of source files. Sphinx considers the files with this 
-# suffix as sources. The value can be a dictionary mapping file extensions 
+# The file extensions of source files. Sphinx considers the files with this
+# suffix as sources. The value can be a dictionary mapping file extensions
 # to file types. For example:
 
 source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
+    ".rst": "restructuredtext",
+    ".md": "markdown",
 }
 
 
@@ -57,19 +61,19 @@ source_suffix = {
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'furo'
+html_theme = "furo"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
-# The “title” for HTML documentation generated with Sphinx’s own templates. 
-# This is appended to the <title> tag of individual pages, and used in the 
-# navigation bar as the “topmost” element. 
+# The “title” for HTML documentation generated with Sphinx’s own templates.
+# This is appended to the <title> tag of individual pages, and used in the
+# navigation bar as the “topmost” element.
 # It defaults to '<project> v<revision> documentation'.
-html_title = 'Barfi'
-html_short_title = 'Barfi - documentation'
+html_title = "Barfi"
+html_short_title = "Barfi - documentation"
 
 # Navigation with keyboard keys
 html_theme_options = {
