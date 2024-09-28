@@ -16,18 +16,18 @@ import "@xyflow/react/dist/style.css";
 import PanelContextMenu from "./components/flow/panel-context-menu";
 import PanelRun from "./components/flow/panel-run";
 import { BaseBlockNode } from "./components/nodes";
-import { useFlowUIStore } from "./components/flow/flowState";
+import { useFlowStateStore } from "./components/flow/flowState";
 import { BarfiState } from "@/types";
 
 export function App({ args }: { args: BarfiState }) {
-    console.log(args.base_blocks);
-    console.log(args.load_editor_schema);
+    // console.log(args.base_blocks);
+    // console.log(args.load_editor_schema);
     // const hiddenTriggerRef = useRef(null);
 
     const proOptions = { hideAttribution: true };
     // const nodeTypes = useMemo(() => nodeTypes, []);
 
-    // @ts-ignore
+    // @ts-expect-error setNodes is not used
     const [nodes, setNodes, onNodesChange] = useNodesState([
         ...args.load_editor_schema.nodes,
     ]);
@@ -40,14 +40,13 @@ export function App({ args }: { args: BarfiState }) {
     });
 
     const onConnect = useCallback(
-        // @ts-ignore
+        // @ts-expect-error params is not used
         (params) =>
-            // @ts-ignore
             setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
         []
     );
 
-    const setContextLocation = useFlowUIStore(
+    const setContextLocation = useFlowStateStore(
         (state) => state.setContextLocation
     );
 
@@ -87,6 +86,7 @@ export function App({ args }: { args: BarfiState }) {
                             proOptions={proOptions}
                             nodesDraggable
                             minZoom={0}
+                            onDelete={(p) => console.log(p)}
                         >
                             <Background color="#aaa" gap={16} />
                             <MiniMap position="top-right" />

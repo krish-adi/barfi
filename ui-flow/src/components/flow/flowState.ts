@@ -2,6 +2,16 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { BaseBlock, BlockOption } from "@/types";
 
+type FlowUIState = {
+    contextLocation: {
+        x: number | undefined;
+        y: number | undefined;
+    };
+    setContextLocation: (x: number | undefined, y: number | undefined) => void;
+};
+
+// This NodeDataState is to store the options' values of the nodes that have been changed by the user
+// The options' values are stored in the nodesOptionData object and later retrieved by the PanelRun component
 type NodeDataState = {
     nodeBaseBlockCount: Record<string, number>;
     nodes: Record<string, BaseBlock>;
@@ -20,8 +30,16 @@ export type NodeDataActions = {
     setNodeBaseBlockCount: (nodeName: string) => number;
 };
 
-const useNodeDataStore = create<NodeDataState & NodeDataActions>()(
+const useFlowStateStore = create<
+    FlowUIState & NodeDataState & NodeDataActions
+>()(
     immer((set, get) => ({
+        contextLocation: {
+            x: undefined,
+            y: undefined,
+        },
+        setContextLocation: (x: number | undefined, y: number | undefined) =>
+            set({ contextLocation: { x, y } }),
         nodes: {},
         nodeBaseBlockCount: {},
         nodesOptionData: {},
@@ -60,4 +78,4 @@ const useNodeDataStore = create<NodeDataState & NodeDataActions>()(
     }))
 );
 
-export { useNodeDataStore };
+export { useFlowStateStore };

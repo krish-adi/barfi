@@ -1,5 +1,5 @@
 import { useReactFlow, Node, Edge, Viewport } from "@xyflow/react";
-import { useNodeDataStore } from "@/components/nodes/nodeStore";
+import { useFlowStateStore } from "@/components/flow/flowState";
 import {
     BaseBlock,
     BlockOption,
@@ -61,7 +61,7 @@ export default function PanelRun({
     }) => void;
 }) {
     const { getNodes, getEdges, getViewport } = useReactFlow();
-    const getNodesOptionDataFromStore = useNodeDataStore(
+    const getNodesOptionDataFromStore = useFlowStateStore(
         (state) => state.getNodesOptionData
     );
     return (

@@ -8,9 +8,9 @@ import { FlowNumber } from "@/components/ui/input";
 import { FlowSelect } from "@/components/ui/select";
 import { FlowSlider } from "@/components/ui/slider";
 import {
-    useNodeDataStore,
+    useFlowStateStore,
     NodeDataActions,
-} from "@/components/nodes/nodeStore";
+} from "@/components/flow/flowState";
 
 // create function with a switch statement to render the correct input type
 // based on the option type
@@ -105,8 +105,8 @@ const BaseBlockNodeComponent = memo(
         };
         selected: boolean;
         isConnectable: boolean;
-    }) => {        
-        const mutateNodeData = useNodeDataStore(
+    }) => {
+        const mutateNodeData = useFlowStateStore(
             (state) => state.mutateNodeData
         );
         return (

@@ -16,9 +16,9 @@
     -   [x] able to construct the graph given a schema
 -   [x] make export in ui simple and handle migrations in the backend
 -   [x] change custom node to base block node
--   [ ] add schema version to the schema saved and sent from ui-flow
 -   [ ] custom actions on react flow -> node store
     -   [ ] delete node on ui -> del node in
+-   [ ] add schema version to the schema saved and sent from ui-flow
 -   [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
     -   [ ] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
 -   [ ] migrate the TextOption to a display option with display as text

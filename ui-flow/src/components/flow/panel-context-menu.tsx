@@ -10,18 +10,17 @@ import {
     // ContextMenuSubTrigger,
 } from "@/components/ui/context-menu";
 import { useReactFlow } from "@xyflow/react";
-import { useFlowUIStore } from "./flowState";
 import { BaseBlock } from "@/types";
-import { useNodeDataStore } from "@/components/nodes/nodeStore";
+import { useFlowStateStore } from "@/components/flow/flowState";
 
 function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
     const { addNodes, screenToFlowPosition } = useReactFlow();
-    const contextLocation = useFlowUIStore((state) => state.contextLocation);
-    const setContextLocation = useFlowUIStore(
+    const contextLocation = useFlowStateStore((state) => state.contextLocation);
+    const setContextLocation = useFlowStateStore(
         (state) => state.setContextLocation
     );
-    const addNodeToStore = useNodeDataStore((state) => state.addNode);
-    const setNodeBaseBlockCount = useNodeDataStore(
+    const addNodeToStore = useFlowStateStore((state) => state.addNode);
+    const setNodeBaseBlockCount = useFlowStateStore(
         (state) => state.setNodeBaseBlockCount
     );
     return (
