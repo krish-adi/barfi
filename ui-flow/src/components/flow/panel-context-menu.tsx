@@ -29,7 +29,7 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
                 // create a new block data with the label
                 const newBlockData = {
                     ...blockData,
-                    label: `${blockData.name} ${setNodeBaseBlockCount(
+                    label: `${blockData.name}-${setNodeBaseBlockCount(
                         blockData.name
                     )}`,
                 };

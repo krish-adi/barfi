@@ -14,6 +14,8 @@ type FlowUIState = {
 // The options' values are stored in the nodesOptionData object and later retrieved by the PanelRun component
 type NodeDataState = {
     nodeBaseBlockCount: Record<string, number>;
+    // TODO: this map needn't contain the BaseBlock object, just the the name 
+    // and below the options data
     nodes: Record<string, BaseBlock>;
     nodesOptionData: Record<string, Record<string, BlockOption>>;
 };

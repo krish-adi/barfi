@@ -25,12 +25,24 @@ export function App({ args }: { args: BarfiState }) {
     // const hiddenTriggerRef = useRef(null);
 
     const proOptions = { hideAttribution: true };
-    // const nodeTypes = useMemo(() => nodeTypes, []);
 
-    // @ts-expect-error setNodes is not used
-    const [nodes, setNodes, onNodesChange] = useNodesState([
+    const setContextLocation = useFlowStateStore(
+        (state) => state.setContextLocation
+    );
+    const addNodeToStore = useFlowStateStore((state) => state.addNode);
+    const getNodesFromStore = useFlowStateStore((state) => state.getNodes);
+    const nodeIDsInStore = Object.keys(getNodesFromStore());
+
+    const [nodes, , onNodesChange] = useNodesState([
         ...args.load_editor_schema.nodes,
     ]);
+
+    args.load_editor_schema.nodes.forEach((node) => {
+        if (!nodeIDsInStore.includes(node.id)) {
+            addNodeToStore(node.id, node.data.blockData);
+        }
+    });
+
     const [edges, setEdges, onEdgesChange] = useEdgesState([
         ...args.load_editor_schema.connections,
     ]);
@@ -43,29 +55,27 @@ export function App({ args }: { args: BarfiState }) {
         // @ts-expect-error params is not used
         (params) =>
             setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
-        []
+        [setEdges]
     );
 
-    const setContextLocation = useFlowStateStore(
-        (state) => state.setContextLocation
+    const onPanelContextClick = useCallback(
+        (e: React.MouseEvent) => {
+            setContextLocation(e.clientX, e.clientY);
+            // e.preventDefault();
+            // // https://github.com/radix-ui/primitives/issues/1307
+            // if (hiddenTriggerRef.current) {
+            //     const contextMenuEvent = new MouseEvent("contextmenu", {
+            //         bubbles: true,
+            //         clientX: e.clientX,
+            //         clientY: e.clientY,
+            //     });
+            //     (hiddenTriggerRef.current as HTMLElement).dispatchEvent(
+            //         contextMenuEvent
+            //     );
+            // }
+        },
+        [setContextLocation]
     );
-
-    const onPanelContextClick = useCallback((e: React.MouseEvent) => {
-        setContextLocation(e.clientX, e.clientY);
-        // e.preventDefault();
-        // console.log(e);
-        // // https://github.com/radix-ui/primitives/issues/1307
-        // if (hiddenTriggerRef.current) {
-        //     const contextMenuEvent = new MouseEvent("contextmenu", {
-        //         bubbles: true,
-        //         clientX: e.clientX,
-        //         clientY: e.clientY,
-        //     });
-        //     (hiddenTriggerRef.current as HTMLElement).dispatchEvent(
-        //         contextMenuEvent
-        //     );
-        // }
-    }, []);
 
     return (
         <div className="border rounded-md w-full h-[36rem]">

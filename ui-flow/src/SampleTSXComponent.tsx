@@ -16,7 +16,7 @@ interface State {
  */
 class SampleComponentBase extends StreamlitComponentBase<State> {
     public state = { numClicks: 0, isFocused: false };
-
+ 
     public render = (): ReactNode => {
         // Arguments that are passed to the plugin in Python are accessible
         // via `this.props.args`. Here, we access the "name" arg.

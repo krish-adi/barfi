@@ -13,6 +13,7 @@ function constructFlowState(
     viewport: Viewport,
     nodesOptionData: Record<string, Record<string, BlockOption>>
 ) {
+    console.log("node options", nodesOptionData);
     const flowStateNodes: FlowStateNode[] = nodes.map((node) => {
         const blockData = node.data.blockData as BaseBlock;
         return {

@@ -16,6 +16,11 @@
     -   [x] able to construct the graph given a schema
 -   [x] make export in ui simple and handle migrations in the backend
 -   [x] change custom node to base block node
+-   [ ] state data are different across all the places. 
+    -   [ ] when a component is loaded from schema to editor, option values must be loaded from the store. essentially option values must only be from the store. 
+    -   [ ] when a block is loaded from barfi-state into editor, it must be transformed to be in type `Node`
+    -   [ ] keep node and baseBlock different. but you can refresh the nodes added to the editor from the baseblock. 
+    -   [ ] migrate BarfitateNode to FlowStateNode. 
 -   [ ] custom actions on react flow -> node store
     -   [ ] delete node on ui -> del node in
 -   [ ] add schema version to the schema saved and sent from ui-flow
