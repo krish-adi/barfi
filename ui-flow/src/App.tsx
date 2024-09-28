@@ -20,10 +20,6 @@ import { useFlowStateStore } from "./components/flow/flowState";
 import { BarfiState } from "@/types";
 
 export function App({ args }: { args: BarfiState }) {
-    // console.log(args.base_blocks);
-    // console.log(args.load_editor_schema);
-    // const hiddenTriggerRef = useRef(null);
-
     const proOptions = { hideAttribution: true };
 
     const setContextLocation = useFlowStateStore(
@@ -31,6 +27,10 @@ export function App({ args }: { args: BarfiState }) {
     );
     const addNodeToStore = useFlowStateStore((state) => state.addNode);
     const getNodesFromStore = useFlowStateStore((state) => state.getNodes);
+    const delNodeFromStore = useFlowStateStore((state) => state.delNode);
+    const setNodeBaseBlockCount = useFlowStateStore(
+        (state) => state.setNodeBaseBlockCount
+    );
     const nodeIDsInStore = Object.keys(getNodesFromStore());
 
     const [nodes, , onNodesChange] = useNodesState([
@@ -40,6 +40,7 @@ export function App({ args }: { args: BarfiState }) {
     args.load_editor_schema.nodes.forEach((node) => {
         if (!nodeIDsInStore.includes(node.id)) {
             addNodeToStore(node.id, node.data.blockData);
+            setNodeBaseBlockCount(node.data.blockData.name);
         }
     });
 
@@ -58,10 +59,12 @@ export function App({ args }: { args: BarfiState }) {
         [setEdges]
     );
 
+    // const hiddenTriggerRef = useRef(null);
     const onPanelContextClick = useCallback(
         (e: React.MouseEvent) => {
             setContextLocation(e.clientX, e.clientY);
             // e.preventDefault();
+            // Keep this for future reference
             // // https://github.com/radix-ui/primitives/issues/1307
             // if (hiddenTriggerRef.current) {
             //     const contextMenuEvent = new MouseEvent("contextmenu", {
@@ -96,7 +99,11 @@ export function App({ args }: { args: BarfiState }) {
                             proOptions={proOptions}
                             nodesDraggable
                             minZoom={0}
-                            onDelete={(p) => console.log(p)}
+                            onDelete={({ nodes }) => {
+                                nodes.forEach((node) => {
+                                    delNodeFromStore(node.id);
+                                });
+                            }}
                         >
                             <Background color="#aaa" gap={16} />
                             <MiniMap position="top-right" />

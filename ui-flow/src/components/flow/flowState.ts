@@ -13,8 +13,9 @@ type FlowUIState = {
 // This NodeDataState is to store the options' values of the nodes that have been changed by the user
 // The options' values are stored in the nodesOptionData object and later retrieved by the PanelRun component
 type NodeDataState = {
+    // All the values below are a map to the nodeID to the data mentioned
     nodeBaseBlockCount: Record<string, number>;
-    // TODO: this map needn't contain the BaseBlock object, just the the name 
+    // TODO: this map needn't contain the BaseBlock object, just the the name
     // and below the options data
     nodes: Record<string, BaseBlock>;
     nodesOptionData: Record<string, Record<string, BlockOption>>;
@@ -22,6 +23,7 @@ type NodeDataState = {
 
 export type NodeDataActions = {
     addNode: (nodeId: string, nodeblock: BaseBlock) => void;
+    delNode: (nodeId: string) => void;
     getNodes: () => Record<string, BaseBlock>;
     getNodesOptionData: () => Record<string, Record<string, BlockOption>>;
     mutateNodeData: (
@@ -52,6 +54,12 @@ const useFlowStateStore = create<
                 nodeblock.options.forEach((option) => {
                     state.nodesOptionData[nodeId][option.name] = option;
                 });
+            });
+        },
+        delNode: (nodeId) => {
+            set((state) => {
+                delete state.nodes[nodeId];
+                delete state.nodesOptionData[nodeId];
             });
         },
         getNodes: () => {

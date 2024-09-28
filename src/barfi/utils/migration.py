@@ -27,7 +27,7 @@ def migrate_connections_to_ui(nodes: List[Dict], connections: List[Dict]):
 
 def migrate_nodes_to_ui(nodes: List[Dict], base_blocks: List[Dict]):
     _return_nodes = []
-    _base_block_map = {base_block["name"]                       : base_block for base_block in base_blocks}
+    _base_block_map = {base_block["name"]: base_block for base_block in base_blocks}
 
     for node in nodes:
         _node_base_block = deepcopy(_base_block_map[node["type"]])
@@ -86,7 +86,7 @@ def migrate_state_from_ui(
     nodes: List[Dict[str, Any]],
     connections: List[Dict[str, Any]],
 ) -> Dict[str, Any]:
-    block_data_map = {base_block["name"]                      : base_block for base_block in base_blocks}
+    block_data_map = {base_block["name"]: base_block for base_block in base_blocks}
 
     flow_state_nodes = []
     for node in nodes:
