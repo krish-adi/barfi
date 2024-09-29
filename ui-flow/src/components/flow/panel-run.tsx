@@ -6,6 +6,7 @@ import {
     FlowStateNode,
     FlowStateConnection,
 } from "@/types";
+import { TriangleRightIcon } from "@radix-ui/react-icons";
 
 function constructFlowState(
     nodes: Node[],
@@ -67,7 +68,7 @@ export default function PanelRun({
     );
     return (
         <button
-            className="border rounded-sm border-black px-2 py-0.5"
+            className="flex items-center border rounded-sm border-black px-1 py-1 text-white bg-black"
             onClick={() => {
                 onClickRun({
                     command: "execute",
@@ -80,7 +81,10 @@ export default function PanelRun({
                 });
             }}
         >
-            Run <span className="ml-2">🚀</span>{" "}
+            <span className="ml-2">Execute</span>
+            <span className="ml-1">
+                <TriangleRightIcon className="w-6 h-6" />
+            </span>
         </button>
     );
 }
