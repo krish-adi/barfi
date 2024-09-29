@@ -31,28 +31,26 @@ def migrate_nodes_to_ui(nodes: List[Dict], base_blocks: List[Dict]):
 
     for node in nodes:
         _node_base_block = deepcopy(_base_block_map[node["type"]])
-        _node_options_value_map = {_opt[0]: _opt[1]
-                                   for _opt in node["options"]}
+        _node_options_value_map = {_opt[0]: _opt[1] for _opt in node["options"]}
         _node_options = _node_base_block["options"]
         _node_options_tuple = []
         for _noption in _node_options:
             _noption["value"] = _node_options_value_map[_noption["name"]]
-            _node_options_tuple.append(_noption["name"], _noption["value"])
+            _node_options_tuple.append((_noption["name"], _noption["value"]))
 
-        _node_interfaces_map = {_intf[0]: _intf[1]
-                                for _intf in node["interfaces"]}
+        _node_interfaces_map = {_intf[0]: _intf[1] for _intf in node["interfaces"]}
         _node_inputs = _node_base_block["inputs"]
         _node_inputs_tuple = []
         for _ninput in _node_inputs:
             _ninput["id"] = _node_interfaces_map[_ninput["name"]]["id"]
             _ninput["value"] = _node_interfaces_map[_ninput["name"]]["value"]
-            _node_inputs_tuple.append(_ninput["name"], _ninput["value"])
+            _node_inputs_tuple.append((_ninput["name"], _ninput["value"]))
         _node_outputs = _node_base_block["outputs"]
         _node_outputs_tuple = []
         for _noutput in _node_outputs:
             _noutput["id"] = _node_interfaces_map[_noutput["name"]]["id"]
             _noutput["value"] = _node_interfaces_map[_noutput["name"]]["value"]
-            _node_outputs_tuple.append(_noutput["name"], _noutput["value"])
+            _node_outputs_tuple.append((_noutput["name"], _noutput["value"]))
 
         _return_nodes.append(
             {
@@ -92,8 +90,7 @@ def migrate_state_from_ui(
     for node in nodes:
         block_data = block_data_map[node["type"]]
         _node_inputs_map = {_input[0]: _input[1] for _input in node["inputs"]}
-        _node_outputs_map = {_output[0]: _output[1]
-                             for _output in node["outputs"]}
+        _node_outputs_map = {_output[0]: _output[1] for _output in node["outputs"]}
         input_interfaces = [
             (
                 item["name"],
