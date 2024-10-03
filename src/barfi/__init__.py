@@ -11,6 +11,13 @@ from .utils.migration import (
     migrate_state_from_ui,
 )
 import os
+from .std_types import (
+    BarfiResponse,
+    FlowEditorState,
+    FlowNode,
+    FlowConnection,
+    FlowViewport,
+)
 
 _RELEASE = False
 
@@ -92,8 +99,6 @@ def st_barfi(
 
     editor_setting = {"compute_engine": compute_engine}
 
-    # base_blocks_data = [block._export() for block in base_blocks]
-
     _from_client = _component_func(
         base_blocks=base_blocks_data,
         load_editor_schema=editor_schema,
@@ -111,6 +116,20 @@ def st_barfi(
             _from_client["editor_state"]["connections"],
         )
         _editor_state_from_client["viewport"] = _from_client["editor_state"]["viewport"]
+
+        # _typed_barfi_response = BarfiResponse(
+        #     command=_from_client["command"],
+        #     editor_state=FlowEditorState(
+        #         nodes=[FlowNode(**node) for node in _editor_state_from_client["nodes"]],
+        #         connections=[
+        #             FlowConnection(**conn)
+        #             for conn in _editor_state_from_client["connections"]
+        #         ],
+        #         viewport=FlowViewport(**_editor_state_from_client["viewport"]),
+        #     ),
+        # )
+
+        # print(_typed_barfi_response)
 
         if _from_client["command"] == "execute":
             if compute_engine:

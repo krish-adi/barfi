@@ -30,4 +30,6 @@ elif test_case == "load__math":
 
     if barfi_result:
         st.write(barfi_result)
-        st.write(barfi_result["Result-1"]["block"].get_interface("Input 1"))
+        # st.write(barfi_result["Addition-1"]["block"].get_interface("Input 1"))
+        # st.write(barfi_result["Addition-1"]["block"].get_interface("Input 2"))
+        # st.write(barfi_result["Addition-1"]["block"].get_interface("Output 1"))
