@@ -47,9 +47,3 @@ class FlowEditorState:
     nodes: List[FlowNode]
     connections: List[FlowConnection]
     viewport: FlowViewport
-
-
-@dataclass
-class BarfiResponse:
-    command: str
-    editor_state: FlowEditorState

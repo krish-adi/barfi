@@ -4,7 +4,7 @@ from barfi.static import STATIC_DIR_PATH
 
 # import st_flow components
 from barfi.st_flow.block import Block
-from barfi.st_flow.compute_engine import ComputeEngine
+from barfi.st_flow.flow.compute import ComputeEngine
 from barfi.st_flow.manage_schema import load_schema_name, load_schemas, save_schema
 from barfi.utils.migration import (
     migrate_connections_to_ui,
@@ -12,13 +12,6 @@ from barfi.utils.migration import (
     migrate_state_from_ui,
 )
 import os
-from .std_types import (
-    BarfiResponse,
-    FlowEditorState,
-    FlowNode,
-    FlowConnection,
-    FlowViewport,
-)
 
 _RELEASE = False
 
