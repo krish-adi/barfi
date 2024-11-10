@@ -33,6 +33,7 @@
 -   [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
     -   [ ] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
 -   [ ] migrate the TextOption to a display option with display as text
+-   [ ] rename /frontend to ui-barfi and move it to archive to not confuse future devs
 
 ```
 interface TextOption {
