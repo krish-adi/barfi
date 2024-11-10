@@ -1,7 +1,9 @@
+import os
 import streamlit.components.v1 as components
 from typing import List, Dict, Union
 
 # import st_flow components
+from barfi.config import RELEASE
 from barfi.st_flow.block import Block
 from barfi.st_flow.block.prepare import prepare_blocks_export
 from barfi.st_flow.flow.compute import ComputeEngine
@@ -12,9 +14,8 @@ from barfi.st_flow.schema import (
     prepare_editor_schema,
 )
 from barfi.utils.migration import migrate_state_from_ui
-import os
 
-_RELEASE = False
+_RELEASE = RELEASE
 
 # Declare a Streamlit component. `declare_component` returns a function
 # that is used to create instances of the component. We're naming this
