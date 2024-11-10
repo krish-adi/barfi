@@ -39,7 +39,7 @@ if not _RELEASE:
     )
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
-    build_dir = os.path.join(parent_dir, "static/baklava")
+    build_dir = os.path.join(parent_dir, "static/ui_st_barfi")
     _component_func = components.declare_component("st_barfi", path=build_dir)
 
 # Create a wrapper function for the component. This is an optional
