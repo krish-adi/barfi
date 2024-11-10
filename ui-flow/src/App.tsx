@@ -35,10 +35,10 @@ export function App({ args }: { args: BarfiState }) {
     const nodeIDsInStore = Object.keys(getNodesFromStore());
 
     const [nodes, , onNodesChange] = useNodesState([
-        ...args.load_editor_schema.nodes,
+        ...args.editor_schema.nodes,
     ]);
 
-    args.load_editor_schema.nodes.forEach((node) => {
+    args.editor_schema.nodes.forEach((node) => {
         if (!nodeIDsInStore.includes(node.id)) {
             addNodeToStore(node.id, node.data.blockData);
             setNodeBaseBlockCount(node.data.blockData.name);
@@ -46,7 +46,7 @@ export function App({ args }: { args: BarfiState }) {
     });
 
     const [edges, setEdges, onEdgesChange] = useEdgesState([
-        ...args.load_editor_schema.connections,
+        ...args.editor_schema.connections,
     ]);
 
     useEffect(() => {

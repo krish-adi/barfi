@@ -7,14 +7,6 @@ from barfi.config import RELEASE
 from barfi.st_flow.block import Block
 from barfi.st_flow.block.prepare import prepare_blocks_export
 from barfi.st_flow.flow.types import build_streamlit_flow_response
-from barfi.st_flow.flow.compute import ComputeEngine
-from barfi.st_flow.schema import (
-    load_schema_name,
-    barfi_schemas,
-    save_schema,
-    prepare_editor_schema,
-)
-from barfi.utils.migration import migrate_state_from_ui
 
 _RELEASE = RELEASE
 
@@ -54,59 +46,20 @@ else:
 
 def st_flow(
     base_blocks: Union[List[Block], Dict[str, List[Block]]],
-    load_schema: str = None,
-    compute_engine: bool = True,
+    editor_schema: str = None,
+    commands: List[str] = ["execute", "save"],
     key=None,
 ):
-    base_blocks_data, base_blocks_list = prepare_blocks_export(base_blocks)
-    editor_schema = prepare_editor_schema(load_schema, base_blocks_data)
-
-    schema_names_in_db = barfi_schemas()
-
-    editor_setting = {"compute_engine": compute_engine}
+    base_blocks_data, _ = prepare_blocks_export(base_blocks)
 
     # TODO: Add custom commands, to make it customize to act upon a command bar of tools
     # and commmands and how to render them on the ui
     _from_client = _component_func(
         base_blocks=base_blocks_data,
-        load_editor_schema=editor_schema,
-        load_schema_names=schema_names_in_db,
-        load_schema_name=load_schema,
-        editor_setting=editor_setting,
+        editor_schema=editor_schema,
+        commands=commands,
         key=key,
         default={"command": "default", "editor_state": {}},
     )
 
     return build_streamlit_flow_response(_from_client)
-
-    # if _from_client["command"] != "skip":
-    #     _editor_state_from_client = migrate_state_from_ui(
-    #         base_blocks_data,
-    #         _from_client["editor_state"]["nodes"],
-    #         _from_client["editor_state"]["connections"],
-    #     )
-    #     _editor_state_from_client["viewport"] = _from_client["editor_state"]["viewport"]
-
-    #     if _from_client["command"] == "execute":
-    #         if compute_engine:
-    #             _ce = ComputeEngine(blocks=base_blocks_list)
-    #             _ce.add_editor_state(_editor_state_from_client)
-    #             _ce._map_block_link()
-    #             _ce._execute_compute()
-    #             return _ce.get_result()
-    #         else:
-    #             _ce = ComputeEngine(blocks=base_blocks_list)
-    #             _ce.add_editor_state(_editor_state_from_client)
-    #             _ce._map_block_link()
-    #             # return _ce.get_result()
-    #             return {"command": "execute", "editor_state": _editor_state_from_client}
-    #     if _from_client["command"] == "save":
-    #         save_schema(
-    #             schema_name=_from_client["schema_name"],
-    #             schema_data=_editor_state_from_client,
-    #         )
-    #     if _from_client["command"] == "load":
-    #         load_schema = _from_client["schema_name"]
-    #         editor_schema = load_schema_name(load_schema)
-    # else:
-    #     return {}

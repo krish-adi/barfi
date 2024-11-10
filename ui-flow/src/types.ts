@@ -148,7 +148,7 @@ export type BarfiStateConnection = {
 
 export type BarfiState = {
     key: string | number | null;
-    base_blocks: BaseBlock[];
+    base_blocks: BaseBlock[] | Record<string, BaseBlock[]>;
     default: {
         command: string;
         editor_state: {
@@ -157,12 +157,7 @@ export type BarfiState = {
             viewport: Viewport;
         };
     };
-    editor_setting: {
-        compute_engine: boolean;
-    };
-    load_schema_name: string;
-    load_schema_names: string[];
-    load_editor_schema: {
+    editor_schema: {
         nodes: BarfiStateNode[];
         connections: BarfiStateConnection[];
         panning: {
