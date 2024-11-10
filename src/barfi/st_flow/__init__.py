@@ -3,7 +3,7 @@ from typing import List, Dict, Union
 from barfi.static import STATIC_DIR_PATH
 
 # import st_flow components
-from barfi.st_flow.block_builder import Block
+from barfi.st_flow.block import Block
 from barfi.st_flow.compute_engine import ComputeEngine
 from barfi.st_flow.manage_schema import load_schema_name, load_schemas, save_schema
 from barfi.utils.migration import (
@@ -79,9 +79,7 @@ def st_flow(
                     "Invalid type for base_blocks passed to the st_flow component."
                 )
     else:
-        raise TypeError(
-            "Invalid type for base_blocks passed to the st_flow component."
-        )
+        raise TypeError("Invalid type for base_blocks passed to the st_flow component.")
 
     if load_schema:
         editor_schema = load_schema_name(load_schema)

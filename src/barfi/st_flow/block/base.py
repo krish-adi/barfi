@@ -1,8 +1,8 @@
 import types
 from typing import Callable, Any, Dict
 from dataclasses import asdict
-from barfi.st_flow.option_builder import build_option
-from barfi.st_flow.std_types import BlockOption, BlockInterface, Value
+from barfi.st_flow.block.option import BlockOption, build_option, BlockOptionValue
+from barfi.st_flow.block.types import BlockInterface, BlockInterfaceValue
 
 
 class Block(object):
@@ -45,7 +45,7 @@ class Block(object):
         line_4 = f"Options: {options_name!r} "
         return line_1 + line_2 + line_3 + line_4
 
-    def add_input(self, name: str = None, value: Value = None) -> None:
+    def add_input(self, name: str = None, value: BlockInterfaceValue = None) -> None:
         """
         Add an Input interface to the Block
 
@@ -71,7 +71,7 @@ class Block(object):
         self._inputs[name] = BlockInterface(name=name, value=value)
         self._interface_names.append(name)
 
-    def add_output(self, name: str = None, value: Value = None) -> None:
+    def add_output(self, name: str = None, value: BlockInterfaceValue = None) -> None:
         """
         Add an Output interface to the Block
 
@@ -254,7 +254,7 @@ class Block(object):
         else:
             raise ValueError(f"Option name: {name} does not exist in Block.")
 
-    def get_option(self, name: str) -> Value:
+    def get_option(self, name: str) -> BlockOptionValue:
         """
         Get the value of an existing Option interface in the Block.
 

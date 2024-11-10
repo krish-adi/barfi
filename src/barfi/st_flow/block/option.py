@@ -1,6 +1,20 @@
-from barfi.st_flow.std_types import BlockOption
+from typing import Union, List, Optional
+from dataclasses import dataclass, field
+
+BlockOptionValue = Union[int, float, str, None, bool]
 
 
+@dataclass
+class BlockOption:
+    name: str
+    type: str
+    value: Optional[BlockOptionValue] = None
+    min: Optional[Union[int, float]] = None
+    max: Optional[Union[int, float]] = None
+    items: List[str] = field(default_factory=list)
+    properties: dict = field(default_factory=dict)
+
+# TODO: turn this into a class method
 def build_option(name: str, type: str, kwargs):
     if type == "checkbox":
         value = kwargs.get("value", False)
