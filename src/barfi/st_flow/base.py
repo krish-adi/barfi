@@ -76,48 +76,50 @@ def st_flow(
         default={"command": "skip", "editor_state": {}},
     )
 
-    if _from_client["command"] != "skip":
-        _editor_state_from_client = migrate_state_from_ui(
-            base_blocks_data,
-            _from_client["editor_state"]["nodes"],
-            _from_client["editor_state"]["connections"],
-        )
-        _editor_state_from_client["viewport"] = _from_client["editor_state"]["viewport"]
+    #     # _typed_barfi_response = BarfiResponse(
+    #     #     command=_from_client["command"],
+    #     #     editor_state=FlowEditorState(
+    #     #         nodes=[FlowNode(**node) for node in _editor_state_from_client["nodes"]],
+    #     #         connections=[
+    #     #             FlowConnection(**conn)
+    #     #             for conn in _editor_state_from_client["connections"]
+    #     #         ],
+    #     #         viewport=FlowViewport(**_editor_state_from_client["viewport"]),
+    #     #     ),
+    #     # )
 
-        # _typed_barfi_response = BarfiResponse(
-        #     command=_from_client["command"],
-        #     editor_state=FlowEditorState(
-        #         nodes=[FlowNode(**node) for node in _editor_state_from_client["nodes"]],
-        #         connections=[
-        #             FlowConnection(**conn)
-        #             for conn in _editor_state_from_client["connections"]
-        #         ],
-        #         viewport=FlowViewport(**_editor_state_from_client["viewport"]),
-        #     ),
-        # )
+    #     # print(_typed_barfi_response)
 
-        # print(_typed_barfi_response)
+    return _from_client
 
-        if _from_client["command"] == "execute":
-            if compute_engine:
-                _ce = ComputeEngine(blocks=base_blocks_list)
-                _ce.add_editor_state(_editor_state_from_client)
-                _ce._map_block_link()
-                _ce._execute_compute()
-                return _ce.get_result()
-            else:
-                _ce = ComputeEngine(blocks=base_blocks_list)
-                _ce.add_editor_state(_editor_state_from_client)
-                _ce._map_block_link()
-                # return _ce.get_result()
-                return {"command": "execute", "editor_state": _editor_state_from_client}
-        if _from_client["command"] == "save":
-            save_schema(
-                schema_name=_from_client["schema_name"],
-                schema_data=_editor_state_from_client,
-            )
-        if _from_client["command"] == "load":
-            load_schema = _from_client["schema_name"]
-            editor_schema = load_schema_name(load_schema)
-    else:
-        return {}
+    # if _from_client["command"] != "skip":
+    #     _editor_state_from_client = migrate_state_from_ui(
+    #         base_blocks_data,
+    #         _from_client["editor_state"]["nodes"],
+    #         _from_client["editor_state"]["connections"],
+    #     )
+    #     _editor_state_from_client["viewport"] = _from_client["editor_state"]["viewport"]
+
+    #     if _from_client["command"] == "execute":
+    #         if compute_engine:
+    #             _ce = ComputeEngine(blocks=base_blocks_list)
+    #             _ce.add_editor_state(_editor_state_from_client)
+    #             _ce._map_block_link()
+    #             _ce._execute_compute()
+    #             return _ce.get_result()
+    #         else:
+    #             _ce = ComputeEngine(blocks=base_blocks_list)
+    #             _ce.add_editor_state(_editor_state_from_client)
+    #             _ce._map_block_link()
+    #             # return _ce.get_result()
+    #             return {"command": "execute", "editor_state": _editor_state_from_client}
+    #     if _from_client["command"] == "save":
+    #         save_schema(
+    #             schema_name=_from_client["schema_name"],
+    #             schema_data=_editor_state_from_client,
+    #         )
+    #     if _from_client["command"] == "load":
+    #         load_schema = _from_client["schema_name"]
+    #         editor_schema = load_schema_name(load_schema)
+    # else:
+    #     return {}
