@@ -1,6 +1,3 @@
-import pickle
-from typing import Dict
-
 editor_preset = {
     "nodes": [
         {
@@ -97,6 +94,7 @@ editor_preset = {
     "panning": {"x": 163.41400013998373, "y": 110.67177791961308},
     "scaling": 0.7761150375278565,
 }
+
 editor_preset_with_loop = {
     "nodes": [
         {
@@ -240,51 +238,3 @@ editor_preset_with_loop = {
     "panning": {"x": 462.8955070935626, "y": 373.0757152670363},
     "scaling": 0.4821928840637319,
 }
-
-
-def load_schemas():
-    try:
-        with open("schemas.barfi", "rb") as handle_read:
-            schemas = pickle.load(handle_read)
-    except FileNotFoundError:
-        schemas = {}
-
-    schema_names = list(schemas.keys())
-    return {"schema_names": schema_names, "schemas": schemas}
-
-
-def save_schema(schema_name: str, schema_data: Dict):
-    try:
-        with open("schemas.barfi", "rb") as handle_read:
-            schemas = pickle.load(handle_read)
-    except FileNotFoundError:
-        schemas = {}
-
-    with open("schemas.barfi", "wb") as handle_write:
-        schemas[schema_name] = schema_data
-        pickle.dump(schemas, handle_write, protocol=pickle.HIGHEST_PROTOCOL)
-
-
-def load_schema_name(schema_name: str) -> Dict:
-    schemas_barfi = load_schemas()
-    if schema_name in schemas_barfi["schema_names"]:
-        schema = schemas_barfi["schemas"][schema_name]
-        return schema
-    else:
-        raise ValueError(f"Schema :{schema_name}: not found in the saved schemas")
-
-
-def delete_schema(schema_name: str):
-    try:
-        with open("schemas.barfi", "rb") as handle_read:
-            schemas = pickle.load(handle_read)
-    except FileNotFoundError:
-        schemas = {}
-
-    if schema_name in schemas:
-        del schemas[schema_name]
-    else:
-        raise ValueError(f"Schema :{schema_name}: not found in the saved schemas")
-
-    with open("schemas.barfi", "wb") as handle_write:
-        pickle.dump(schemas, handle_write, protocol=pickle.HIGHEST_PROTOCOL)

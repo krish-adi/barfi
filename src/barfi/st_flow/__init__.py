@@ -4,14 +4,15 @@ from barfi.static import STATIC_DIR_PATH
 
 # import st_flow components
 from barfi.st_flow.block import Block
-from barfi.st_flow.block.export import prepare_blocks_export
+from barfi.st_flow.block.prepare import prepare_blocks_export
 from barfi.st_flow.flow.compute import ComputeEngine
-from barfi.st_flow.manage_schema import load_schema_name, load_schemas, save_schema
-from barfi.utils.migration import (
-    migrate_connections_to_ui,
-    migrate_nodes_to_ui,
-    migrate_state_from_ui,
+from barfi.st_flow.schema import (
+    load_schema_name,
+    barfi_schemas,
+    save_schema,
+    prepare_editor_schema,
 )
+from barfi.utils.migration import migrate_state_from_ui
 import os
 
 _RELEASE = False
@@ -56,23 +57,14 @@ def st_flow(
     key=None,
 ):
     base_blocks_data, base_blocks_list = prepare_blocks_export(base_blocks)
+    editor_schema = prepare_editor_schema(load_schema, base_blocks_data)
 
-    if load_schema:
-        editor_schema = load_schema_name(load_schema)
-        editor_schema["connections"] = migrate_connections_to_ui(
-            editor_schema["nodes"], editor_schema["connections"]
-        )
-        editor_schema["nodes"] = migrate_nodes_to_ui(
-            editor_schema["nodes"], base_blocks_data
-        )
-    else:
-        editor_schema = {"nodes": [], "connections": []}
-
-    schemas_in_db = load_schemas()
-    schema_names_in_db = schemas_in_db["schema_names"]
+    schema_names_in_db = barfi_schemas()
 
     editor_setting = {"compute_engine": compute_engine}
 
+    # TODO: Add custom commands, to make it customize to act upon a command bar of tools
+    # and commmands and how to render them on the ui
     _from_client = _component_func(
         base_blocks=base_blocks_data,
         load_editor_schema=editor_schema,
@@ -128,10 +120,3 @@ def st_flow(
             editor_schema = load_schema_name(load_schema)
     else:
         return {}
-
-
-def barfi_schemas():
-    schemas_in_db = load_schemas()
-    schema_names_in_db = schemas_in_db["schema_names"]
-
-    return schema_names_in_db
