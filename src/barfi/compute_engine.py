@@ -8,7 +8,7 @@ class ComputeEngine(object):
     def __init__(self, blocks: List[Block] = [], **kwargs) -> None:
         # Initialise the Compute Enginge
         # The primitive block types that are tied to this compute engine
-        self._blocks = blocks
+        self._blocks: List[Block] = blocks
 
         # The state of the editor that is stored as JSON/Dict that represents
         # the active blocks and links on the editor
@@ -154,7 +154,7 @@ class ComputeEngine(object):
                         ]._outputs.items():
                             try:
                                 for find_to in self._map_link_interface_id_from_to[
-                                    value["id"]
+                                    value.id
                                 ]:
                                     find_to_block = self._map_interface_id_block_id[
                                         find_to
@@ -163,12 +163,17 @@ class ComputeEngine(object):
                                         "block"
                                     ].set_interface(
                                         name=self._map_interface_id_name[find_to],
-                                        value=value["value"],
+                                        value=value.value,
                                     )
                             except Exception as e:
                                 raise ValueError(f"Error setting interface: {str(e)}")
 
                     except Exception as e:
+                        print(e)
+                        # add a traceback
+                        import traceback
+                        traceback.print_exc()
+
                         self._active_blocks[node]["block"]._state["info"] = {
                             "status": "Errored",
                             "exception": e.args,
