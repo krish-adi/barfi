@@ -36,10 +36,10 @@ function constructFlowState(
     const flowStateConnections: FlowStateConnection[] = edges.map((edge) => {
         return {
             id: edge.id,
-            outputBlock: edge.source,
-            outputBlockInterface: edge.sourceHandle ?? "",
-            inputBlock: edge.target,
-            inputBlockInterface: edge.targetHandle ?? "",
+            outputNode: edge.source,
+            outputNodeInterface: edge.sourceHandle ?? "",
+            inputNode: edge.target,
+            inputNodeInterface: edge.targetHandle ?? "",
         };
     });
     return {

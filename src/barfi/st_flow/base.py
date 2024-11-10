@@ -6,6 +6,7 @@ from typing import List, Dict, Union
 from barfi.config import RELEASE
 from barfi.st_flow.block import Block
 from barfi.st_flow.block.prepare import prepare_blocks_export
+from barfi.st_flow.flow.types import build_streamlit_flow_response
 from barfi.st_flow.flow.compute import ComputeEngine
 from barfi.st_flow.schema import (
     load_schema_name,
@@ -73,24 +74,10 @@ def st_flow(
         load_schema_name=load_schema,
         editor_setting=editor_setting,
         key=key,
-        default={"command": "skip", "editor_state": {}},
+        default={"command": "default", "editor_state": {}},
     )
 
-    #     # _typed_barfi_response = BarfiResponse(
-    #     #     command=_from_client["command"],
-    #     #     editor_state=FlowEditorState(
-    #     #         nodes=[FlowNode(**node) for node in _editor_state_from_client["nodes"]],
-    #     #         connections=[
-    #     #             FlowConnection(**conn)
-    #     #             for conn in _editor_state_from_client["connections"]
-    #     #         ],
-    #     #         viewport=FlowViewport(**_editor_state_from_client["viewport"]),
-    #     #     ),
-    #     # )
-
-    #     # print(_typed_barfi_response)
-
-    return _from_client
+    return build_streamlit_flow_response(_from_client)
 
     # if _from_client["command"] != "skip":
     #     _editor_state_from_client = migrate_state_from_ui(

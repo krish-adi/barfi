@@ -110,10 +110,10 @@ export interface FlowStateNode {
 
 export type FlowStateConnection = {
     id: string;
-    outputBlock: string;
-    outputBlockInterface: string;
-    inputBlock: string;
-    inputBlockInterface: string;
+    outputNode: string;
+    outputNodeInterface: string;
+    inputNode: string;
+    inputNodeInterface: string;
 };
 
 export type TextOption = {

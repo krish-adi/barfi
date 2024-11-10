@@ -1,1 +1,2 @@
 RELEASE = False
+SCHEMA_VERSION = "1.0"
