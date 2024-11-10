@@ -4,6 +4,7 @@ from barfi.static import STATIC_DIR_PATH
 
 # import st_flow components
 from barfi.st_flow.block import Block
+from barfi.st_flow.block.export import prepare_blocks_export
 from barfi.st_flow.flow.compute import ComputeEngine
 from barfi.st_flow.manage_schema import load_schema_name, load_schemas, save_schema
 from barfi.utils.migration import (
@@ -49,30 +50,12 @@ else:
 
 
 def st_flow(
-    base_blocks: Union[List[Block], Dict],
+    base_blocks: Union[List[Block], Dict[str, List[Block]]],
     load_schema: str = None,
     compute_engine: bool = True,
     key=None,
 ):
-    if isinstance(base_blocks, List):
-        base_blocks_data = [block._export() for block in base_blocks]
-        base_blocks_list = base_blocks
-    elif isinstance(base_blocks, Dict):
-        base_blocks_data = []
-        base_blocks_list = []
-        for category, block_list in base_blocks.items():
-            if isinstance(block_list, List):
-                for block in block_list:
-                    base_blocks_list.append(block)
-                    block_data = block._export()
-                    block_data["category"] = category
-                    base_blocks_data.append(block_data)
-            else:
-                raise TypeError(
-                    "Invalid type for base_blocks passed to the st_flow component."
-                )
-    else:
-        raise TypeError("Invalid type for base_blocks passed to the st_flow component.")
+    base_blocks_data, base_blocks_list = prepare_blocks_export(base_blocks)
 
     if load_schema:
         editor_schema = load_schema_name(load_schema)
