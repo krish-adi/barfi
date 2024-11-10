@@ -110,10 +110,10 @@ export interface FlowStateNode {
 
 export type FlowStateConnection = {
     id: string;
-    source: string;
-    target: string;
-    sourceHandle: string;
-    targetHandle: string;
+    outputBlock: string;
+    outputBlockInterface: string;
+    inputBlock: string;
+    inputBlockInterface: string;
 };
 
 export type TextOption = {
@@ -138,6 +138,14 @@ export interface BarfiStateNode {
     };
 }
 
+export type BarfiStateConnection = {
+    id: string;
+    source: string;
+    sourceHandler: string;
+    target: string;
+    targetHandler: string;
+};
+
 export type BarfiState = {
     key: string | number | null;
     base_blocks: BaseBlock[];
@@ -145,7 +153,7 @@ export type BarfiState = {
         command: string;
         editor_state: {
             nodes: BarfiStateNode[];
-            connections: FlowStateConnection[];
+            connections: BarfiStateConnection[];
             viewport: Viewport;
         };
     };
@@ -156,7 +164,7 @@ export type BarfiState = {
     load_schema_names: string[];
     load_editor_schema: {
         nodes: BarfiStateNode[];
-        connections: FlowStateConnection[];
+        connections: BarfiStateConnection[];
         panning: {
             x: number;
             y: number;

@@ -38,7 +38,7 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
                     x: contextLocation.x || 0,
                     y: contextLocation.y || 0,
                 });
-                const nodeId = uuid();
+                const nodeId = `node__${uuid()}`;
                 addNodes([
                     {
                         id: nodeId,

@@ -18,6 +18,7 @@ import PanelRun from "./components/flow/panel-run";
 import { BaseBlockNode } from "./components/nodes";
 import { useFlowStateStore } from "./components/flow/flowState";
 import { BarfiState } from "@/types";
+import { v4 as uuid } from "uuid";
 
 export function App({ args }: { args: BarfiState }) {
     const proOptions = { hideAttribution: true };
@@ -55,7 +56,12 @@ export function App({ args }: { args: BarfiState }) {
     const onConnect = useCallback(
         // @ts-expect-error params is not used
         (params) =>
-            setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
+            setEdges((eds) =>
+                addEdge(
+                    { ...params, animated: true, id: `edge__${uuid()}` },
+                    eds
+                )
+            ),
         [setEdges]
     );
 

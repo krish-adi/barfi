@@ -14,6 +14,8 @@ function constructFlowState(
     viewport: Viewport,
     nodesOptionData: Record<string, Record<string, BlockOption>>
 ) {
+    console.log("nodes", nodes);
+    console.log("edges", edges);
     console.log("node options", nodesOptionData);
     const flowStateNodes: FlowStateNode[] = nodes.map((node) => {
         const blockData = node.data.blockData as BaseBlock;
@@ -34,10 +36,10 @@ function constructFlowState(
     const flowStateConnections: FlowStateConnection[] = edges.map((edge) => {
         return {
             id: edge.id,
-            source: edge.source,
-            target: edge.target,
-            sourceHandle: edge.sourceHandle ?? "",
-            targetHandle: edge.targetHandle ?? "",
+            outputBlock: edge.source,
+            outputBlockInterface: edge.sourceHandle ?? "",
+            inputBlock: edge.target,
+            inputBlockInterface: edge.targetHandle ?? "",
         };
     });
     return {
