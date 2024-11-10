@@ -1,4 +1,4 @@
-from barfi import Block
+from barfi.st_flow import Block
 
 checkbox = Block(name="Checkbox")
 checkbox.add_output()

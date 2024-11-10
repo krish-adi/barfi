@@ -1,4 +1,4 @@
-from barfi import Block
+from barfi.st_flow import Block
 
 
 def feed_func(self):
