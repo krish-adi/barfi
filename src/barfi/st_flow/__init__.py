@@ -1,6 +1,5 @@
 import streamlit.components.v1 as components
 from typing import List, Dict, Union
-from barfi.static import STATIC_DIR_PATH
 
 # import st_flow components
 from barfi.st_flow.block import Block
@@ -34,7 +33,8 @@ if not _RELEASE:
         url="http://localhost:3001",
     )
 else:
-    build_dir = os.path.join(STATIC_DIR_PATH, "static/ui_st_flow")
+    st_barfi_dir = os.path.dirname(os.path.abspath(__file__))
+    build_dir = os.path.join(st_barfi_dir, "static")
     _component_func = components.declare_component("st_flow", path=build_dir)
 
 # Create a wrapper function for the component. This is an optional
