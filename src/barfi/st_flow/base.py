@@ -46,7 +46,11 @@ else:
 
 def st_flow(
     base_blocks: Union[List[Block], Dict[str, List[Block]]],
-    editor_schema: str = None,
+    editor_schema: dict = {
+        "nodes": [],
+        "connections": [],
+        "viewport": {"x": 0, "y": 0, "zoom": 1},
+    },
     commands: List[str] = ["execute", "save"],
     key=None,
 ):
@@ -62,4 +66,5 @@ def st_flow(
         default={"command": "default", "editor_state": {}},
     )
 
-    return build_streamlit_flow_response(_from_client)
+    return _from_client
+    # return build_streamlit_flow_response(_from_client)

@@ -148,22 +148,15 @@ export type BarfiStateConnection = {
 
 export type BarfiState = {
     key: string | number | null;
-    base_blocks: BaseBlock[] | Record<string, BaseBlock[]>;
-    default: {
-        command: string;
-        editor_state: {
-            nodes: BarfiStateNode[];
-            connections: BarfiStateConnection[];
-            viewport: Viewport;
-        };
-    };
+    base_blocks: BaseBlock[] | Record<string, BaseBlock[]>;    
     editor_schema: {
         nodes: BarfiStateNode[];
         connections: BarfiStateConnection[];
-        panning: {
-            x: number;
-            y: number;
-        };
-        scaling: number;
+        // panning: {
+        //     x: number;
+        //     y: number;
+        // };
+        // scaling: number;
+        viewport: Viewport;
     };
 };

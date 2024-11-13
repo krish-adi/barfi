@@ -9,14 +9,14 @@ from barfi.st_flow.schema import (
     prepare_editor_schema,
 )
 
-base_blocks = base_blocks_category["process"]
-load_schema = "schema-basic"
-base_blocks_data, base_blocks_list = prepare_blocks_export(base_blocks)
-editor_schema = prepare_editor_schema(load_schema, base_blocks_data)
+base_blocks = base_blocks_category["math"]
+# load_schema = "schema-basic"
+# base_blocks_data, base_blocks_list = prepare_blocks_export(base_blocks)
+# editor_schema = prepare_editor_schema(load_schema, base_blocks_data)
 
 barfi_result = st_flow(
     base_blocks=base_blocks,
-    editor_schema=editor_schema,
+    # editor_schema=editor_schema,
 )
 st.write(barfi_result)
 

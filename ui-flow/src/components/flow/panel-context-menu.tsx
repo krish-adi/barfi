@@ -5,9 +5,9 @@ import {
     ContextMenuItem,
     ContextMenuLabel,
     ContextMenuSeparator,
-    // ContextMenuSub,
-    // ContextMenuSubContent,
-    // ContextMenuSubTrigger,
+    ContextMenuSub,
+    ContextMenuSubContent,
+    ContextMenuSubTrigger,
 } from "@/components/ui/context-menu";
 import { useReactFlow } from "@xyflow/react";
 import { BaseBlock } from "@/types";
@@ -59,26 +59,44 @@ function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
     );
 }
 
-const PanelContextMenu = memo(({ baseBlocks }: { baseBlocks: BaseBlock[] }) => {
-    // console.log(baseBlocks);
-    return (
-        <ContextMenuContent>
-            <ContextMenuLabel>Add a node</ContextMenuLabel>
-            <ContextMenuSeparator />
-            {/* <ContextMenuSub>
-                <ContextMenuSubTrigger>Node type 1</ContextMenuSubTrigger>
-                <ContextMenuSubContent>
-                    <ContextMenuItem>Node 1</ContextMenuItem>
-                    <ContextMenuItem>Node 2</ContextMenuItem>
-                    <ContextMenuItem>Node 3</ContextMenuItem>
-                </ContextMenuSubContent>
-            </ContextMenuSub> */}
-
-            {baseBlocks.map((blockData) => (
-                <ContextMenuNodeItem blockData={blockData} key={uuid()} />
-            ))}
-        </ContextMenuContent>
-    );
-});
+const PanelContextMenu = memo(
+    ({
+        baseBlocks,
+    }: {
+        baseBlocks: BaseBlock[] | Record<string, BaseBlock[]>;
+    }) => {
+        // console.log(baseBlocks);
+        return (
+            <ContextMenuContent>
+                <ContextMenuLabel>Add a node</ContextMenuLabel>
+                <ContextMenuSeparator />
+                {Array.isArray(baseBlocks)
+                    ? // Handle array case
+                      baseBlocks.map((blockData) => (
+                          <ContextMenuNodeItem
+                              blockData={blockData}
+                              key={uuid()}
+                          />
+                      ))
+                    : // Handle Record case
+                      Object.entries(baseBlocks).map(([category, blocks]) => (
+                          <ContextMenuSub key={category}>
+                              <ContextMenuSubTrigger>
+                                  {category}
+                              </ContextMenuSubTrigger>
+                              <ContextMenuSubContent>
+                                  {blocks.map((blockData) => (
+                                      <ContextMenuNodeItem
+                                          blockData={blockData}
+                                          key={uuid()}
+                                      />
+                                  ))}
+                              </ContextMenuSubContent>
+                          </ContextMenuSub>
+                      ))}
+            </ContextMenuContent>
+        );
+    }
+);
 
 export default PanelContextMenu;
