@@ -47,7 +47,7 @@ class FlowViewport:
 
 
 @dataclass
-class FlowEditorState:
+class FlowSchema:
     version: str
     nodes: List[FlowNode]
     connections: List[FlowConnection]
@@ -57,14 +57,34 @@ class FlowEditorState:
 @dataclass
 class StreamlitFlowResponse:
     command: Union[str, Literal["default", "execute", "save"]]
-    editor_state: FlowEditorState
+    editor_schema: FlowSchema
+
+
+def build_flow_schema_from_dict(schema_dict: dict) -> FlowSchema:
+    return FlowSchema(
+        version=schema_dict.get("version", SCHEMA_VERSION),
+        nodes=[
+            FlowNode(
+                **{
+                    **node,
+                    "position": FlowNodePosition(**node["position"]),
+                    "measured": FlowNodeMeasured(**node["measured"]),
+                }
+            )
+            for node in schema_dict.get("nodes", {})
+        ],
+        connections=[
+            FlowConnection(**conn) for conn in schema_dict.get("connections", {})
+        ],
+        viewport=FlowViewport(**schema_dict.get("viewport", {})),
+    )
 
 
 def build_streamlit_flow_response(_from_client: dict) -> StreamlitFlowResponse:
     if _from_client["command"] == "default":
         return StreamlitFlowResponse(
             command=_from_client["command"],
-            editor_state=FlowEditorState(
+            editor_schema=FlowSchema(
                 version=SCHEMA_VERSION,
                 nodes=[],
                 connections=[],
@@ -74,15 +94,5 @@ def build_streamlit_flow_response(_from_client: dict) -> StreamlitFlowResponse:
     else:
         return StreamlitFlowResponse(
             command=_from_client["command"],
-            editor_state=FlowEditorState(
-                version=SCHEMA_VERSION,
-                nodes=[
-                    FlowNode(**node) for node in _from_client["editor_state"]["nodes"]
-                ],
-                connections=[
-                    FlowConnection(**conn)
-                    for conn in _from_client["editor_state"]["connections"]
-                ],
-                viewport=FlowViewport(**_from_client["editor_state"]["viewport"]),
-            ),
+            editor_schema=build_flow_schema_from_dict(_from_client["editor_state"]),
         )
