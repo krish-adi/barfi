@@ -1,6 +1,6 @@
 from barfi import st_flow
 import streamlit as st
-from test_blocks import base_blocks_category
+from assets import base_blocks_category
 import json
 # from barfi.st_flow.block.prepare import prepare_blocks_export
 
@@ -20,7 +20,7 @@ with st.form("save_barfi_result"):
     # Every form must have a submit button.
     submitted = st.form_submit_button("Submit")
     if submitted:
-        with open("barfi_result_v1.json", "w") as f:
+        with open("v1_app_result.json", "w") as f:
             json.dump(barfi_result, f)
         st.write("Barfi result saved!")
 
