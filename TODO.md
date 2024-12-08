@@ -1,5 +1,13 @@
 # TODOs
 
+## Top
+
+-   [ ] v1 types for editor state to export
+    -   [x] nodes -> ??
+    -   [ ] remove id from interfaces.
+    -   [] migrate all the data types from both barfi and ui to match each other, as the conversion to and from the barfi state happens in the ui, which maintains the actual model
+    -   [x] connections -> outputNode, outputNodeInterface, inputNode, inputNodeInterface
+
 ## P0
 
 -   [x] migrate to poetry for better deps management and local dev experience
@@ -22,9 +30,9 @@
 -   [ ] add schema version to the schema saved and sent from ui-flow
     -   [ ] Check for saving old schema
     -   [ ] Check for loading old schema
--   [ ] check if options work
+-   [ ] test and check if options work
     -   [ ] if options from schema are loaded
-    -   [ ] if options 
+    -   [ ] if options
 -   [ ] state data are different across all the places.
     -   [ ] when a component is loaded from schema to editor, option values must be loaded from the store. essentially option values must only be from the store.
     -   [ ] when a block is loaded from barfi-state into editor, it must be transformed to be in type `Node`
