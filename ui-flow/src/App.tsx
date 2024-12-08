@@ -17,8 +17,12 @@ import PanelContextMenu from "./components/flow/panel-context-menu";
 import PanelRun from "./components/flow/panel-run";
 import { BaseBlockNode } from "./components/nodes";
 import { useFlowStateStore } from "./components/flow/flowState";
-import { BarfiState } from "@/types";
+import { BarfiState, BaseBlock } from "@/types";
 import { v4 as uuid } from "uuid";
+import {
+    convertFlowNodesToNodes,
+    convertFlowConnectionsToEdges,
+} from "./type-casts";
 
 export function App({ args }: { args: BarfiState }) {
     const proOptions = { hideAttribution: true };
@@ -34,20 +38,25 @@ export function App({ args }: { args: BarfiState }) {
     );
     const nodeIDsInStore = Object.keys(getNodesFromStore());
 
-    const [nodes, , onNodesChange] = useNodesState([
-        ...args.editor_schema.nodes,
-    ]);
+    const defaultNodes = convertFlowNodesToNodes(
+        args.editor_schema.nodes,
+        args.base_blocks
+    );
+    console.log(defaultNodes);
+    const defaultEdges = convertFlowConnectionsToEdges(
+        args.editor_schema.connections
+    );
+    console.log(defaultEdges);
+    const [nodes, , onNodesChange] = useNodesState([...defaultNodes]);
 
-    args.editor_schema.nodes.forEach((node) => {
+    defaultNodes.forEach((node) => {
         if (!nodeIDsInStore.includes(node.id)) {
-            addNodeToStore(node.id, node.data.blockData);
-            setNodeBaseBlockCount(node.data.blockData.name);
+            addNodeToStore(node.id, node.data.blockData as BaseBlock);
+            setNodeBaseBlockCount((node.data.blockData as BaseBlock).name);
         }
     });
 
-    const [edges, setEdges, onEdgesChange] = useEdgesState([
-        ...args.editor_schema.connections,
-    ]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([...defaultEdges]);
 
     useEffect(() => {
         Streamlit.setFrameHeight();

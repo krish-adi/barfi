@@ -54,7 +54,7 @@ def st_flow(
     commands: List[str] = ["execute", "save"],
     key=None,
 ):
-    base_blocks_data, _ = prepare_blocks_export(base_blocks)
+    base_blocks_data, _ = prepare_blocks_export(base_blocks)    
 
     # TODO: Add custom commands, to make it customize to act upon a command bar of tools
     # and commmands and how to render them on the ui
@@ -66,5 +66,4 @@ def st_flow(
         default={"command": "default", "editor_state": {}},
     )
 
-    return _from_client
-    # return build_streamlit_flow_response(_from_client)
+    return build_streamlit_flow_response(_from_client)

@@ -3,7 +3,7 @@ import { Viewport } from "@xyflow/react";
 export type BaseBlock = {
     // `name` of the base-block is the type of the Node
     name: string;
-    // `label` isn't used, need to check if this is used in the future
+    // `label` isn't used here only in flow_schem or state, need to check if this is used in the future
     label: string | null;
     inputs: BlockInterface[];
     outputs: BlockInterface[];
@@ -11,7 +11,7 @@ export type BaseBlock = {
 };
 
 export interface BlockInterface {
-    id: string | null;
+    // id: string | null;
     name: string;
     value: string | number | boolean | null;
 }
@@ -91,13 +91,20 @@ export type DisplayOption = {
     value: string;
 };
 
+export type TextOption = {
+    name: string;
+    type: "TextOption";
+    value: string;
+};
+
 export interface FlowStateNode {
     id: string; // id from the node created upon creation on flow
     type: string; // type from the blockData name from the user
+    // TODO: change name to label
     name: string; // name that is displayed on node in ui flow, can be changed in the future to label
     inputs: [string, string | number | boolean | null][];
     outputs: [string, string | number | boolean | null][];
-    options: [string, string | number | boolean | null][];
+    options: [string, string, string | number | boolean | null][];
     position: {
         x: number;
         y: number;
@@ -116,47 +123,13 @@ export type FlowStateConnection = {
     inputNodeInterface: string;
 };
 
-export type TextOption = {
-    name: string;
-    type: "TextOption";
-    value: string;
-};
-
-export interface BarfiStateNode {
-    id: string;
-    type: string;
-    data: {
-        blockData: BaseBlock;
-    };
-    position: {
-        x: number;
-        y: number;
-    };
-    measured: {
-        width?: number | undefined;
-        height?: number | undefined;
-    };
-}
-
-export type BarfiStateConnection = {
-    id: string;
-    source: string;
-    sourceHandler: string;
-    target: string;
-    targetHandler: string;
-};
-
 export type BarfiState = {
     key: string | number | null;
-    base_blocks: BaseBlock[] | Record<string, BaseBlock[]>;    
+    base_blocks: BaseBlock[] | Record<string, BaseBlock[]>;
     editor_schema: {
-        nodes: BarfiStateNode[];
-        connections: BarfiStateConnection[];
-        // panning: {
-        //     x: number;
-        //     y: number;
-        // };
-        // scaling: number;
+        version: string;
+        nodes: FlowStateNode[];
+        connections: FlowStateConnection[];
         viewport: Viewport;
     };
 };
