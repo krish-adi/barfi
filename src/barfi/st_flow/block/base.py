@@ -1,4 +1,5 @@
 import types
+import uuid
 from typing import Callable, Any, Dict
 from dataclasses import asdict
 from barfi.st_flow.block.option import BlockOption, build_option, BlockOptionValue
@@ -20,10 +21,14 @@ class Block(object):
         # Initialise the Block object
 
         # To set the name of the Block, default = Block
-        # Reference to the type of the Block
-        self._type = name
         # Title of the block on the editor
-        self._name = name
+        if name == "Block":
+            self._name = f"Block_{str(uuid.uuid4()).replace('-', '_')}"
+        else:
+            self._name = name
+
+        # Reference to the type of the Block
+        self._type = self._name
 
         # To set the defaults for inputs, outputs, options
         self._inputs: Dict[str, BlockInterface] = {}
