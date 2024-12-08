@@ -1,13 +1,9 @@
 from barfi import st_flow
 import streamlit as st
 from test_blocks import base_blocks_category
-from barfi.st_flow.block.prepare import prepare_blocks_export
-from barfi.st_flow.schema import (
-    load_schema_name,
-    barfi_schemas,
-    save_schema,
-    prepare_editor_schema,
-)
+import json
+# from barfi.st_flow.block.prepare import prepare_blocks_export
+
 
 base_blocks = base_blocks_category["math"]
 # load_schema = "schema-basic"
@@ -19,6 +15,15 @@ barfi_result = st_flow(
     # editor_schema=editor_schema,
 )
 st.write(barfi_result)
+with st.form("save_barfi_result"):
+    st.write("Save Barfi Result")
+    # Every form must have a submit button.
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        with open("barfi_result_v1.json", "w") as f:
+            json.dump(barfi_result, f)
+        st.write("Barfi result saved!")
+
 
 # if _from_client["command"] != "skip":
 #     _editor_state_from_client = migrate_state_from_ui(

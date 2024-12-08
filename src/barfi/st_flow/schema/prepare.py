@@ -1,5 +1,5 @@
 from typing import Dict, List, Any
-from barfi.st_flow.schema import load_schema_name
+from barfi.st_flow.schema import SchemaManager
 from barfi.utils.migration import (
     migrate_connections_to_ui,
     migrate_nodes_to_ui,
@@ -9,8 +9,9 @@ from barfi.utils.migration import (
 def prepare_editor_schema(
     load_schema: str, base_blocks_data: List[Dict[str, Any]]
 ) -> Dict[str, List]:
+    schema_manager = SchemaManager()
     if load_schema:
-        editor_schema = load_schema_name(load_schema)
+        editor_schema = schema_manager.load_schema(load_schema)
         editor_schema["connections"] = migrate_connections_to_ui(
             editor_schema["nodes"], editor_schema["connections"]
         )

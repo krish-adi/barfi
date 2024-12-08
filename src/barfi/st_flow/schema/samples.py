@@ -1,4 +1,4 @@
-editor_preset = {
+old_editor_preset = {
     "nodes": [
         {
             "type": "Feed",
@@ -95,7 +95,7 @@ editor_preset = {
     "scaling": 0.7761150375278565,
 }
 
-editor_preset_with_loop = {
+old_editor_preset_with_loop = {
     "nodes": [
         {
             "type": "Feed",

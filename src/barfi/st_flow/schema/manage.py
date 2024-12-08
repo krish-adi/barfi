@@ -11,7 +11,7 @@ class SchemaManager:
     The schema data structure maintains a list of schema names and their corresponding data.
     """
 
-    def __init__(self, filename: str = "schemas.json.gz", filepath: str = "./"):
+    def __init__(self, filename: str = "v1_schemas.json.gz", filepath: str = "./"):
         """Initialize SchemaManager with storage configuration.
 
         Args:
@@ -23,6 +23,14 @@ class SchemaManager:
         self._full_file_path = os.path.abspath(os.path.join(filepath, filename))
 
         self._schemas = self._read_file()
+
+    @property
+    def schema_names(self):
+        return list(self._schemas.keys())
+
+    @property
+    def schemas(self):
+        return self._schemas
 
     def _read_file(self) -> Dict:
         """Load schemas from the gzipped JSON storage file.
@@ -45,8 +53,7 @@ class SchemaManager:
             ) as handle_write:
                 json.dump(schemas, handle_write)
 
-        schema_names = list(schemas.keys())
-        return {"schema_names": schema_names, "schemas": schemas}
+        return schemas
 
     def _write_file(self):
         """Persist schemas to the gzipped JSON storage file.
@@ -79,8 +86,8 @@ class SchemaManager:
         Raises:
             ValueError: When schema_name doesn't exist in storage
         """
-        if schema_name in self._schemas["schema_names"]:
-            return self._schemas["schemas"][schema_name]
+        if schema_name in self._schemas:
+            return self._schemas[schema_name]
 
         raise ValueError(f"Schema :{schema_name}: not found in the saved schemas")
 
@@ -93,8 +100,8 @@ class SchemaManager:
         Raises:
             ValueError: When schema_name doesn't exist in storage
         """
-        if schema_name in self._schemas["schema_names"]:
-            del self._schemas["schemas"][schema_name]
+        if schema_name in self._schemas:
+            del self._schemas[schema_name]
         else:
             raise ValueError(f"Schema :{schema_name}: not found in the saved schemas")
 

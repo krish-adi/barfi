@@ -1,0 +1,115 @@
+{
+    "command": "execute",
+    "editor_state": {
+        "nodes": [
+            {
+                "id": "node__b19717fb-73d2-408e-84e1-014cb1199721",
+                "type": "Result",
+                "name": "Result-1",
+                "inputs": [["Input 1", null]],
+                "outputs": [],
+                "options": [],
+                "position": { "x": 909.4353929549902, "y": 492.943539295499 },
+                "measured": { "width": 160, "height": 90 }
+            },
+            {
+                "id": "node__e77e4dd4-71ec-4eb4-8efc-c76bb75919f5",
+                "type": "Subtraction",
+                "name": "Subtraction-1",
+                "inputs": [
+                    ["Input 1", null],
+                    ["Input 2", null]
+                ],
+                "outputs": [["Output 1", null]],
+                "options": [],
+                "position": { "x": 618.6779954228948, "y": 331.3634127847843 },
+                "measured": { "width": 160, "height": 134 }
+            },
+            {
+                "id": "node__750f2f1e-9f88-4f6d-8e8a-97f09f8ad2a9",
+                "type": "Number 5",
+                "name": "Number 5-2",
+                "inputs": [],
+                "outputs": [["Output 1", null]],
+                "options": [],
+                "position": { "x": 239.7886910139365, "y": 460.8131596830814 },
+                "measured": { "width": 160, "height": 90 }
+            },
+            {
+                "id": "node__9a4d04a0-30ed-4f74-b694-2753f80465bb",
+                "type": "Addition",
+                "name": "Addition-1",
+                "inputs": [
+                    ["Input 1", null],
+                    ["Input 2", null]
+                ],
+                "outputs": [["Output 1", null]],
+                "options": [],
+                "position": { "x": 339.0500452235862, "y": 210.3382909325823 },
+                "measured": { "width": 160, "height": 134 }
+            },
+            {
+                "id": "node__beb91616-003d-4f48-86f5-03e0efdc0ae0",
+                "type": "Number 5",
+                "name": "Number 5-1",
+                "inputs": [],
+                "outputs": [["Output 1", null]],
+                "options": [],
+                "position": { "x": 51.288245708996044, "y": 270.8387431684444 },
+                "measured": { "width": 160, "height": 90 }
+            },
+            {
+                "id": "node__73b38ca6-96f1-480b-9cdd-9257982d0408",
+                "type": "Number 10",
+                "name": "Number 10-1",
+                "inputs": [],
+                "outputs": [["Output 1", null]],
+                "options": [],
+                "position": { "x": 50.2886979448582, "y": 137 },
+                "measured": { "width": 160, "height": 90 }
+            }
+        ],
+        "connections": [
+            {
+                "id": "edge__75d6b4fe-e721-4d63-9412-f90a2ef4e436",
+                "outputNode": "node__73b38ca6-96f1-480b-9cdd-9257982d0408",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__9a4d04a0-30ed-4f74-b694-2753f80465bb",
+                "inputNodeInterface": "Input 1"
+            },
+            {
+                "id": "edge__7c0e6817-739a-4246-9669-bdab2933ad49",
+                "outputNode": "node__beb91616-003d-4f48-86f5-03e0efdc0ae0",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__9a4d04a0-30ed-4f74-b694-2753f80465bb",
+                "inputNodeInterface": "Input 2"
+            },
+            {
+                "id": "edge__f37941a3-902a-4b7b-be78-92f3322691eb",
+                "outputNode": "node__9a4d04a0-30ed-4f74-b694-2753f80465bb",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__e77e4dd4-71ec-4eb4-8efc-c76bb75919f5",
+                "inputNodeInterface": "Input 1"
+            },
+            {
+                "id": "edge__4b329b79-0071-4d9a-8190-a9f93a86e701",
+                "outputNode": "node__750f2f1e-9f88-4f6d-8e8a-97f09f8ad2a9",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__e77e4dd4-71ec-4eb4-8efc-c76bb75919f5",
+                "inputNodeInterface": "Input 2"
+            },
+            {
+                "id": "edge__53dbc20e-58c0-4b82-811d-7b434e7841d6",
+                "outputNode": "node__e77e4dd4-71ec-4eb4-8efc-c76bb75919f5",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__b19717fb-73d2-408e-84e1-014cb1199721",
+                "inputNodeInterface": "Input 1"
+            }
+        ],
+        "viewport": {
+            "x": 52.41683119874733,
+            "y": 107.95386763498101,
+            "zoom": 0.5213749700223003
+        }
+    }
+}
