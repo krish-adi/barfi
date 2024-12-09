@@ -1,5 +1,5 @@
 import { useReactFlow, Node, Edge, Viewport } from "@xyflow/react";
-import { useFlowStateStore } from "@/components/flow/flowState";
+import { useFlowStateStore } from "@/components/flow/flow-state";
 import {
     BaseBlock,
     BlockOption,
@@ -58,10 +58,10 @@ export default function PanelRun({
 }: {
     onClickRun: ({
         command,
-        editor_state,
+        editor_schema,
     }: {
         command: string;
-        editor_state: {
+        editor_schema: {
             nodes: FlowStateNode[];
             connections: FlowStateConnection[];
             viewport: Viewport;
@@ -78,7 +78,7 @@ export default function PanelRun({
             onClick={() => {
                 onClickRun({
                     command: "execute",
-                    editor_state: constructFlowState(
+                    editor_schema: constructFlowState(
                         getNodes(),
                         getEdges(),
                         getViewport(),

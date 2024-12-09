@@ -10,7 +10,7 @@ import { FlowSlider } from "@/components/ui/slider";
 import {
     useFlowStateStore,
     NodeDataActions,
-} from "@/components/flow/flowState";
+} from "@/components/flow/flow-state";
 
 // create function with a switch statement to render the correct input type
 // based on the option type

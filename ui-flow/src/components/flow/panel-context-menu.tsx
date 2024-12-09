@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/context-menu";
 import { useReactFlow } from "@xyflow/react";
 import { BaseBlock } from "@/types";
-import { useFlowStateStore } from "@/components/flow/flowState";
+import { useFlowStateStore } from "@/components/flow/flow-state";
 
 function ContextMenuNodeItem({ blockData }: { blockData: BaseBlock }) {
     const { addNodes, screenToFlowPosition } = useReactFlow();

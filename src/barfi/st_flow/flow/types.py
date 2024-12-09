@@ -94,5 +94,5 @@ def build_streamlit_flow_response(_from_client: dict) -> StreamlitFlowResponse:
     else:
         return StreamlitFlowResponse(
             command=_from_client["command"],
-            editor_schema=build_flow_schema_from_dict(_from_client["editor_state"]),
+            editor_schema=build_flow_schema_from_dict(_from_client["editor_schema"]),
         )
