@@ -1,12 +1,17 @@
 import os
-import streamlit.components.v1 as components
 from typing import List, Dict, Union
+from dataclasses import asdict
+import streamlit.components.v1 as components
 
 # import st_flow components
-from barfi.config import RELEASE
+from barfi.config import RELEASE, SCHEMA_VERSION
 from barfi.st_flow.block import Block
 from barfi.st_flow.block.prepare import prepare_blocks_export
-from barfi.st_flow.flow.types import build_streamlit_flow_response
+from barfi.st_flow.flow.types import (
+    build_streamlit_flow_response,
+    FlowSchema,
+    FlowViewport,
+)
 
 _RELEASE = RELEASE
 
@@ -46,24 +51,26 @@ else:
 
 def st_flow(
     base_blocks: Union[List[Block], Dict[str, List[Block]]],
-    editor_schema: dict = {
-        "nodes": [],
-        "connections": [],
-        "viewport": {"x": 0, "y": 0, "zoom": 1},
-    },
+    editor_schema: FlowSchema = FlowSchema(
+        version=SCHEMA_VERSION,
+        nodes=[],
+        connections=[],
+        viewport=FlowViewport(x=0, y=0, zoom=1),
+    ),
     commands: List[str] = ["execute", "save"],
     key=None,
 ):
     base_blocks_data, _ = prepare_blocks_export(base_blocks)
+    serialized_editor_schema = asdict(editor_schema)
 
     # TODO: Add custom commands, to make it customize to act upon a command bar of tools
     # and commmands and how to render them on the ui
     _from_client = _component_func(
         base_blocks=base_blocks_data,
-        editor_schema=editor_schema,
+        editor_schema=serialized_editor_schema,
         commands=commands,
         key=key,
-        default={"command": "default", "editor_schema": editor_schema},
+        default={"command": "default", "editor_schema": serialized_editor_schema},
     )
 
     return build_streamlit_flow_response(_from_client)

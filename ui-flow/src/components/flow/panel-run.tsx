@@ -14,9 +14,6 @@ function constructFlowState(
     viewport: Viewport,
     nodesOptionData: Record<string, Record<string, BlockOption>>
 ) {
-    console.log("nodes", nodes);
-    console.log("edges", edges);
-    console.log("node options", nodesOptionData);
     const flowStateNodes: FlowStateNode[] = nodes.map((node) => {
         const blockData = node.data.blockData as BaseBlock;
         return {

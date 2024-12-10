@@ -1,32 +1,32 @@
 import streamlit as st
 from barfi import st_flow
+from barfi.config import SCHEMA_VERSION
 from barfi.st_flow.schema.manage import SchemaManager
+from barfi.st_flow.flow.types import FlowSchema, FlowViewport
 from assets import base_blocks_category
-from dataclasses import asdict
 
-# from barfi.st_flow.block.prepare import prepare_blocks_export
+
+base_blocks = base_blocks_category["math"]
 
 schema_manager = SchemaManager()
 st.write(schema_manager.schema_names)
+load_schema_name = st.selectbox("Schema name", [None] + schema_manager.schema_names)
 
-# load_schema = "schema-basic"
-# base_blocks_data, base_blocks_list = prepare_blocks_export(base_blocks)
-# editor_schema = prepare_editor_schema(load_schema, base_blocks_data)
-
-base_blocks = base_blocks_category["math"]
-load_schema = schema_manager.load_schema("test_schema_math")
+if load_schema_name is not None:
+    load_schema = schema_manager.load_schema(load_schema_name)
+else:
+    load_schema = FlowSchema(
+        version=SCHEMA_VERSION,
+        nodes=[],
+        connections=[],
+        viewport=FlowViewport(x=0, y=0, zoom=1),
+    )
 
 barfi_result = st_flow(
     base_blocks=base_blocks,
-    editor_schema=asdict(load_schema),
+    editor_schema=load_schema,
 )
 
-st.write(barfi_result.editor_schema)
+st.write(barfi_result)
 
-# schema_manager.save_schema("test_schema_math", barfi_result.editor_schema)
-
-# load_schema = schema_manager.load_schema("test_schema_math")
-# st.write(load_schema)
-
-# with open("v1_app_result.json", "r") as f:
-#     barfi_result = build_streamlit_flow_response(json.load(f))
+# schema_manager.save_schema(schema_name, barfi_result.editor_schema)
