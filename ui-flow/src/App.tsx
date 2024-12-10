@@ -15,16 +15,12 @@ export function App({ args }: { args: BarfiState }) {
         args.editor_schema.nodes,
         args.base_blocks
     );
-    console.log(args.base_blocks);
-    console.log(defaultNodes);
     const defaultEdges = convertFlowConnectionsToEdges(
         args.editor_schema.connections
     );
-    console.log(defaultEdges);
 
     const addNodeToStore = useFlowStateStore((state) => state.addNode);
     const getNodesFromStore = useFlowStateStore((state) => state.getNodes);
-
     const setNodeBaseBlockCount = useFlowStateStore(
         (state) => state.setNodeBaseBlockCount
     );

@@ -27,7 +27,7 @@ export function convertFlowNodesToNodes(
         };
         return {
             id: _node.id,
-            type: _node.type,
+            type: "baseBlock",
             data: {
                 blockData: {
                     name: _node.type,
@@ -50,7 +50,7 @@ export function convertFlowNodesToNodes(
                             value: option[2],
                         };
                     }),
-                },
+                } as BaseBlock,
             },
             position: _node.position,
             measured: _node.measured,

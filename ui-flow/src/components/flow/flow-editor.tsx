@@ -15,7 +15,7 @@ import {
     OnEdgesChange,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import PanelContextMenu from "@/components/flow/panel-context-menu";
+import PanelContextMenu from "@/components/flow/context-menu";
 import PanelRun from "@/components/flow/panel-run";
 import { useFlowStateStore } from "@/components/flow/flow-state";
 import { BaseBlockNode } from "@/components/nodes";
@@ -54,23 +54,9 @@ export default function FlowEditor({
         [setEdges]
     );
 
-    // const hiddenTriggerRef = useRef(null);
     const onPanelContextClick = useCallback(
         (e: React.MouseEvent) => {
             setContextLocation(e.clientX, e.clientY);
-            // e.preventDefault();
-            // Keep this for future reference
-            // // https://github.com/radix-ui/primitives/issues/1307
-            // if (hiddenTriggerRef.current) {
-            //     const contextMenuEvent = new MouseEvent("contextmenu", {
-            //         bubbles: true,
-            //         clientX: e.clientX,
-            //         clientY: e.clientY,
-            //     });
-            //     (hiddenTriggerRef.current as HTMLElement).dispatchEvent(
-            //         contextMenuEvent
-            //     );
-            // }
         },
         [setContextLocation]
     );
@@ -79,7 +65,6 @@ export default function FlowEditor({
         <ReactFlowProvider>
             <ContextMenu>
                 <ContextMenuTrigger asChild>
-                    {/* <div ref={hiddenTriggerRef} /> */}
                     <ReactFlow
                         nodeTypes={{ baseBlock: BaseBlockNode }}
                         nodes={nodes}
