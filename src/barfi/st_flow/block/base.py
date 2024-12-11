@@ -2,7 +2,7 @@ import types
 import uuid
 from typing import Callable, Any, Dict
 from dataclasses import asdict
-from barfi.st_flow.block.option import BlockOption, build_option, BlockOptionValue
+from barfi.st_flow.block.option import BlockOption, BlockOptionValue
 from barfi.st_flow.block.types import BlockInterface, BlockInterfaceValue
 
 
@@ -225,7 +225,7 @@ class Block(object):
         if name in self._options:
             raise ValueError(f"Option with name: {name} already exists in Block.")
 
-        option = build_option(name, type, kwargs)
+        option = BlockOption.build(name, type, kwargs)
         self._options[name] = option
 
     def set_option(self, name: str, **kwargs) -> None:
