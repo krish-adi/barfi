@@ -5,7 +5,7 @@ from .math import math_blocks as math_blocks
 base_blocks = process_blocks
 
 base_blocks_category = {
-    "process": process_blocks,
-    "options": options_blocks,
-    "math": math_blocks,
+    "Math": math_blocks,
+    "Process": process_blocks,
+    "Options": options_blocks,
 }

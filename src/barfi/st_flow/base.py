@@ -60,7 +60,7 @@ def st_flow(
     commands: List[str] = ["execute", "save"],
     key=None,
 ):
-    base_blocks_data, _ = prepare_blocks_export(base_blocks)
+    base_blocks_data = prepare_blocks_export(base_blocks)
     serialized_editor_schema = asdict(editor_schema)
 
     # TODO: Add custom commands, to make it customize to act upon a command bar of tools
