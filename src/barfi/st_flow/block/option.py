@@ -131,13 +131,13 @@ class BlockOption:
             )
 
         elif type == "display":
-            value = kwargs.get("value", "null display")
+            value = kwargs.get("value", None)
             assert isinstance(
                 value, str
             ), "Error: For display option, 'value' must be of type string."
-            return cls(name=name, type="TextOption", value=value)
+            return cls(name=name, type="DisplayOption", value=value)
 
         else:
             raise ValueError(
-                "Error: No valid option type passed to the addOption method."
+                "Error: No valid option type passed to the add_option method."
             )

@@ -177,6 +177,12 @@ mixer.add_input()
 mixer.add_output()
 mixer.add_compute(mixer_func)
 
+three_mixer = Block(name="Three Mixer")
+three_mixer.add_input()
+three_mixer.add_input()
+three_mixer.add_input()
+three_mixer.add_output()
+
 
 def result_func(self):
     _ = self.get_interface(name="Input 1")
@@ -188,8 +194,7 @@ result.add_compute(result_func)
 
 process_blocks = [feed, result, mixer, splitter]
 
-
-options_blocks = [checkbox, input, integer, number, selecto, slider]
+options_blocks = [input, integer, number, checkbox, selecto, slider, three_mixer]
 
 math_blocks = [
     number_10,

@@ -87,13 +87,6 @@ export type SliderOption = {
 export type DisplayOption = {
     name: string;
     type: "DisplayOption";
-    display: string;
-    value: string;
-};
-
-export type TextOption = {
-    name: string;
-    type: "TextOption";
     value: string;
 };
 

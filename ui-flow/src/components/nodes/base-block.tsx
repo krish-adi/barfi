@@ -20,6 +20,10 @@ const renderOption = (
     mutateNodeData: NodeDataActions["mutateNodeData"],
     idx: number
 ) => {
+    console.log({
+        nodeId,
+        option,
+    });
     const handleChange = (newValue: string | number | boolean) => {
         mutateNodeData(nodeId, option.name, newValue);
     };
@@ -86,6 +90,12 @@ const renderOption = (
                     step={option?.step ?? undefined}
                     onValueChange={(e) => handleChange(e[0])}
                 />
+            );
+        case "DisplayOption":
+            return (
+                <div className="w-full text-center text-xs">
+                    {option.value}
+                </div>
             );
         default:
             return null;

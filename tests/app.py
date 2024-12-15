@@ -10,7 +10,8 @@ from assets.blocks import base_blocks
 schema_manager = SchemaManager(filepath="./assets/")
 # st.write(schema_manager.schema_names)
 # load_schema_name = st.selectbox("Schema name", [None] + schema_manager.schema_names)
-load_schema_name = "process-w-options"
+load_schema_name = "options-w-display"
+# load_schema_name = None
 
 if load_schema_name is not None:
     load_schema = schema_manager.load_schema(load_schema_name)
