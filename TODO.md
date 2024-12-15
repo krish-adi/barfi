@@ -2,8 +2,8 @@
 
 ## Top
 
--   [ ] add text display option in the block
--   [x] fix type conversion for integer and number options
+-   [ ] check for redundant data types as name, type, label which would mean different acroos frontend and backend
+-   [ ] check for low haning TODOs across fe and be
 
 ## P0
 
@@ -33,14 +33,16 @@
 -   [x] test and check if options work
     -   [x] if options from schema are loaded
     -   [x] if options
--   [ ] state data are different across all the places.
-    -   [ ] when a component is loaded from schema to editor, option values must be loaded from the store. essentially option values must only be from the store.
-    -   [ ] when a block is loaded from barfi-state into editor, it must be transformed to be in type `Node`
-    -   [ ] keep node and baseBlock different. but you can refresh the nodes added to the editor from the baseblock.
-    -   [ ] migrate BarfitateNode to FlowStateNode.
--   [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
-    -   [ ] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
--   [ ] migrate the TextOption to a display option with display as text
+-   [x] add text display option in the block
+-   [x] fix type conversion for integer and number options
+-   [x] state data are different across all the places.
+    -   [x] when a component is loaded from schema to editor, option values must be loaded from the store. essentially option values must only be from the store.
+    -   [x] when a block is loaded from barfi-state into editor, it must be transformed to be in type `Node`
+    -   [x] keep node and baseBlock different. but you can refresh the nodes added to the editor from the baseblock.
+    -   [x] migrate BarfitateNode to FlowStateNode.
+-   [x] check data scemas and types across the app from base-block, node, base-block are different in py and ts
+    -   [x] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
+-   [x] migrate the TextOption to a display option with display as text
 -   [ ] Check for saving old schema
 -   [ ] Check for loading old schema
 -   [ ] rename /frontend to ui-barfi and move it to archive to not confuse future devs
