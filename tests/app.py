@@ -4,12 +4,10 @@ from barfi import st_flow
 from barfi.config import SCHEMA_VERSION
 from barfi.st_flow.schema.manage import SchemaManager
 from barfi.st_flow.flow.types import FlowSchema, FlowViewport
-from assets import base_blocks_category
+from assets.blocks import base_blocks
 
 
-base_blocks = base_blocks_category
-
-schema_manager = SchemaManager()
+schema_manager = SchemaManager(filepath="./assets/")
 # st.write(schema_manager.schema_names)
 # load_schema_name = st.selectbox("Schema name", [None] + schema_manager.schema_names)
 load_schema_name = "process-w-options"
