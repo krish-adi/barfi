@@ -2,11 +2,7 @@
 
 ## Top
 
--   [ ] v1 types for editor state to export
-    -   [x] nodes -> ??
-    -   [ ] remove id from interfaces.
-    -   [] migrate all the data types from both barfi and ui to match each other, as the conversion to and from the barfi state happens in the ui, which maintains the actual model
-    -   [x] connections -> outputNode, outputNodeInterface, inputNode, inputNodeInterface
+-   [ ] add text display option in the block
 
 ## P0
 
@@ -26,13 +22,16 @@
 -   [x] change custom node to base block node
 -   [x] custom actions on react flow -> node store
     -   [x] delete node on ui -> del node in
--   [ ] add strong type cheing on the python side
--   [ ] add schema version to the schema saved and sent from ui-flow
-    -   [ ] Check for saving old schema
-    -   [ ] Check for loading old schema
--   [ ] test and check if options work
-    -   [ ] if options from schema are loaded
-    -   [ ] if options
+-   [x] v1 types for editor state to export
+    -   [x] nodes -> ??
+    -   [x] remove id from interfaces.
+    -   [x] migrate all the data types from both barfi and ui to match each other, as the conversion to and from the barfi state happens in the ui, which maintains the actual model
+    -   [x] connections -> outputNode, outputNodeInterface, inputNode, inputNodeInterface
+-   [x] add strong type cheing on the python side
+-   [x] add schema version to the schema saved and sent from ui-flow
+-   [x] test and check if options work
+    -   [x] if options from schema are loaded
+    -   [x] if options
 -   [ ] state data are different across all the places.
     -   [ ] when a component is loaded from schema to editor, option values must be loaded from the store. essentially option values must only be from the store.
     -   [ ] when a block is loaded from barfi-state into editor, it must be transformed to be in type `Node`
@@ -41,15 +40,9 @@
 -   [ ] check data scemas and types across the app from base-block, node, base-block are different in py and ts
     -   [ ] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
 -   [ ] migrate the TextOption to a display option with display as text
+-   [ ] Check for saving old schema
+-   [ ] Check for loading old schema
 -   [ ] rename /frontend to ui-barfi and move it to archive to not confuse future devs
-
-```
-interface TextOption {
-    name: string;
-    type: "TextOption";
-    value: string;
-}
-```
 
 ## P1
 

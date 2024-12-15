@@ -1,0 +1,262 @@
+{
+    "editor_schema": {
+        "version": "1.0",
+        "nodes": [
+            {
+                "id": "node__0f27cccb-cd08-4714-a312-fa68f451b2c6",
+                "type": "Result",
+                "name": "Result-1",
+                "inputs": [["Input 1", null]],
+                "outputs": [],
+                "options": [],
+                "position": {
+                    "x": 938.6608379724819,
+                    "y": 257.18403750377604
+                },
+                "measured": {
+                    "width": 160,
+                    "height": 90
+                }
+            },
+            {
+                "id": "node__c8e8db7a-9adc-4661-aca3-7dca4e587561",
+                "type": "Mixer",
+                "name": "Mixer-2",
+                "inputs": [
+                    ["Input 1", null],
+                    ["Input 2", null]
+                ],
+                "outputs": [["Output 1", null]],
+                "options": [],
+                "position": {
+                    "x": 661.7329851504061,
+                    "y": 387.8683090269728
+                },
+                "measured": {
+                    "width": 160,
+                    "height": 134
+                }
+            },
+            {
+                "id": "node__32331dd1-ea25-4114-ac9a-0247632eb347",
+                "type": "Mixer",
+                "name": "Mixer-1",
+                "inputs": [
+                    ["Input 1", null],
+                    ["Input 2", null]
+                ],
+                "outputs": [["Output 1", null]],
+                "options": [],
+                "position": {
+                    "x": 448.24096045332396,
+                    "y": 125.13895678010627
+                },
+                "measured": {
+                    "width": 160,
+                    "height": 134
+                }
+            },
+            {
+                "id": "node__c34580e4-8d9d-4293-8bae-001e212ae50b",
+                "type": "Slider",
+                "name": "Slider-1",
+                "inputs": [["Input 1", null]],
+                "outputs": [["Output 1", null]],
+                "options": [
+                    [
+                        "display-option",
+                        "TextOption",
+                        "This is a Block with Slider option."
+                    ],
+                    ["slider-option", "SliderOption", 4]
+                ],
+                "position": {
+                    "x": 188.28438444710716,
+                    "y": 403.31912364213366
+                },
+                "measured": {
+                    "width": 160,
+                    "height": 136
+                }
+            },
+            {
+                "id": "node__e518de52-c373-40cc-96f7-8b27c401294a",
+                "type": "Select",
+                "name": "Select-1",
+                "inputs": [["Input 1", null]],
+                "outputs": [["Output 1", null]],
+                "options": [
+                    [
+                        "display-option",
+                        "TextOption",
+                        "This is a Block with Select option."
+                    ],
+                    ["select-option", "SelectOption", "Select B"]
+                ],
+                "position": {
+                    "x": 188.33649323964687,
+                    "y": 187.2445933568635
+                },
+                "measured": {
+                    "width": 160,
+                    "height": 140
+                }
+            },
+            {
+                "id": "node__38c91648-835c-494c-884f-aecd5db4a7ba",
+                "type": "Checkbox",
+                "name": "Checkbox-1",
+                "inputs": [["Input 1", null]],
+                "outputs": [["Output 1", null]],
+                "options": [
+                    [
+                        "display-option",
+                        "TextOption",
+                        "This is a Block with Checkbox option."
+                    ],
+                    ["checkbox-option", "CheckboxOption", true]
+                ],
+                "position": {
+                    "x": 186.9309480175724,
+                    "y": -17.82120353589547
+                },
+                "measured": {
+                    "width": 160,
+                    "height": 130
+                }
+            },
+            {
+                "id": "node__834a548e-d2c6-44f9-8971-00e4f4b0287f",
+                "type": "Integer",
+                "name": "Integer-2",
+                "inputs": [],
+                "outputs": [["Output 1", null]],
+                "options": [
+                    [
+                        "display-option",
+                        "TextOption",
+                        "This is a Block with Integer option."
+                    ],
+                    ["integer-option", "IntegerOption", "3"]
+                ],
+                "position": {
+                    "x": -83.30440950337467,
+                    "y": 416.0278765470783
+                },
+                "measured": {
+                    "width": 171,
+                    "height": 118
+                }
+            },
+            {
+                "id": "node__15a037b0-38a6-4dff-b758-d030e3ded4ea",
+                "type": "Integer",
+                "name": "Integer-1",
+                "inputs": [],
+                "outputs": [["Output 1", null]],
+                "options": [
+                    [
+                        "display-option",
+                        "TextOption",
+                        "This is a Block with Integer option."
+                    ],
+                    ["integer-option", "IntegerOption", "7"]
+                ],
+                "position": {
+                    "x": -97.95270337043466,
+                    "y": 193.68363755968784
+                },
+                "measured": {
+                    "width": 171,
+                    "height": 118
+                }
+            },
+            {
+                "id": "node__4df170dd-07c8-4d6e-a854-21c51d457c22",
+                "type": "Input",
+                "name": "Input-1",
+                "inputs": [],
+                "outputs": [["Output 1", null]],
+                "options": [
+                    [
+                        "display-option",
+                        "TextOption",
+                        "This is a Block with Input option."
+                    ],
+                    ["input-option", "InputOption", "hello there"]
+                ],
+                "position": {
+                    "x": -90.79928400493773,
+                    "y": -1.3824219386405403
+                },
+                "measured": {
+                    "width": 171,
+                    "height": 118
+                }
+            }
+        ],
+        "connections": [
+            {
+                "id": "edge__0dfccd33-6291-46a3-b4bc-a607f3686d16",
+                "outputNode": "node__4df170dd-07c8-4d6e-a854-21c51d457c22",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__38c91648-835c-494c-884f-aecd5db4a7ba",
+                "inputNodeInterface": "Input 1"
+            },
+            {
+                "id": "edge__caca60fc-b9e2-4232-bf0f-6595105210a2",
+                "outputNode": "node__15a037b0-38a6-4dff-b758-d030e3ded4ea",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__e518de52-c373-40cc-96f7-8b27c401294a",
+                "inputNodeInterface": "Input 1"
+            },
+            {
+                "id": "edge__f5381487-8900-49bd-a0ed-3f71ac9a545f",
+                "outputNode": "node__834a548e-d2c6-44f9-8971-00e4f4b0287f",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__c34580e4-8d9d-4293-8bae-001e212ae50b",
+                "inputNodeInterface": "Input 1"
+            },
+            {
+                "id": "edge__3b6384c9-f021-4ca1-9698-c88591e90af9",
+                "outputNode": "node__38c91648-835c-494c-884f-aecd5db4a7ba",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__32331dd1-ea25-4114-ac9a-0247632eb347",
+                "inputNodeInterface": "Input 1"
+            },
+            {
+                "id": "edge__f3067a03-b11d-4819-903b-c4acf123190e",
+                "outputNode": "node__e518de52-c373-40cc-96f7-8b27c401294a",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__32331dd1-ea25-4114-ac9a-0247632eb347",
+                "inputNodeInterface": "Input 2"
+            },
+            {
+                "id": "edge__6c17e32f-8d52-4f8e-9edb-49aa582852d4",
+                "outputNode": "node__32331dd1-ea25-4114-ac9a-0247632eb347",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__c8e8db7a-9adc-4661-aca3-7dca4e587561",
+                "inputNodeInterface": "Input 1"
+            },
+            {
+                "id": "edge__2ad14066-36e5-4d1e-affd-6def763536b2",
+                "outputNode": "node__c34580e4-8d9d-4293-8bae-001e212ae50b",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__c8e8db7a-9adc-4661-aca3-7dca4e587561",
+                "inputNodeInterface": "Input 2"
+            },
+            {
+                "id": "edge__792fbd91-a255-44c3-a1dd-d1d3c9e3f0ec",
+                "outputNode": "node__c8e8db7a-9adc-4661-aca3-7dca4e587561",
+                "outputNodeInterface": "Output 1",
+                "inputNode": "node__0f27cccb-cd08-4714-a312-fa68f451b2c6",
+                "inputNodeInterface": "Input 1"
+            }
+        ],
+        "viewport": {
+            "x": 187.5828892805018,
+            "y": 105.39947498545106,
+            "zoom": 0.41621267299051684
+        }
+    }
+}

@@ -1,3 +1,4 @@
+from dataclasses import asdict
 import streamlit as st
 from barfi import st_flow
 from barfi.config import SCHEMA_VERSION
@@ -28,6 +29,9 @@ barfi_result = st_flow(
     editor_schema=load_schema,
 )
 
-st.write([(n.name, n.options) for n in barfi_result.editor_schema.nodes])
+st.write(asdict(barfi_result.editor_schema))
+st.write(
+    [(n.name, n.options, n.inputs, n.outputs) for n in barfi_result.editor_schema.nodes]
+)
 
 # schema_manager.save_schema(schema_name, barfi_result.editor_schema)

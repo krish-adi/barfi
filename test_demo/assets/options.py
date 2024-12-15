@@ -1,6 +1,7 @@
 from barfi.st_flow import Block
 
 checkbox = Block(name="Checkbox")
+checkbox.add_input()
 checkbox.add_output()
 checkbox.add_option(
     name="display-option", type="display", value="This is a Block with Checkbox option."
@@ -29,6 +30,7 @@ number.add_option(
 number.add_option(name="number-option", type="number")
 
 selecto = Block(name="Select")
+selecto.add_input()
 selecto.add_output()
 selecto.add_option(
     name="display-option", type="display", value="This is a Block with Select option."
@@ -38,6 +40,7 @@ selecto.add_option(
 )
 
 slider = Block(name="Slider")
+slider.add_input()
 slider.add_output()
 slider.add_option(
     name="display-option", type="display", value="This is a Block with Slider option."
