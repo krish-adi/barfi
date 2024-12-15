@@ -38,6 +38,13 @@ mixer.add_output()
 mixer.add_compute(mixer_func)
 
 
+three_mixer = Block(name="3 Mixer")
+three_mixer.add_input()
+three_mixer.add_input()
+three_mixer.add_input()
+three_mixer.add_output()
+
+
 def result_func(self):
     _ = self.get_interface(name="Input 1")
 
@@ -46,4 +53,4 @@ result = Block(name="Result")
 result.add_input()
 result.add_compute(result_func)
 
-process_blocks = [feed, result, mixer, splitter]
+process_blocks = [feed, result, mixer, splitter, three_mixer]

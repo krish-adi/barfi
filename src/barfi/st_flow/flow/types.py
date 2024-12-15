@@ -14,6 +14,7 @@ class FlowNodePosition:
         x (float): X-coordinate position of the node
         y (float): Y-coordinate position of the node
     """
+
     x: float
     y: float
 
@@ -26,6 +27,7 @@ class FlowNodeMeasured:
         width (int): Width of the node in pixels
         height (int): Height of the node in pixels
     """
+
     width: int
     height: int
 
@@ -44,6 +46,7 @@ class FlowNode:
         position (FlowNodePosition): Position of the node in the editor
         measured (FlowNodeMeasured): Dimensions of the node
     """
+
     id: str
     type: str
     name: str
@@ -65,6 +68,7 @@ class FlowConnection:
         inputNode (str): ID of the node where the connection ends
         inputNodeInterface (str): Name of the input interface on the target node
     """
+
     id: str
     outputNode: str
     outputNodeInterface: str
@@ -81,6 +85,7 @@ class FlowViewport:
         y (float): Y-coordinate of the viewport position
         zoom (float): Current zoom level of the viewport
     """
+
     x: float
     y: float
     zoom: float
@@ -96,6 +101,7 @@ class FlowSchema:
         connections (List[FlowConnection]): List of all connections between nodes
         viewport (FlowViewport): Current state of the editor viewport
     """
+
     version: str
     nodes: List[FlowNode]
     connections: List[FlowConnection]
@@ -110,6 +116,7 @@ class StreamlitFlowResponse:
         command (Union[str, Literal["default", "execute", "save"]]): The command to be executed
         editor_schema (FlowSchema): The complete flow editor schema
     """
+
     command: Union[str, Literal["default", "execute", "save"]]
     editor_schema: FlowSchema
 
@@ -135,18 +142,7 @@ def build_flow_schema_from_dict(schema_dict: dict) -> FlowSchema:
 
 
 def build_streamlit_flow_response(_from_client: dict) -> StreamlitFlowResponse:
-    if _from_client["command"] == "default":
-        return StreamlitFlowResponse(
-            command=_from_client["command"],
-            editor_schema=FlowSchema(
-                version=SCHEMA_VERSION,
-                nodes=[],
-                connections=[],
-                viewport=FlowViewport(0, 0, 1),
-            ),
-        )
-    else:
-        return StreamlitFlowResponse(
-            command=_from_client["command"],
-            editor_schema=build_flow_schema_from_dict(_from_client["editor_schema"]),
-        )
+    return StreamlitFlowResponse(
+        command=_from_client["command"],
+        editor_schema=build_flow_schema_from_dict(_from_client["editor_schema"]),
+    )

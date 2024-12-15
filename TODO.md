@@ -3,6 +3,7 @@
 ## Top
 
 -   [ ] add text display option in the block
+-   [x] fix type conversion for integer and number options
 
 ## P0
 

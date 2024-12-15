@@ -11,7 +11,6 @@ import {
 } from "./type-casts";
 
 export function App({ args }: { args: BarfiState }) {
-    console.log(args.base_blocks);
     const defaultNodes = convertFlowNodesToNodes(
         args.editor_schema.nodes,
         args.base_blocks

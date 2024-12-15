@@ -65,7 +65,6 @@ const PanelContextMenu = memo(
     }: {
         baseBlocks: BaseBlock[] | Record<string, BaseBlock[]>;
     }) => {
-        // console.log(baseBlocks);
         return (
             <ContextMenuContent>
                 <ContextMenuLabel>Add a node</ContextMenuLabel>

@@ -51,7 +51,7 @@ const renderOption = (
                     id={option.name}
                     placeholder={option.name}
                     defaultValue={option?.value ?? undefined}
-                    onChange={(e) => handleChange(e.target.value)}
+                    onChange={(e) => handleChange(Number(e.target.value))}
                 />
             );
         case "IntegerOption":
@@ -61,7 +61,7 @@ const renderOption = (
                     id={option.name}
                     placeholder={option.name}
                     defaultValue={option?.value ?? undefined}
-                    onChange={(e) => handleChange(e.target.value)}
+                    onChange={(e) => handleChange(parseInt(e.target.value))}
                 />
             );
         case "SelectOption":

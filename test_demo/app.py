@@ -10,9 +10,9 @@ from assets import base_blocks_category
 base_blocks = base_blocks_category
 
 schema_manager = SchemaManager()
-st.write(schema_manager.schema_names)
+# st.write(schema_manager.schema_names)
 # load_schema_name = st.selectbox("Schema name", [None] + schema_manager.schema_names)
-load_schema_name = None
+load_schema_name = "process-w-options"
 
 if load_schema_name is not None:
     load_schema = schema_manager.load_schema(load_schema_name)
@@ -29,9 +29,17 @@ barfi_result = st_flow(
     editor_schema=load_schema,
 )
 
-st.write(asdict(barfi_result.editor_schema))
+st.write(barfi_result)
+# st.write(asdict(barfi_result.editor_schema))
 st.write(
     [(n.name, n.options, n.inputs, n.outputs) for n in barfi_result.editor_schema.nodes]
 )
 
-# schema_manager.save_schema(schema_name, barfi_result.editor_schema)
+# with st.form("save_schema"):
+#     schema_name = st.text_input("Schema name")
+#     if st.form_submit_button("Save schema"):
+#         schema_manager.save_schema(schema_name, barfi_result.editor_schema)
+
+with st.form("update_schema"):
+    if st.form_submit_button("Update schema"):
+        schema_manager.update_schema(load_schema_name, barfi_result.editor_schema)
