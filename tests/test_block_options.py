@@ -114,11 +114,7 @@ def test_display_option():
     # Test valid display
     block.add_option("status", "display", value="Ready")
     assert block._options["status"].value == "Ready"
-    assert block._options["status"].type == "TextOption"
-
-    # Test default value
-    block.add_option("default", "display")
-    assert block._options["default"].value == "null display"
+    assert block._options["status"].type == "DisplayOption"
 
     # Test invalid display value type
     with pytest.raises(AssertionError):

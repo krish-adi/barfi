@@ -2,8 +2,10 @@
 
 ## Top
 
--   [ ] check for redundant data types as name, type, label which would mean different acroos frontend and backend
--   [ ] check for low haning TODOs across fe and be
+-   [ ] add compute engine for adding functional compute logic to blocks
+    -   [ ] find root nodes and create a execute graph
+    -   [ ] apply for multiple roots
+    -   [ ] create a DAG and execute it
 
 ## P0
 
@@ -43,9 +45,8 @@
 -   [x] check data scemas and types across the app from base-block, node, base-block are different in py and ts
     -   [x] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
 -   [x] migrate the TextOption to a display option with display as text
--   [ ] Check for saving old schema
--   [ ] Check for loading old schema
--   [ ] rename /frontend to ui-barfi and move it to archive to not confuse future devs
+-   [x] check for redundant data types as name, type, label which would mean different acroos frontend and backend
+-   [x] check for low haning TODOs across fe and be
 
 ## P1
 
@@ -56,3 +57,9 @@
 -   [ ] use the theme props given by the newer streamlit clients
 -   [ ] move barfi client to separate pkg
 -   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui
+
+## P2
+
+-   [ ] Check for saving old schema
+-   [ ] Check for loading old schema
+-   [ ] rename /frontend to ui-barfi and move it to archive to not confuse future devs
