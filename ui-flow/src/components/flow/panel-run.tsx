@@ -18,8 +18,9 @@ function constructFlowState(
         const blockData = node.data.blockData as BaseBlock;
         return {
             id: node.id,
-            type: blockData.name,
-            name: blockData.label || "",
+            name: blockData.name,
+            type: blockData.type,
+            label: blockData.label || "",
             inputs: blockData.inputs.map((input) => [input.name, input.value]),
             outputs: blockData.outputs.map((output) => [
                 output.name,

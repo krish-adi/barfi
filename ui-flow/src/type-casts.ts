@@ -31,7 +31,8 @@ export function convertFlowNodesToNodes(
             data: {
                 blockData: {
                     name: _node.type,
-                    label: _node.name,
+                    type: _node.type,
+                    label: _node.label,
                     inputs: _node.inputs.map((input) => ({
                         name: input[0],
                         value: input[1],

@@ -292,6 +292,7 @@ class Block(object):
         """
         return {
             "name": self._name,
+            "type": self._type,
             "inputs": [asdict(input) for input in self._inputs.values()],
             "outputs": [asdict(output) for output in self._outputs.values()],
             "options": [asdict(option) for option in self._options.values()],

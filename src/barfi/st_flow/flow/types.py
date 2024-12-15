@@ -50,6 +50,7 @@ class FlowNode:
     id: str
     type: str
     name: str
+    label: str
     inputs: List[Tuple[str, NodeInterfaceValue]]
     outputs: List[Tuple[str, NodeInterfaceValue]]
     options: List[Tuple[str, NodeOptionValue]]

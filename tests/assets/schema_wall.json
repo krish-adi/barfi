@@ -3,15 +3,16 @@
         "version": "1.0",
         "nodes": [
             {
-                "id": "node__0f27cccb-cd08-4714-a312-fa68f451b2c6",
+                "id": "node__63f52b2d-a89e-4c9d-b76a-fce2de009abc",
                 "type": "Result",
-                "name": "Result-1",
+                "name": "Result",
+                "label": "Result-1",
                 "inputs": [["Input 1", null]],
                 "outputs": [],
                 "options": [],
                 "position": {
-                    "x": 938.6608379724819,
-                    "y": 257.18403750377604
+                    "x": 833.1182563833727,
+                    "y": 465.83234538053506
                 },
                 "measured": {
                     "width": 160,
@@ -19,244 +20,226 @@
                 }
             },
             {
-                "id": "node__c8e8db7a-9adc-4661-aca3-7dca4e587561",
-                "type": "Mixer",
-                "name": "Mixer-2",
+                "id": "node__3b951695-214c-40a0-a7c9-a412dd5f1b05",
+                "type": "Three Mixer",
+                "name": "Three Mixer",
+                "label": "Three Mixer-1",
                 "inputs": [
                     ["Input 1", null],
-                    ["Input 2", null]
+                    ["Input 2", null],
+                    ["Input 3", null]
                 ],
                 "outputs": [["Output 1", null]],
                 "options": [],
                 "position": {
-                    "x": 661.7329851504061,
-                    "y": 387.8683090269728
+                    "x": 586.4924756343597,
+                    "y": 432.3696546645699
                 },
                 "measured": {
                     "width": 160,
-                    "height": 134
+                    "height": 156
                 }
             },
             {
-                "id": "node__32331dd1-ea25-4114-ac9a-0247632eb347",
-                "type": "Mixer",
-                "name": "Mixer-1",
-                "inputs": [
-                    ["Input 1", null],
-                    ["Input 2", null]
-                ],
-                "outputs": [["Output 1", null]],
-                "options": [],
-                "position": {
-                    "x": 448.24096045332396,
-                    "y": 125.13895678010627
-                },
-                "measured": {
-                    "width": 160,
-                    "height": 134
-                }
-            },
-            {
-                "id": "node__c34580e4-8d9d-4293-8bae-001e212ae50b",
+                "id": "node__ad28bb31-e6a3-4b9b-95db-27c1589e4681",
                 "type": "Slider",
-                "name": "Slider-1",
+                "name": "Slider",
+                "label": "Slider-1",
                 "inputs": [["Input 1", null]],
                 "outputs": [["Output 1", null]],
                 "options": [
                     [
                         "display-option",
-                        "TextOption",
+                        "DisplayOption",
                         "This is a Block with Slider option."
                     ],
                     ["slider-option", "SliderOption", 4]
                 ],
                 "position": {
-                    "x": 188.28438444710716,
-                    "y": 403.31912364213366
+                    "x": 274.3914778392688,
+                    "y": 646.6693447266343
                 },
                 "measured": {
-                    "width": 160,
-                    "height": 136
+                    "width": 205,
+                    "height": 164
                 }
             },
             {
-                "id": "node__e518de52-c373-40cc-96f7-8b27c401294a",
+                "id": "node__e246465a-3c91-466a-97d0-67e4f1e5f39c",
                 "type": "Select",
-                "name": "Select-1",
+                "name": "Select",
+                "label": "Select-1",
                 "inputs": [["Input 1", null]],
                 "outputs": [["Output 1", null]],
                 "options": [
                     [
                         "display-option",
-                        "TextOption",
+                        "DisplayOption",
                         "This is a Block with Select option."
                     ],
                     ["select-option", "SelectOption", "Select B"]
                 ],
                 "position": {
-                    "x": 188.33649323964687,
-                    "y": 187.2445933568635
+                    "x": 271.18490760185034,
+                    "y": 425.97274308866974
                 },
                 "measured": {
-                    "width": 160,
-                    "height": 140
+                    "width": 208,
+                    "height": 168
                 }
             },
             {
-                "id": "node__38c91648-835c-494c-884f-aecd5db4a7ba",
+                "id": "node__6f36da7c-1406-43e4-87f2-98882cc656ba",
                 "type": "Checkbox",
-                "name": "Checkbox-1",
+                "name": "Checkbox",
+                "label": "Checkbox-1",
                 "inputs": [["Input 1", null]],
                 "outputs": [["Output 1", null]],
                 "options": [
                     [
                         "display-option",
-                        "TextOption",
+                        "DisplayOption",
                         "This is a Block with Checkbox option."
                     ],
                     ["checkbox-option", "CheckboxOption", true]
                 ],
                 "position": {
-                    "x": 186.9309480175724,
-                    "y": -17.82120353589547
+                    "x": 271.27298707908375,
+                    "y": 205.49634014378873
                 },
                 "measured": {
-                    "width": 160,
-                    "height": 130
+                    "width": 210,
+                    "height": 174
                 }
             },
             {
-                "id": "node__834a548e-d2c6-44f9-8971-00e4f4b0287f",
-                "type": "Integer",
-                "name": "Integer-2",
+                "id": "node__b6c8a787-0b37-466e-9d95-a8dbe763d3b0",
+                "type": "Number",
+                "name": "Number",
+                "label": "Number-1",
                 "inputs": [],
                 "outputs": [["Output 1", null]],
                 "options": [
                     [
                         "display-option",
-                        "TextOption",
-                        "This is a Block with Integer option."
+                        "DisplayOption",
+                        "This is a Block with Number option."
                     ],
-                    ["integer-option", "IntegerOption", "3"]
+                    ["number-option", "NumberOption", 7]
                 ],
                 "position": {
-                    "x": -83.30440950337467,
-                    "y": 416.0278765470783
+                    "x": -39.8554281664682,
+                    "y": 650.9597408723112
                 },
                 "measured": {
-                    "width": 171,
-                    "height": 118
+                    "width": 210,
+                    "height": 162
                 }
             },
             {
-                "id": "node__15a037b0-38a6-4dff-b758-d030e3ded4ea",
+                "id": "node__750307de-ad07-4cfc-8271-5fab7ebe207a",
                 "type": "Integer",
-                "name": "Integer-1",
+                "name": "Integer",
+                "label": "Integer-1",
                 "inputs": [],
                 "outputs": [["Output 1", null]],
                 "options": [
                     [
                         "display-option",
-                        "TextOption",
+                        "DisplayOption",
                         "This is a Block with Integer option."
                     ],
-                    ["integer-option", "IntegerOption", "7"]
+                    ["integer-option", "IntegerOption", 3]
                 ],
                 "position": {
-                    "x": -97.95270337043466,
-                    "y": 193.68363755968784
+                    "x": -47.129378086200035,
+                    "y": 435.351069622257
                 },
                 "measured": {
-                    "width": 171,
-                    "height": 118
+                    "width": 210,
+                    "height": 162
                 }
             },
             {
-                "id": "node__4df170dd-07c8-4d6e-a854-21c51d457c22",
+                "id": "node__d837dd01-d9d1-463d-b162-c30022344173",
                 "type": "Input",
-                "name": "Input-1",
+                "name": "Input",
+                "label": "Input-1",
                 "inputs": [],
                 "outputs": [["Output 1", null]],
                 "options": [
                     [
                         "display-option",
-                        "TextOption",
+                        "DisplayOption",
                         "This is a Block with Input option."
                     ],
                     ["input-option", "InputOption", "hello there"]
                 ],
                 "position": {
-                    "x": -90.79928400493773,
-                    "y": -1.3824219386405403
+                    "x": -43.0222661476569,
+                    "y": 220.60703554362922
                 },
                 "measured": {
-                    "width": 171,
-                    "height": 118
+                    "width": 201,
+                    "height": 146
                 }
             }
         ],
         "connections": [
             {
-                "id": "edge__0dfccd33-6291-46a3-b4bc-a607f3686d16",
-                "outputNode": "node__4df170dd-07c8-4d6e-a854-21c51d457c22",
+                "id": "edge__c9c929ac-83bd-4be3-a2b7-893e28b1f17e",
+                "outputNode": "node__d837dd01-d9d1-463d-b162-c30022344173",
                 "outputNodeInterface": "Output 1",
-                "inputNode": "node__38c91648-835c-494c-884f-aecd5db4a7ba",
+                "inputNode": "node__6f36da7c-1406-43e4-87f2-98882cc656ba",
                 "inputNodeInterface": "Input 1"
             },
             {
-                "id": "edge__caca60fc-b9e2-4232-bf0f-6595105210a2",
-                "outputNode": "node__15a037b0-38a6-4dff-b758-d030e3ded4ea",
+                "id": "edge__8bad77d2-a344-4194-975f-060a7ec219a8",
+                "outputNode": "node__750307de-ad07-4cfc-8271-5fab7ebe207a",
                 "outputNodeInterface": "Output 1",
-                "inputNode": "node__e518de52-c373-40cc-96f7-8b27c401294a",
+                "inputNode": "node__e246465a-3c91-466a-97d0-67e4f1e5f39c",
                 "inputNodeInterface": "Input 1"
             },
             {
-                "id": "edge__f5381487-8900-49bd-a0ed-3f71ac9a545f",
-                "outputNode": "node__834a548e-d2c6-44f9-8971-00e4f4b0287f",
+                "id": "edge__c9a9c3e5-c883-4378-a32a-ca6b1598b1d0",
+                "outputNode": "node__b6c8a787-0b37-466e-9d95-a8dbe763d3b0",
                 "outputNodeInterface": "Output 1",
-                "inputNode": "node__c34580e4-8d9d-4293-8bae-001e212ae50b",
+                "inputNode": "node__ad28bb31-e6a3-4b9b-95db-27c1589e4681",
                 "inputNodeInterface": "Input 1"
             },
             {
-                "id": "edge__3b6384c9-f021-4ca1-9698-c88591e90af9",
-                "outputNode": "node__38c91648-835c-494c-884f-aecd5db4a7ba",
+                "id": "edge__90ecc43a-629f-44ef-90a4-a7a586347ba6",
+                "outputNode": "node__6f36da7c-1406-43e4-87f2-98882cc656ba",
                 "outputNodeInterface": "Output 1",
-                "inputNode": "node__32331dd1-ea25-4114-ac9a-0247632eb347",
+                "inputNode": "node__3b951695-214c-40a0-a7c9-a412dd5f1b05",
                 "inputNodeInterface": "Input 1"
             },
             {
-                "id": "edge__f3067a03-b11d-4819-903b-c4acf123190e",
-                "outputNode": "node__e518de52-c373-40cc-96f7-8b27c401294a",
+                "id": "edge__ae9b7d0f-f2f3-458c-bb3e-5dc79dcd6425",
+                "outputNode": "node__e246465a-3c91-466a-97d0-67e4f1e5f39c",
                 "outputNodeInterface": "Output 1",
-                "inputNode": "node__32331dd1-ea25-4114-ac9a-0247632eb347",
+                "inputNode": "node__3b951695-214c-40a0-a7c9-a412dd5f1b05",
                 "inputNodeInterface": "Input 2"
             },
             {
-                "id": "edge__6c17e32f-8d52-4f8e-9edb-49aa582852d4",
-                "outputNode": "node__32331dd1-ea25-4114-ac9a-0247632eb347",
+                "id": "edge__4599f87a-5714-4e25-a154-d79ff2465b41",
+                "outputNode": "node__ad28bb31-e6a3-4b9b-95db-27c1589e4681",
                 "outputNodeInterface": "Output 1",
-                "inputNode": "node__c8e8db7a-9adc-4661-aca3-7dca4e587561",
-                "inputNodeInterface": "Input 1"
+                "inputNode": "node__3b951695-214c-40a0-a7c9-a412dd5f1b05",
+                "inputNodeInterface": "Input 3"
             },
             {
-                "id": "edge__2ad14066-36e5-4d1e-affd-6def763536b2",
-                "outputNode": "node__c34580e4-8d9d-4293-8bae-001e212ae50b",
+                "id": "edge__d194ae85-56cf-4f79-9857-3372978c7fa6",
+                "outputNode": "node__3b951695-214c-40a0-a7c9-a412dd5f1b05",
                 "outputNodeInterface": "Output 1",
-                "inputNode": "node__c8e8db7a-9adc-4661-aca3-7dca4e587561",
-                "inputNodeInterface": "Input 2"
-            },
-            {
-                "id": "edge__792fbd91-a255-44c3-a1dd-d1d3c9e3f0ec",
-                "outputNode": "node__c8e8db7a-9adc-4661-aca3-7dca4e587561",
-                "outputNodeInterface": "Output 1",
-                "inputNode": "node__0f27cccb-cd08-4714-a312-fa68f451b2c6",
+                "inputNode": "node__63f52b2d-a89e-4c9d-b76a-fce2de009abc",
                 "inputNodeInterface": "Input 1"
             }
         ],
         "viewport": {
-            "x": 187.5828892805018,
-            "y": 105.39947498545106,
-            "zoom": 0.41621267299051684
+            "x": 99.64234551534923,
+            "y": 30.127633464956148,
+            "zoom": 0.567724738219929
         }
     }
 }

@@ -13,7 +13,7 @@ type FlowUIState = {
 // This NodeDataState is to store the options' values of the nodes that have been changed by the user
 // The options' values are stored in the nodesOptionData object and later retrieved by the PanelRun component
 type NodeDataState = {
-    // All the values below are a map to the nodeID to the data mentioned
+    // All the values below are a map to the node-name/type to the data mentioned
     nodeBaseBlockCount: Record<string, number>;
     // TODO: this map needn't contain the BaseBlock object, just the the name
     // and below the options data

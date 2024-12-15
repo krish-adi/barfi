@@ -1,9 +1,10 @@
 import { Viewport } from "@xyflow/react";
 
 export type BaseBlock = {
-    // `name` of the base-block is the type of the Node
+    // `name` of the base-block is the type of the Node, name and type used interchangeably
     name: string;
-    // `label` isn't used here only in flow_schem or state, need to check if this is used in the future
+    type: string;
+    // `label` is not used on load, but used on subsequet schema renders
     label: string | null;
     inputs: BlockInterface[];
     outputs: BlockInterface[];
@@ -93,8 +94,8 @@ export type DisplayOption = {
 export interface FlowStateNode {
     id: string; // id from the node created upon creation on flow
     type: string; // type from the blockData name from the user
-    // TODO: change name to label
-    name: string; // name that is displayed on node in ui flow, can be changed in the future to label
+    name: string;
+    label: string; // label that is displayed on node in ui flow, can be changed in the future to label
     inputs: [string, string | number | boolean | null][];
     outputs: [string, string | number | boolean | null][];
     options: [string, string, string | number | boolean | null][];

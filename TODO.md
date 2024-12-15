@@ -55,3 +55,4 @@
     -   [ ] multiple root nodes, implying multple flows possible
 -   [ ] use the theme props given by the newer streamlit clients
 -   [ ] move barfi client to separate pkg
+-   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui

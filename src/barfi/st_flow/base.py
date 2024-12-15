@@ -63,8 +63,6 @@ def st_flow(
     base_blocks_data = prepare_blocks_export(base_blocks)
     serialized_editor_schema = asdict(editor_schema)
 
-    # TODO: Add custom commands, to make it customize to act upon a command bar of tools
-    # and commmands and how to render them on the ui
     _from_client = _component_func(
         base_blocks=base_blocks_data,
         editor_schema=serialized_editor_schema,

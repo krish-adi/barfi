@@ -1,11 +1,10 @@
 import pytest
 from barfi.st_flow.block import Block
-from barfi.st_flow.block.option import BlockOption
 
 
 def test_checkbox_option():
     block = Block()
-    
+
     # Test valid checkbox
     block.add_option("show_details", "checkbox", value=True)
     assert block._options["show_details"].value is True
@@ -18,7 +17,7 @@ def test_checkbox_option():
 
 def test_input_option():
     block = Block()
-    
+
     # Test valid input
     block.add_option("name", "input", value="test")
     assert block._options["name"].value == "test"
@@ -35,7 +34,7 @@ def test_input_option():
 
 def test_integer_option():
     block = Block()
-    
+
     # Test valid integer
     block.add_option("count", "integer", value=5, min=0, max=10)
     assert block._options["count"].value == 5
@@ -53,7 +52,7 @@ def test_integer_option():
 
 def test_number_option():
     block = Block()
-    
+
     # Test valid number (integer)
     block.add_option("int_val", "number", value=5)
     assert block._options["int_val"].value == 5
@@ -72,7 +71,7 @@ def test_number_option():
 def test_select_option():
     block = Block()
     items = ["option1", "option2", "option3"]
-    
+
     # Test valid select
     block.add_option("choice", "select", value="option1", items=items)
     assert block._options["choice"].value == "option1"
@@ -93,7 +92,7 @@ def test_select_option():
 
 def test_slider_option():
     block = Block()
-    
+
     # Test valid slider
     block.add_option("volume", "slider", value=50, min=0, max=100)
     assert block._options["volume"].value == 50
@@ -111,7 +110,7 @@ def test_slider_option():
 
 def test_display_option():
     block = Block()
-    
+
     # Test valid display
     block.add_option("status", "display", value="Ready")
     assert block._options["status"].value == "Ready"
@@ -128,7 +127,7 @@ def test_display_option():
 
 def test_invalid_option_type():
     block = Block()
-    
+
     # Test invalid option type
     with pytest.raises(AssertionError):
         block.add_option("invalid", "unknown_type")
@@ -136,10 +135,10 @@ def test_invalid_option_type():
 
 def test_duplicate_option_names():
     block = Block()
-    
+
     # Add first option
     block.add_option("test", "input", value="first")
-    
+
     # Try to add another option with the same name
     with pytest.raises(ValueError):
         block.add_option("test", "input", value="second")
