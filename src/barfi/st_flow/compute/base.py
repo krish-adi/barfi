@@ -114,7 +114,7 @@ class ComputeEngine:
                     if parents_visited and child not in queue:
                         queue.append(child)
 
-    def execute(self, schema: FlowSchema):
+    def execute(self, schema: FlowSchema) -> Dict[str, Block]:
         _map_node_block = self._make_map_node_block(schema)
         _execution_graph, _root_nodes = self._make_execution_graph(schema)
 
@@ -122,13 +122,23 @@ class ComputeEngine:
         for node_id in self._traverse_graph_compute_blocks(
             _execution_graph, _root_nodes
         ):
-            # find node for the node_id
-            node = next((node for node in schema.nodes if node.id == node_id), None)
-            print(node, node_id)
             block = _map_node_block[node_id]
-            # if block._options:
-            #     for _opt in block._options:
-            #         print(block.get_option(_opt))
             block._on_compute()
-            print(block)
-            break
+
+            # set all dependent node input interfaces
+            for conn in schema.connections:
+                if conn.outputNode == node_id:
+                    input_node_block = _map_node_block[conn.inputNode]
+                    input_node_block.set_interface(
+                        conn.inputNodeInterface,
+                        block.get_interface(conn.outputNodeInterface),
+                    )
+
+        for node in schema.nodes:
+            node_block = _map_node_block[node.id]
+            for _interface in node.inputs:
+                _interface.value = node_block.get_interface(_interface.name)
+            for _interface in node.outputs:
+                _interface.value = node_block.get_interface(_interface.name)
+
+        return _map_node_block

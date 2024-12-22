@@ -51,5 +51,7 @@ def test_make_execution_graph(compute_engine, load_schema):
 
 
 def test_execute(compute_engine, load_schema):
-    print("\n")
-    compute_engine.execute(load_schema)
+    _map_node_block = compute_engine.execute(load_schema)
+    for node in load_schema.nodes:
+        print(node, _map_node_block[node.id])
+        print("\n\n")

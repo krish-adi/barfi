@@ -41,6 +41,7 @@ def subtraction_func(self):
     in_1 = self.get_interface(name="Input 1")
     in_2 = self.get_interface(name="Input 2")
     value = in_1 - in_2
+    print(f"{in_1} - {in_2} = {value}")
     self.set_interface(name="Output 1", value=value)
 
 
@@ -54,13 +55,10 @@ subtraction.add_compute(subtraction_func)
 def addition_func(self):
     print("addition_func")
     in_1 = self.get_interface(name="Input 1")
-    print(in_1)
     in_2 = self.get_interface(name="Input 2")
-    print(in_2)
     value = in_1 + in_2
+    print(f"{in_1} + {in_2} = {value}")
     self.set_interface(name="Output 1", value=value)
-    print(value)
-    print(self.get_interface(name="Output 1"))
 
 
 addition = Block(name="Addition")
@@ -75,6 +73,7 @@ def multiplication_func(self):
     in_1 = self.get_interface(name="Input 1")
     in_2 = self.get_interface(name="Input 2")
     value = in_1 * in_2
+    print(f"{in_1} * {in_2} = {value}")
     self.set_interface(name="Output 1", value=value)
 
 
@@ -90,6 +89,7 @@ def division_func(self):
     in_1 = self.get_interface(name="Input 1")
     in_2 = self.get_interface(name="Input 2")
     value = in_1 / in_2
+    print(f"{in_1} / {in_2} = {value}")
     self.set_interface(name="Output 1", value=value)
 
 
