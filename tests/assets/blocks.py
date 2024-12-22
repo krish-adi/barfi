@@ -21,6 +21,21 @@ number_5.add_output()
 number_5.add_compute(number_5_func)
 
 
+def real_number_func(self):
+    option_value = self.get_option(name="number-option")
+    self.set_interface(name="Output 1", value=option_value)
+    print(self.get_interface(name="Output 1"))
+
+
+real_number = Block(name="Real Number")
+real_number.add_output()
+real_number.add_option(
+    name="display-option", type="display", value="This is a Block with Number option."
+)
+real_number.add_option(name="number-option", type="number")
+real_number.add_compute(real_number_func)
+
+
 def subtraction_func(self):
     print("subtraction_func")
     in_1 = self.get_interface(name="Input 1")
@@ -84,14 +99,6 @@ division.add_input()
 division.add_output()
 division.add_compute(division_func)
 
-
-def result_func(self):
-    _ = self.get_interface(name="Input 1")
-
-
-result = Block(name="Result")
-result.add_input()
-result.add_compute(result_func)
 
 checkbox = Block(name="Checkbox")
 checkbox.add_input()
@@ -185,20 +192,22 @@ three_mixer.add_output()
 
 
 def result_func(self):
-    _ = self.get_interface(name="Input 1")
+    value = self.get_interface(name="Input 1")
+    print(value)
 
 
 result = Block(name="Result")
 result.add_input()
 result.add_compute(result_func)
 
-process_blocks = [feed, result, mixer, splitter]
+process_blocks = [feed, mixer, splitter]
 
 options_blocks = [input, integer, number, checkbox, selecto, slider, three_mixer]
 
 math_blocks = [
-    number_10,
-    number_5,
+    # number_10,
+    # number_5,
+    real_number,
     result,
     addition,
     subtraction,

@@ -2,6 +2,7 @@
 
 ## Top
 
+-   [ ] check if there are no duplicates of blocks with same block name, ex: results, result
 -   [ ] add compute engine for adding functional compute logic to blocks
     -   [ ] find root nodes and create a execute graph
     -   [ ] apply for multiple roots
