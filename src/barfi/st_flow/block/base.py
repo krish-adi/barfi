@@ -1,54 +1,88 @@
 import types
 import uuid
-from typing import Callable, Any, Dict
-from dataclasses import asdict
+from typing import Callable, Any, Dict, List
+from dataclasses import asdict, dataclass, field
 from barfi.st_flow.block.option import BlockOption, BlockOptionValue
 from barfi.st_flow.block.types import BlockInterface, BlockInterfaceValue
 
 
-class Block(object):
-    def __init__(self, name: str = "Block") -> None:
+@dataclass
+class Block:
+    # Public fields
+    name: str = "Block"
+
+    # Private fields (excluded from init and compare)
+    _type: str = field(init=False, repr=False, compare=False)
+    _inputs: Dict[str, BlockInterface] = field(
+        init=False, default_factory=dict, compare=False
+    )
+    _outputs: Dict[str, BlockInterface] = field(
+        init=False, default_factory=dict, compare=False
+    )
+    _options: Dict[str, BlockOption] = field(
+        init=False, default_factory=dict, compare=False
+    )
+    _state: Dict[str, object] = field(
+        init=False, default_factory=lambda: {"info": None}, repr=False, compare=False
+    )
+    _interface_names: List[str] = field(
+        init=False, default_factory=list, repr=False, compare=False
+    )
+
+    def __post_init__(self):
         """
-        Initialize a Block object.
-
-        Args:
-            name (str): The name of the Block. Defaults to "Block".
-
-        This method sets up the initial state of the Block, including:
-        - The type and name of the Block
-        - Empty state for inputs, outputs, and options
+        Post-initialization to set up private fields based on the given `name`.
         """
-        # Initialise the Block object
+        # Generate a unique name if the default is used
+        if self.name == "Block":
+            self.name = f"Block_{str(uuid.uuid4()).replace('-', '_')}"
 
-        # To set the name of the Block, default = Block
-        # Title of the block on the editor
-        if name == "Block":
-            self._name = f"Block_{str(uuid.uuid4()).replace('-', '_')}"
-        else:
-            self._name = name
+        # Set the type to match the name
+        self._type = self.name
 
-        # Reference to the type of the Block
-        self._type = self._name
+    # def __init__(self, name: str = "Block") -> None:
+    #     """
+    #     Initialize a Block object.
 
-        # To set the defaults for inputs, outputs, options
-        self._inputs: Dict[str, BlockInterface] = {}
-        self._outputs: Dict[str, BlockInterface] = {}
-        self._options: Dict[str, BlockOption] = {}
-        self._state = {"info": None}
-        self._interface_names = []
+    #     Args:
+    #         name (str): The name of the Block. Defaults to "Block".
 
-    def __repr__(self) -> str:
-        return f"<barfi.Block of type `{self._type}` at {hex(id(self))}>"
+    #     This method sets up the initial state of the Block, including:
+    #     - The type and name of the Block
+    #     - Empty state for inputs, outputs, and options
+    #     """
+    #     # Initialise the Block object
 
-    def __str__(self) -> str:
-        inputs_name = self._inputs.keys()
-        outputs_name = self._outputs.keys()
-        options_name = self._options.keys()
-        line_1 = f"barfi.Block of type {self._type} with name {self._name} \n"
-        line_2 = f"Inputs: {inputs_name!r} \n"
-        line_3 = f"Outputs: {outputs_name!r} \n"
-        line_4 = f"Options: {options_name!r} "
-        return line_1 + line_2 + line_3 + line_4
+    #     # To set the name of the Block, default = Block
+    #     # Title of the block on the editor
+    #     if name == "Block":
+    #         self._name = f"Block_{str(uuid.uuid4()).replace('-', '_')}"
+    #     else:
+    #         self._name = name
+
+    #     # Reference to the type of the Block
+    #     self._type = self._name
+
+    #     # To set the defaults for inputs, outputs, options
+    #     self._inputs: Dict[str, BlockInterface] = {}
+    #     self._outputs: Dict[str, BlockInterface] = {}
+    #     self._options: Dict[str, BlockOption] = {}
+    #     self._state = {"info": None}
+    #     self._interface_names = []
+
+    # def __repr__(self) -> str:
+    #     return f"<barfi.Block of type `{self._type}` at {hex(id(self))}>"
+
+    # def __str__(self) -> str:
+    #     # TODO: make this more readable like a print of a dataclass of a pydantic model
+    #     inputs_name = self._inputs.keys()
+    #     outputs_name = self._outputs.keys()
+    #     options_name = self._options.keys()
+    #     line_1 = f"barfi.Block of type {self._type} with name {self._name} \n"
+    #     line_2 = f"Inputs: {inputs_name!r} \n"
+    #     line_3 = f"Outputs: {outputs_name!r} \n"
+    #     line_4 = f"Options: {options_name!r} "
+    #     return line_1 + line_2 + line_3 + line_4
 
     def add_input(self, name: str = None, value: BlockInterfaceValue = None) -> None:
         """
@@ -291,7 +325,7 @@ class Block(object):
         This method is used internally to serialize the block's data for saving or transmitting.
         """
         return {
-            "name": self._name,
+            "name": self.name,
             "type": self._type,
             "inputs": [asdict(input) for input in self._inputs.values()],
             "outputs": [asdict(output) for output in self._outputs.values()],

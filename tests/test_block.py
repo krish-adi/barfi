@@ -6,12 +6,12 @@ def test_block_initialization():
     # Test default initialization
     block = Block()
     assert block._type.startswith("Block_")
-    assert block._name.startswith("Block_")
+    assert block.name.startswith("Block_")
 
     # Test named initialization
     named_block = Block(name="Addition")
     assert named_block._type == "Addition"
-    assert named_block._name == "Addition"
+    assert named_block.name == "Addition"
 
 
 def test_block_state():
