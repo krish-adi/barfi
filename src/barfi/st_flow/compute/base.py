@@ -40,7 +40,7 @@ class ComputeEngine:
                 _node_block: Block = deepcopy(_map_name_block[node.name])
                 for _opt in node.options:
                     # TODO: ideally to be _opt.name, _opt.type, _opt.value
-                    _node_block.set_option(_opt[0], value=_opt[2])
+                    _node_block.set_option(_opt.name, value=_opt.value)
 
                 _map_node_block[node.id] = _node_block
 

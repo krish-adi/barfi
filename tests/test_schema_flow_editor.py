@@ -35,8 +35,8 @@ def test_nodes(editor_schema):
         assert input_node is not None, f"Input node {connection.inputNode} not found"
 
         # Verify interfaces exist
-        output_interfaces = [interface[0] for interface in output_node.outputs]
-        input_interfaces = [interface[0] for interface in input_node.inputs]
+        output_interfaces = [interface.name for interface in output_node.outputs]
+        input_interfaces = [interface.name for interface in input_node.inputs]
 
         assert (
             connection.outputNodeInterface in output_interfaces
@@ -70,20 +70,20 @@ def test_connections(editor_schema):
     # Test Input-1 -> Checkbox-1 connection
     connection = find_connection("Input-1", "Checkbox-1")
     assert connection is not None
-    assert find_node_by_label("Input-1").type == "Input"
-    assert find_node_by_label("Checkbox-1").type == "Checkbox"
+    assert find_node_by_label("Input-1").name == "Input"
+    assert find_node_by_label("Checkbox-1").name == "Checkbox"
 
     # Test Integer-1 -> Select-1 connection
     connection = find_connection("Integer-1", "Select-1")
     assert connection is not None
-    assert find_node_by_label("Integer-1").type == "Integer"
-    assert find_node_by_label("Select-1").type == "Select"
+    assert find_node_by_label("Integer-1").name == "Integer"
+    assert find_node_by_label("Select-1").name == "Select"
 
     # Test Integer-2 -> Slider-1 connection
     connection = find_connection("Number-1", "Slider-1")
     assert connection is not None
-    assert find_node_by_label("Number-1").type == "Number"
-    assert find_node_by_label("Slider-1").type == "Slider"
+    assert find_node_by_label("Number-1").name == "Number"
+    assert find_node_by_label("Slider-1").name == "Slider"
 
     # Test Checkbox-1 -> Mixer-1 connection
     connection = find_connection("Checkbox-1", "Three Mixer-1")
@@ -109,78 +109,93 @@ def test_options(editor_schema):
 
     # Test Input-1 options
     input_node = find_node_by_label("Input-1")
-    assert input_node.type == "Input"
+    assert input_node.name == "Input"
     assert len(input_node.options) == 2
-    assert [
-        "display-option",
-        "DisplayOption",
-        "This is a Block with Input option.",
-    ] in input_node.options
-    assert ["input-option", "InputOption", "hello there"] in input_node.options
+    assert any(
+        opt.name == "display-option"
+        and opt.value == "This is a Block with Input option."
+        for opt in input_node.options
+    )
+    assert any(
+        opt.name == "input-option" and opt.value == "hello there"
+        for opt in input_node.options
+    )
 
     # Test Checkbox-1 options
     checkbox_node = find_node_by_label("Checkbox-1")
-    assert checkbox_node.type == "Checkbox"
+    assert checkbox_node.name == "Checkbox"
     assert len(checkbox_node.options) == 2
-    assert [
-        "display-option",
-        "DisplayOption",
-        "This is a Block with Checkbox option.",
-    ] in checkbox_node.options
-    assert ["checkbox-option", "CheckboxOption", True] in checkbox_node.options
+    assert any(
+        opt.name == "display-option"
+        and opt.value == "This is a Block with Checkbox option."
+        for opt in checkbox_node.options
+    )
+    assert any(
+        opt.name == "checkbox-option" and opt.value is True
+        for opt in checkbox_node.options
+    )
 
     # Test Integer-1 options
     integer_node = find_node_by_label("Integer-1")
-    assert integer_node.type == "Integer"
+    assert integer_node.name == "Integer"
     assert len(integer_node.options) == 2
-    assert [
-        "display-option",
-        "DisplayOption",
-        "This is a Block with Integer option.",
-    ] in integer_node.options
-    assert ["integer-option", "IntegerOption", 3] in integer_node.options
+    assert any(
+        opt.name == "display-option"
+        and opt.value == "This is a Block with Integer option."
+        for opt in integer_node.options
+    )
+    assert any(
+        opt.name == "integer-option" and opt.value == 3 for opt in integer_node.options
+    )
 
     # Test Integer-2 options
     number_node = find_node_by_label("Number-1")
-    assert number_node.type == "Number"
+    assert number_node.name == "Number"
     assert len(number_node.options) == 2
-    assert [
-        "display-option",
-        "DisplayOption",
-        "This is a Block with Number option.",
-    ] in number_node.options
-    assert ["number-option", "NumberOption", 7] in number_node.options
+    assert any(
+        opt.name == "display-option"
+        and opt.value == "This is a Block with Number option."
+        for opt in number_node.options
+    )
+    assert any(
+        opt.name == "number-option" and opt.value == 7 for opt in number_node.options
+    )
 
     # Test Select-1 options
     select_node = find_node_by_label("Select-1")
-    assert select_node.type == "Select"
+    assert select_node.name == "Select"
     assert len(select_node.options) == 2
-    assert [
-        "display-option",
-        "DisplayOption",
-        "This is a Block with Select option.",
-    ] in select_node.options
-    assert ["select-option", "SelectOption", "Select B"] in select_node.options
+    assert any(
+        opt.name == "display-option"
+        and opt.value == "This is a Block with Select option."
+        for opt in select_node.options
+    )
+    assert any(
+        opt.name == "select-option" and opt.value == "Select B"
+        for opt in select_node.options
+    )
 
     # Test Slider-1 options
     slider_node = find_node_by_label("Slider-1")
-    assert slider_node.type == "Slider"
+    assert slider_node.name == "Slider"
     assert len(slider_node.options) == 2
-    assert [
-        "display-option",
-        "DisplayOption",
-        "This is a Block with Slider option.",
-    ] in slider_node.options
-    assert ["slider-option", "SliderOption", 4] in slider_node.options
+    assert any(
+        opt.name == "display-option"
+        and opt.value == "This is a Block with Slider option."
+        for opt in slider_node.options
+    )
+    assert any(
+        opt.name == "slider-option" and opt.value == 4 for opt in slider_node.options
+    )
 
     # Test Mixer nodes have no options
     mixer_1 = find_node_by_label("Three Mixer-1")
-    assert mixer_1.type == "Three Mixer"
+    assert mixer_1.name == "Three Mixer"
     assert len(mixer_1.options) == 0
 
     # Test Result node has no options
     result = find_node_by_label("Result-1")
-    assert result.type == "Result"
+    assert result.name == "Result"
     assert len(result.options) == 0
 
 
@@ -192,47 +207,47 @@ def test_options_values(editor_schema):
     # Test Input-1 value
     input_node = find_node_by_label("Input-1")
     input_option = next(
-        (opt for opt in input_node.options if opt[0] == "input-option"), None
+        (opt for opt in input_node.options if opt.name == "input-option"), None
     )
     assert input_option is not None
-    assert input_option[2] == "hello there"
+    assert input_option.value == "hello there"
 
     # Test Integer-1 value
     integer_1 = find_node_by_label("Integer-1")
     integer_1_option = next(
-        (opt for opt in integer_1.options if opt[0] == "integer-option"), None
+        (opt for opt in integer_1.options if opt.name == "integer-option"), None
     )
     assert integer_1_option is not None
-    assert integer_1_option[2] == 3
+    assert integer_1_option.value == 3
 
     # Test Integer-2 value
     number_1 = find_node_by_label("Number-1")
     number_1_option = next(
-        (opt for opt in number_1.options if opt[0] == "number-option"), None
+        (opt for opt in number_1.options if opt.name == "number-option"), None
     )
     assert number_1_option is not None
-    assert number_1_option[2] == 7
+    assert number_1_option.value == 7
 
     # Test Checkbox-1 value
     checkbox = find_node_by_label("Checkbox-1")
     checkbox_option = next(
-        (opt for opt in checkbox.options if opt[0] == "checkbox-option"), None
+        (opt for opt in checkbox.options if opt.name == "checkbox-option"), None
     )
     assert checkbox_option is not None
-    assert checkbox_option[2] is True
+    assert checkbox_option.value is True
 
     # Test Select-1 value
     select = find_node_by_label("Select-1")
     select_option = next(
-        (opt for opt in select.options if opt[0] == "select-option"), None
+        (opt for opt in select.options if opt.name == "select-option"), None
     )
     assert select_option is not None
-    assert select_option[2] == "Select B"
+    assert select_option.value == "Select B"
 
     # Test Slider-1 value
     slider = find_node_by_label("Slider-1")
     slider_option = next(
-        (opt for opt in slider.options if opt[0] == "slider-option"), None
+        (opt for opt in slider.options if opt.name == "slider-option"), None
     )
     assert slider_option is not None
-    assert slider_option[2] == 4
+    assert slider_option.value == 4

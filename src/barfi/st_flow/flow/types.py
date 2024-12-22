@@ -33,6 +33,18 @@ class FlowNodeMeasured:
 
 
 @dataclass
+class FlowNodeInterface:
+    name: str
+    value: NodeInterfaceValue
+
+
+@dataclass
+class FlowNodeOption:
+    name: str
+    value: NodeOptionValue
+
+
+@dataclass
 class FlowNode:
     """Represents a node in the flow editor with its complete configuration.
 
@@ -51,9 +63,12 @@ class FlowNode:
     type: str
     name: str
     label: str
-    inputs: List[Tuple[str, NodeInterfaceValue]]
-    outputs: List[Tuple[str, NodeInterfaceValue]]
-    options: List[Tuple[str, NodeOptionValue]]
+    # inputs: List[Tuple[str, NodeInterfaceValue]]
+    # outputs: List[Tuple[str, NodeInterfaceValue]]
+    # options: List[Tuple[str, NodeOptionValue]]
+    inputs: List[FlowNodeInterface]
+    outputs: List[FlowNodeInterface]
+    options: List[FlowNodeOption]
     position: FlowNodePosition
     measured: FlowNodeMeasured
 
@@ -129,6 +144,11 @@ def build_flow_schema_from_dict(schema_dict: dict) -> FlowSchema:
             FlowNode(
                 **{
                     **node,
+                    "inputs": [FlowNodeInterface(**input) for input in node["inputs"]],
+                    "outputs": [
+                        FlowNodeInterface(**output) for output in node["outputs"]
+                    ],
+                    "options": [FlowNodeOption(**option) for option in node["options"]],
                     "position": FlowNodePosition(**node["position"]),
                     "measured": FlowNodeMeasured(**node["measured"]),
                 }

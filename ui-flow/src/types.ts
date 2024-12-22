@@ -11,11 +11,11 @@ export type BaseBlock = {
     options: BlockOption[];
 };
 
-export interface BlockInterface {
+export type BlockInterface = {
     // id: string | null;
     name: string;
     value: string | number | boolean | null;
-}
+};
 
 export type BlockOption =
     | CheckboxOption
@@ -91,14 +91,24 @@ export type DisplayOption = {
     value: string;
 };
 
-export interface FlowStateNode {
+export type FlowStateNodeInterface = {
+    name: string;
+    value: string | number | boolean | null;
+};
+
+export type FlowStateNodeOption = {
+    name: string;
+    value: string | number | boolean | null;
+};
+
+export type FlowStateNode = {
     id: string; // id from the node created upon creation on flow
     type: string; // type from the blockData name from the user
     name: string;
     label: string; // label that is displayed on node in ui flow, can be changed in the future to label
-    inputs: [string, string | number | boolean | null][];
-    outputs: [string, string | number | boolean | null][];
-    options: [string, string, string | number | boolean | null][];
+    inputs: FlowStateNodeInterface[];
+    outputs: FlowStateNodeInterface[];
+    options: FlowStateNodeOption[];
     position: {
         x: number;
         y: number;
@@ -107,7 +117,7 @@ export interface FlowStateNode {
         width?: number | undefined;
         height?: number | undefined;
     };
-}
+};
 
 export type FlowStateConnection = {
     id: string;

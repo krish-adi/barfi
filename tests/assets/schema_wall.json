@@ -7,7 +7,7 @@
                 "type": "Result",
                 "name": "Result",
                 "label": "Result-1",
-                "inputs": [["Input 1", null]],
+                "inputs": [{ "name": "Input 1", "value": null }],
                 "outputs": [],
                 "options": [],
                 "position": {
@@ -25,11 +25,11 @@
                 "name": "Three Mixer",
                 "label": "Three Mixer-1",
                 "inputs": [
-                    ["Input 1", null],
-                    ["Input 2", null],
-                    ["Input 3", null]
+                    { "name": "Input 1", "value": null },
+                    { "name": "Input 2", "value": null },
+                    { "name": "Input 3", "value": null }
                 ],
-                "outputs": [["Output 1", null]],
+                "outputs": [{ "name": "Output 1", "value": null }],
                 "options": [],
                 "position": {
                     "x": 586.4924756343597,
@@ -45,15 +45,17 @@
                 "type": "Slider",
                 "name": "Slider",
                 "label": "Slider-1",
-                "inputs": [["Input 1", null]],
-                "outputs": [["Output 1", null]],
+                "inputs": [{ "name": "Input 1", "value": null }],
+                "outputs": [{ "name": "Output 1", "value": null }],
                 "options": [
-                    [
-                        "display-option",
-                        "DisplayOption",
-                        "This is a Block with Slider option."
-                    ],
-                    ["slider-option", "SliderOption", 4]
+                    {
+                        "name": "display-option",
+                        "value": "This is a Block with Slider option."
+                    },
+                    {
+                        "name": "slider-option",
+                        "value": 4
+                    }
                 ],
                 "position": {
                     "x": 274.3914778392688,
@@ -69,15 +71,17 @@
                 "type": "Select",
                 "name": "Select",
                 "label": "Select-1",
-                "inputs": [["Input 1", null]],
-                "outputs": [["Output 1", null]],
+                "inputs": [{ "name": "Input 1", "value": null }],
+                "outputs": [{ "name": "Output 1", "value": null }],
                 "options": [
-                    [
-                        "display-option",
-                        "DisplayOption",
-                        "This is a Block with Select option."
-                    ],
-                    ["select-option", "SelectOption", "Select B"]
+                    {
+                        "name": "display-option",
+                        "value": "This is a Block with Select option."
+                    },
+                    {
+                        "name": "select-option",
+                        "value": "Select B"
+                    }
                 ],
                 "position": {
                     "x": 271.18490760185034,
@@ -93,15 +97,17 @@
                 "type": "Checkbox",
                 "name": "Checkbox",
                 "label": "Checkbox-1",
-                "inputs": [["Input 1", null]],
-                "outputs": [["Output 1", null]],
+                "inputs": [{ "name": "Input 1", "value": null }],
+                "outputs": [{ "name": "Output 1", "value": null }],
                 "options": [
-                    [
-                        "display-option",
-                        "DisplayOption",
-                        "This is a Block with Checkbox option."
-                    ],
-                    ["checkbox-option", "CheckboxOption", true]
+                    {
+                        "name": "display-option",
+                        "value": "This is a Block with Checkbox option."
+                    },
+                    {
+                        "name": "checkbox-option",
+                        "value": true
+                    }
                 ],
                 "position": {
                     "x": 271.27298707908375,
@@ -118,14 +124,16 @@
                 "name": "Number",
                 "label": "Number-1",
                 "inputs": [],
-                "outputs": [["Output 1", null]],
+                "outputs": [{ "name": "Output 1", "value": null }],
                 "options": [
-                    [
-                        "display-option",
-                        "DisplayOption",
-                        "This is a Block with Number option."
-                    ],
-                    ["number-option", "NumberOption", 7]
+                    {
+                        "name": "display-option",
+                        "value": "This is a Block with Number option."
+                    },
+                    {
+                        "name": "number-option",
+                        "value": 7
+                    }
                 ],
                 "position": {
                     "x": -39.8554281664682,
@@ -142,14 +150,16 @@
                 "name": "Integer",
                 "label": "Integer-1",
                 "inputs": [],
-                "outputs": [["Output 1", null]],
+                "outputs": [{ "name": "Output 1", "value": null }],
                 "options": [
-                    [
-                        "display-option",
-                        "DisplayOption",
-                        "This is a Block with Integer option."
-                    ],
-                    ["integer-option", "IntegerOption", 3]
+                    {
+                        "name": "display-option",
+                        "value": "This is a Block with Integer option."
+                    },
+                    {
+                        "name": "integer-option",
+                        "value": 3
+                    }
                 ],
                 "position": {
                     "x": -47.129378086200035,
@@ -166,14 +176,16 @@
                 "name": "Input",
                 "label": "Input-1",
                 "inputs": [],
-                "outputs": [["Output 1", null]],
+                "outputs": [{ "name": "Output 1", "value": null }],
                 "options": [
-                    [
-                        "display-option",
-                        "DisplayOption",
-                        "This is a Block with Input option."
-                    ],
-                    ["input-option", "InputOption", "hello there"]
+                    {
+                        "name": "display-option",
+                        "value": "This is a Block with Input option."
+                    },
+                    {
+                        "name": "input-option",
+                        "value": "hello there"
+                    }
                 ],
                 "position": {
                     "x": -43.0222661476569,

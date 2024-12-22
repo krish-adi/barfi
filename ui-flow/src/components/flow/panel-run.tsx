@@ -21,16 +21,18 @@ function constructFlowState(
             name: blockData.name,
             type: blockData.type,
             label: blockData.label || "",
-            inputs: blockData.inputs.map((input) => [input.name, input.value]),
-            outputs: blockData.outputs.map((output) => [
-                output.name,
-                output.value,
-            ]),
-            options: blockData.options.map((option) => [
-                option.name,
-                option.type,
-                nodesOptionData[node.id][option.name].value,
-            ]),
+            inputs: blockData.inputs.map((input) => ({
+                name: input.name,
+                value: input.value,
+            })),
+            outputs: blockData.outputs.map((output) => ({
+                name: output.name,
+                value: output.value,
+            })),
+            options: blockData.options.map((option) => ({
+                name: option.name,
+                value: nodesOptionData[node.id][option.name].value,
+            })),
             position: node.position,
             measured: node.measured || { width: 0, height: 0 },
         };
