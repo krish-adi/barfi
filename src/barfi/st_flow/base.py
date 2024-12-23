@@ -1,6 +1,5 @@
 import os
 from typing import List, Dict, Union
-from dataclasses import asdict
 import streamlit.components.v1 as components
 
 # import st_flow components
@@ -61,7 +60,7 @@ def st_flow(
     key=None,
 ):
     base_blocks_data = prepare_blocks_export(base_blocks)
-    serialized_editor_schema = asdict(editor_schema)
+    serialized_editor_schema = editor_schema.export()
 
     _from_client = _component_func(
         base_blocks=base_blocks_data,

@@ -114,7 +114,7 @@ class ComputeEngine:
                     if parents_visited and child not in queue:
                         queue.append(child)
 
-    def execute(self, schema: FlowSchema) -> Dict[str, Block]:
+    def execute(self, schema: FlowSchema):
         _map_node_block = self._make_map_node_block(schema)
         _execution_graph, _root_nodes = self._make_execution_graph(schema)
 
@@ -141,4 +141,4 @@ class ComputeEngine:
             for _interface in node.outputs:
                 _interface.value = node_block.get_interface(_interface.name)
 
-        return _map_node_block
+        schema.block_map = _map_node_block

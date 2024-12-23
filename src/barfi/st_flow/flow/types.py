@@ -1,6 +1,7 @@
-from typing import List, Tuple, Union, Literal
-from dataclasses import dataclass
+from typing import List, Union, Literal, Dict
+from dataclasses import dataclass, field, asdict
 from barfi.config import SCHEMA_VERSION
+from barfi.st_flow.block import Block
 
 NodeOptionValue = Union[int, float, str, None, bool]
 NodeInterfaceValue = Union[int, float, str, None, bool]
@@ -63,9 +64,6 @@ class FlowNode:
     type: str
     name: str
     label: str
-    # inputs: List[Tuple[str, NodeInterfaceValue]]
-    # outputs: List[Tuple[str, NodeInterfaceValue]]
-    # options: List[Tuple[str, NodeOptionValue]]
     inputs: List[FlowNodeInterface]
     outputs: List[FlowNodeInterface]
     options: List[FlowNodeOption]
@@ -123,6 +121,41 @@ class FlowSchema:
     connections: List[FlowConnection]
     viewport: FlowViewport
 
+    _block_map: Dict[str, Block] = field(
+        init=False,
+        default_factory=dict,
+        repr=False,
+        compare=False,
+        metadata={"export": False},
+    )
+
+    def block(
+        self, node: FlowNode = None, node_id: str = None, node_label: str = None
+    ) -> Block:
+        if node:
+            node_id = node.id
+            node_label = node.label
+
+        if node_label:
+            node_id = next((n.id for n in self.nodes if n.label == node_label), None)
+
+        if node_id is None:
+            raise ValueError(
+                "Could not find block: no valid node ID, node, or label was provided"
+            )  # noqa
+
+        return self._block_map[node_id]
+
+    def export(self) -> dict:
+        """
+        Convert the dataclass to a dictionary, excluding fields marked with metadata `export=False`.
+        """
+        return {
+            key: value
+            for key, value in asdict(self).items()
+            if self.__dataclass_fields__[key].metadata.get("export", True)
+        }
+
 
 @dataclass
 class StreamlitFlowResponse:
@@ -138,6 +171,7 @@ class StreamlitFlowResponse:
 
 
 def build_flow_schema_from_dict(schema_dict: dict) -> FlowSchema:
+    # TODO move this to a classmethod of FlowSchema import()
     return FlowSchema(
         version=schema_dict.get("version", SCHEMA_VERSION),
         nodes=[

@@ -59,7 +59,9 @@ def test_make_execution_graph(compute_engine, load_schema):
 
 
 def test_execute(compute_engine, load_schema):
-    _map_node_block = compute_engine.execute(load_schema)
+    compute_engine.execute(load_schema)
+
+    _map_node_block = load_schema.block_map
 
     # Assert that we get a dictionary of Block instances
     assert isinstance(_map_node_block, dict)

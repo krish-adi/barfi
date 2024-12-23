@@ -2,7 +2,6 @@ import gzip
 import json
 import os
 from typing import Dict, List
-from dataclasses import asdict
 from barfi.st_flow.flow.types import FlowSchema, build_flow_schema_from_dict
 
 
@@ -62,7 +61,7 @@ class SchemaManager:
             Writes the current state of schemas to storage.
         """
         with gzip.open(self._full_file_path, "wt", encoding="UTF-8") as handle_write:
-            json.dump({k: asdict(v) for k, v in self._schemas.items()}, handle_write)
+            json.dump({k: v.export() for k, v in self._schemas.items()}, handle_write)
 
     def save_schema(self, schema_name: str, flow_schema: FlowSchema):
         """Store a schema with the given name.
