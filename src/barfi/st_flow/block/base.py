@@ -3,7 +3,7 @@ import uuid
 from typing import Callable, Any, Dict, List
 from dataclasses import asdict, dataclass, field
 from barfi.st_flow.block.option import BlockOption, BlockOptionValue
-from barfi.st_flow.block.types import BlockInterface, BlockInterfaceValue
+from barfi.st_flow.block.interface import BlockInterface, BlockInterfaceValue
 
 
 @dataclass
