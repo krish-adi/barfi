@@ -35,11 +35,11 @@ export function convertFlowNodesToNodes(
                     label: _node.label,
                     inputs: _node.inputs.map((input) => ({
                         name: input.name,
-                        value: input.value,
+                        itype: input.itype,
                     })),
                     outputs: _node.outputs.map((output) => ({
                         name: output.name,
-                        value: output.value,
+                        itype: output.itype,
                     })),
                     options: _node.options.map((option) => {
                         const baseOption = baseBlock.options?.find(

@@ -44,7 +44,8 @@ def test_block_inputs():
     assert "Number A" in block._inputs
 
     # Test input with default value
-    block.add_input(name="Number B", value=5)
+    block.add_input(name="Number B")
+    block.set_interface("Number B", 5)
     assert block._inputs["Number B"].value == 5
 
     # Test duplicate input name
@@ -66,7 +67,8 @@ def test_block_outputs():
     assert "Sum" in block._outputs
 
     # Test output with default value
-    block.add_output(name="Doubled Sum", value=10)
+    block.add_output(name="Doubled Sum")
+    block.set_interface("Doubled Sum", 10)
     assert block._outputs["Doubled Sum"].value == 10
 
     # Test duplicate output name

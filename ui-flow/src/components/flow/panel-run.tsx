@@ -23,11 +23,11 @@ function constructFlowState(
             label: blockData.label || "",
             inputs: blockData.inputs.map((input) => ({
                 name: input.name,
-                value: input.value,
+                itype: input.itype,
             })),
             outputs: blockData.outputs.map((output) => ({
                 name: output.name,
-                value: output.value,
+                itype: output.itype,
             })),
             options: blockData.options.map((option) => ({
                 name: option.name,

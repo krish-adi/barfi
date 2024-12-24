@@ -2,11 +2,7 @@
 
 ## Top
 
--   [ ] check if there are no duplicates of blocks with same block name, ex: results, result
--   [ ] add compute engine for adding functional compute logic to blocks
-    -   [ ] find root nodes and create a execute graph
-    -   [ ] apply for multiple roots
-    -   [ ] create a DAG and execute it
+
 
 ## P0
 
@@ -47,20 +43,27 @@
     -   [x] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
 -   [x] migrate the TextOption to a display option with display as text
 -   [x] check for redundant data types as name, type, label which would mean different acroos frontend and backend
+-   [ ] separate dependencies into optional packagages for deprecated version, and new version
 -   [x] check for low haning TODOs across fe and be
 
 ## P1
 
--   [ ] algorithm changes
-    -   [ ] move away from networkx
-    -   [ ] add possibility for cycles
-    -   [ ] multiple root nodes, implying multple flows possible
--   [ ] use the theme props given by the newer streamlit clients
--   [ ] move barfi client to separate pkg
+-   [x] algorithm changes
+    -   [x] move away from networkx
+    -   [x] multiple root nodes, implying multple flows possible
+    -   [x] find root nodes and create a execute graph
+    -   [x] create a DAG and execute it
+    -   [x] apply for multiple roots
+-   [x] add compute engine for adding functional compute logic to blocks
+-   [x] check if there are no duplicates of blocks with same block name, ex: results, result
+-   [x] inputs and outputs in the flowschema store the value type and not the values themselves
 -   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui
+-   [ ] Check all TODOs
+-   [ ] rename /frontend to ui-barfi and move it to archive to not confuse future devs
+-   [ ] release 1.0.0
 
 ## P2
 
--   [ ] Check for saving old schema
--   [ ] Check for loading old schema
--   [ ] rename /frontend to ui-barfi and move it to archive to not confuse future devs
+-   [ ] use the theme props given by the newer streamlit clients
+-   [ ] move barfi client to separate pkg
+-   [ ] add possibility for cyclic compute graph

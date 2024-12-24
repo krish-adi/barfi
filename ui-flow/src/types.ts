@@ -12,9 +12,8 @@ export type BaseBlock = {
 };
 
 export type BlockInterface = {
-    // id: string | null;
     name: string;
-    value: string | number | boolean | null;
+    itype: string;
 };
 
 export type BlockOption =
@@ -93,7 +92,7 @@ export type DisplayOption = {
 
 export type FlowStateNodeInterface = {
     name: string;
-    value: string | number | boolean | null;
+    itype: string;
 };
 
 export type FlowStateNodeOption = {

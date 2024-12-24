@@ -7,7 +7,7 @@
                 "type": "Result",
                 "name": "Result",
                 "label": "Result-1",
-                "inputs": [{ "name": "Input 1", "value": null }],
+                "inputs": [{ "name": "Input 1", "itype": "typing.Any" }],
                 "outputs": [],
                 "options": [],
                 "position": {
@@ -25,11 +25,11 @@
                 "name": "Three Mixer",
                 "label": "Three Mixer-1",
                 "inputs": [
-                    { "name": "Input 1", "value": null },
-                    { "name": "Input 2", "value": null },
-                    { "name": "Input 3", "value": null }
+                    { "name": "Input 1", "itype": "typing.Any" },
+                    { "name": "Input 2", "itype": "typing.Any" },
+                    { "name": "Input 3", "itype": "typing.Any" }
                 ],
-                "outputs": [{ "name": "Output 1", "value": null }],
+                "outputs": [{ "name": "Output 1", "itype": "typing.Any" }],
                 "options": [],
                 "position": {
                     "x": 586.4924756343597,
@@ -45,8 +45,8 @@
                 "type": "Slider",
                 "name": "Slider",
                 "label": "Slider-1",
-                "inputs": [{ "name": "Input 1", "value": null }],
-                "outputs": [{ "name": "Output 1", "value": null }],
+                "inputs": [{ "name": "Input 1", "itype": "typing.Any" }],
+                "outputs": [{ "name": "Output 1", "itype": "typing.Any" }],
                 "options": [
                     {
                         "name": "display-option",
@@ -71,8 +71,8 @@
                 "type": "Select",
                 "name": "Select",
                 "label": "Select-1",
-                "inputs": [{ "name": "Input 1", "value": null }],
-                "outputs": [{ "name": "Output 1", "value": null }],
+                "inputs": [{ "name": "Input 1", "itype": "typing.Any" }],
+                "outputs": [{ "name": "Output 1", "itype": "typing.Any" }],
                 "options": [
                     {
                         "name": "display-option",
@@ -97,8 +97,8 @@
                 "type": "Checkbox",
                 "name": "Checkbox",
                 "label": "Checkbox-1",
-                "inputs": [{ "name": "Input 1", "value": null }],
-                "outputs": [{ "name": "Output 1", "value": null }],
+                "inputs": [{ "name": "Input 1", "itype": "typing.Any" }],
+                "outputs": [{ "name": "Output 1", "itype": "typing.Any" }],
                 "options": [
                     {
                         "name": "display-option",
@@ -124,7 +124,7 @@
                 "name": "Number",
                 "label": "Number-1",
                 "inputs": [],
-                "outputs": [{ "name": "Output 1", "value": null }],
+                "outputs": [{ "name": "Output 1", "itype": "typing.Any" }],
                 "options": [
                     {
                         "name": "display-option",
@@ -150,7 +150,7 @@
                 "name": "Integer",
                 "label": "Integer-1",
                 "inputs": [],
-                "outputs": [{ "name": "Output 1", "value": null }],
+                "outputs": [{ "name": "Output 1", "itype": "typing.Any" }],
                 "options": [
                     {
                         "name": "display-option",
@@ -176,7 +176,7 @@
                 "name": "Input",
                 "label": "Input-1",
                 "inputs": [],
-                "outputs": [{ "name": "Output 1", "value": null }],
+                "outputs": [{ "name": "Output 1", "itype": "typing.Any" }],
                 "options": [
                     {
                         "name": "display-option",

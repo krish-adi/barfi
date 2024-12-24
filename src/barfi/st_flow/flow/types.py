@@ -36,7 +36,7 @@ class FlowNodeMeasured:
 @dataclass
 class FlowNodeInterface:
     name: str
-    value: NodeInterfaceValue
+    itype: str
 
 
 @dataclass
@@ -53,9 +53,9 @@ class FlowNode:
         id (str): Unique identifier for the node
         type (str): Type of the node, this is the name of the block dereived from the base blocks
         name (str): Display name of the node, a label for identyfing the node by a string
-        inputs (List[Tuple[str, NodeInterfaceValue]]): List of input interfaces as (name, value) pairs
-        outputs (List[Tuple[str, NodeInterfaceValue]]): List of output interfaces as (name, value) pairs
-        options (List[Tuple[str, NodeOptionValue]]): List of node options as (name, value) pairs
+        inputs (List[FlowNodeInterface]): List of input interfaces with name and valueType
+        outputs (List[FlowNodeInterface]): List of output interfaces with name and valueType
+        options (List[FlowNodeOption]): List of node options with name and value
         position (FlowNodePosition): Position of the node in the editor
         measured (FlowNodeMeasured): Dimensions of the node
     """

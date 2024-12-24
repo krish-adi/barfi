@@ -1,9 +1,9 @@
 import types
 import uuid
-from typing import Callable, Any, Dict, List
+from typing import Callable, Any, Dict, List, Type
 from dataclasses import asdict, dataclass, field
 from barfi.st_flow.block.option import BlockOption, BlockOptionValue
-from barfi.st_flow.block.interface import BlockInterface, BlockInterfaceValue
+from barfi.st_flow.block.interface import BlockInterface, IT, is_valid_interface_type
 
 
 @dataclass
@@ -40,65 +40,24 @@ class Block:
         # Set the type to match the name
         self._type = self.name
 
-    # def __init__(self, name: str = "Block") -> None:
-    #     """
-    #     Initialize a Block object.
-
-    #     Args:
-    #         name (str): The name of the Block. Defaults to "Block".
-
-    #     This method sets up the initial state of the Block, including:
-    #     - The type and name of the Block
-    #     - Empty state for inputs, outputs, and options
-    #     """
-    #     # Initialise the Block object
-
-    #     # To set the name of the Block, default = Block
-    #     # Title of the block on the editor
-    #     if name == "Block":
-    #         self._name = f"Block_{str(uuid.uuid4()).replace('-', '_')}"
-    #     else:
-    #         self._name = name
-
-    #     # Reference to the type of the Block
-    #     self._type = self._name
-
-    #     # To set the defaults for inputs, outputs, options
-    #     self._inputs: Dict[str, BlockInterface] = {}
-    #     self._outputs: Dict[str, BlockInterface] = {}
-    #     self._options: Dict[str, BlockOption] = {}
-    #     self._state = {"info": None}
-    #     self._interface_names = []
-
-    # def __repr__(self) -> str:
-    #     return f"<barfi.Block of type `{self._type}` at {hex(id(self))}>"
-
-    # def __str__(self) -> str:
-    #     # TODO: make this more readable like a print of a dataclass of a pydantic model
-    #     inputs_name = self._inputs.keys()
-    #     outputs_name = self._outputs.keys()
-    #     options_name = self._options.keys()
-    #     line_1 = f"barfi.Block of type {self._type} with name {self._name} \n"
-    #     line_2 = f"Inputs: {inputs_name!r} \n"
-    #     line_3 = f"Outputs: {outputs_name!r} \n"
-    #     line_4 = f"Options: {options_name!r} "
-    #     return line_1 + line_2 + line_3 + line_4
-
-    def add_input(self, name: str = None, value: BlockInterfaceValue = None) -> None:
+    def add_input(self, name: str = None, interface_type: Type[IT] = Any) -> None:
         """
         Add an Input interface to the Block
 
         Args:
             name (str, optional): The name of the Input interface. If None, a default name will be generated.
-            value (Value, optional): The default value for this input interface.
+            interface_type (Type[IT], optional): The type of the interface. Defaults to Any.
+                Must be a Python built-in type, typing module type, or dataclass.
 
         Raises:
             ValueError: If the name already exists as an interface to the Block.
-            ValueError: If the name is not provided.
+            TypeError: If the interface_type is not a valid type.
 
         Examples:
-            >>> block.add_input(name='Input Name', value=10)
+            >>> block.add_input(name='Input Name', interface_type=int)
         """
+        is_valid_interface_type(interface_type)
+
         if name is None:
             name = f"Input {len(self._inputs) + 1}"
 
@@ -107,24 +66,27 @@ class Block:
                 f"name: {name} already exists as an interface to the Block."
             )
 
-        self._inputs[name] = BlockInterface(name=name, value=value)
+        self._inputs[name] = BlockInterface[interface_type](name=name)
         self._interface_names.append(name)
 
-    def add_output(self, name: str = None, value: BlockInterfaceValue = None) -> None:
+    def add_output(self, name: str = None, interface_type: Type[IT] = Any) -> None:
         """
         Add an Output interface to the Block
 
         Args:
             name (str, optional): The name of the Output interface. If None, a default name will be generated.
-            value (Value, optional): The default value for this output interface.
+            interface_type (Type[IT], optional): The type of the interface. Defaults to Any.
+                Must be a Python built-in type, typing module type, or dataclass.
 
         Raises:
             ValueError: If the name already exists as an interface to the Block.
-            ValueError: If the name is not provided.
+            TypeError: If the interface_type is not a valid type.
 
         Examples:
-            >>> block.add_output(name='Output Name', value=10)
+            >>> block.add_output(name='Output Name', interface_type=str)
         """
+        is_valid_interface_type(interface_type)
+
         if name is None:
             name = f"Output {len(self._outputs) + 1}"
 
@@ -133,11 +95,12 @@ class Block:
                 f"name: {name} already exists as an interface to the Block."
             )
 
-        self._outputs[name] = BlockInterface(name=name, value=value)
+        self._outputs[name] = BlockInterface[interface_type](name=name)
         self._interface_names.append(name)
 
     def _set_interface_id(self, name: str, id: str) -> None:
         """
+        TODO: add this to the compute engine
         Set the ID for a given interface.
 
         Args:
@@ -186,9 +149,9 @@ class Block:
             ValueError: If no interface with the given name is found.
         """
         if name in self._inputs:
-            self._inputs[name].value = value
+            self._inputs[name].set_value(value)
         elif name in self._outputs:
-            self._outputs[name].value = value
+            self._outputs[name].set_value(value)
         else:
             raise ValueError(f"No interface with name: {name} found for Block")
 
@@ -314,7 +277,7 @@ class Block:
         else:
             raise ValueError(f"Option name: {name} does not exist in Block.")
 
-    def _export(self) -> Dict[str, Any]:
+    def _export(self) -> dict:
         """
         Export the block's data as a dictionary.
 
@@ -327,12 +290,12 @@ class Block:
         return {
             "name": self.name,
             "type": self._type,
-            "inputs": [asdict(input) for input in self._inputs.values()],
-            "outputs": [asdict(output) for output in self._outputs.values()],
+            "inputs": [input.export() for input in self._inputs.values()],
+            "outputs": [output.export() for output in self._outputs.values()],
             "options": [asdict(option) for option in self._options.values()],
         }
 
-    def _on_compute(self) -> Any:
+    def _on_compute(self) -> None:
         """
         Default compute method for the block.
         This method is meant to be overridden by the user-defined compute function.
