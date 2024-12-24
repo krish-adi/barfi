@@ -12,7 +12,7 @@ export default defineConfig({
     },
     build: {
         outDir: "../src/barfi/flow/static",
-        chunkSizeWarningLimit: 1600,
+        chunkSizeWarningLimit: 1024,
     },
     server: {
         port: 3001,
