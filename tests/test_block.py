@@ -37,7 +37,6 @@ def test_block_inputs():
     block.add_input()
     assert "Input 1" in block._inputs
     assert block._inputs["Input 1"].value is None
-    assert block._inputs["Input 1"].id is None
 
     # Test named input
     block.add_input(name="Number A")
@@ -60,7 +59,6 @@ def test_block_outputs():
     block.add_output()
     assert "Output 1" in block._outputs
     assert block._outputs["Output 1"].value is None
-    assert block._outputs["Output 1"].id is None
 
     # Test named output
     block.add_output(name="Sum")

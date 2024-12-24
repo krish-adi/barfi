@@ -98,25 +98,6 @@ class Block:
         self._outputs[name] = BlockInterface[interface_type](name=name)
         self._interface_names.append(name)
 
-    def _set_interface_id(self, name: str, id: str) -> None:
-        """
-        TODO: add this to the compute engine
-        Set the ID for a given interface.
-
-        Args:
-            name (str): The name of the interface.
-            id (str): The ID to set for the interface.
-
-        Raises:
-            ValueError: If no interface with the given name is found.
-        """
-        if name in self._inputs:
-            self._inputs[name].id = id
-        elif name in self._outputs:
-            self._outputs[name].id = id
-        else:
-            raise ValueError(f"No interface with name: {name} found for Block")
-
     def get_interface(self, name: str):
         """
         Get the value of a given interface.

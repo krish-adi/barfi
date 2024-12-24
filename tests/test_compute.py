@@ -77,15 +77,9 @@ def test_execute(compute_engine, load_schema):
     for node in load_schema.nodes:
         block = _map_node_block[node.id]
 
-        # Check that all input interfaces exist and have values
-        for interface in node.inputs:
+        # Check that all input and output interfaces exist and have values
+        for interface in node.inputs + node.outputs:
             assert block.get_interface(interface.name) is not None
-            assert interface.value == block.get_interface(interface.name)
-
-        # Check that all output interfaces exist and have values
-        for interface in node.outputs:
-            assert block.get_interface(interface.name) is not None
-            assert interface.value == block.get_interface(interface.name)
 
     # Verify that the connections are correctly set
     for connection in load_schema.connections:

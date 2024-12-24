@@ -9,9 +9,7 @@ IT = TypeVar("IT")
 @dataclass
 class BlockInterface(Generic[IT]):
     name: str
-    # value_type: Type[IT]
     value: IT = None
-    id: str = None
 
     def export(self) -> dict:
         interface_type = get_args(self.__orig_class__)[0]

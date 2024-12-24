@@ -134,11 +134,4 @@ class ComputeEngine:
                         block.get_interface(conn.outputNodeInterface),
                     )
 
-        for node in schema.nodes:
-            node_block = _map_node_block[node.id]
-            for _interface in node.inputs:
-                _interface.value = node_block.get_interface(_interface.name)
-            for _interface in node.outputs:
-                _interface.value = node_block.get_interface(_interface.name)
-
         schema.block_map = _map_node_block
