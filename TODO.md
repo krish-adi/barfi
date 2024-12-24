@@ -2,8 +2,7 @@
 
 ## Top
 
--   [ ] separate dependencies into optional packagages for deprecated version, and new version
--   [ ] Check all TODOs
+-   [ ] release 1.0.0
 
 ## P0
 
@@ -58,12 +57,12 @@
 -   [x] check if there are no duplicates of blocks with same block name, ex: results, result
 -   [x] inputs and outputs in the flowschema store the value type and not the values themselves
 -   [x] rename /frontend to ui-barfi and move it to archive to not confuse future devs
--   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui
--   [ ] Check all TODOs
+-   [x] Check all TODOs
 -   [ ] release 1.0.0
 
 ## P2
 
+-   [ ] Add deprecation warning for st_barfi
 -   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui
 -   [ ] use the theme props given by the newer streamlit clients
 -   [ ] move barfi client to separate pkg

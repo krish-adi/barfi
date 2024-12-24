@@ -1,12 +1,17 @@
 import os
-import streamlit.components.v1 as components
 from typing import List, Dict, Union
 
-# import st_barfi components
 from barfi.config import RELEASE
 from barfi.v0.block_builder import Block
 from barfi.v0.compute_engine import ComputeEngine
 from barfi.v0.manage_schema import load_schema_name, load_schemas, save_schema
+
+try:
+    import streamlit.components.v1 as components
+except ImportError:
+    raise ImportError(
+        "Please install required dependencies using: pip install barfi[v0]"
+    )
 
 
 _RELEASE = RELEASE

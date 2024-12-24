@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "barfi"
-version = "0.8.0"
+version = "1.0.0"
 description = "Graphical programming framework for AI and data apps."
 license = "MIT"
 authors = ["Adithya Krishnan <krishsandeep@gmail.com>"]
@@ -19,8 +19,16 @@ include = ["src/barfi/static/*"]
 
 [tool.poetry.dependencies]
 python = ">=3.8,!=3.9.7"
-streamlit = "^1.37.1"
-networkx = ">=3.1"
+
+
+# List of optional dependencies, installed using `[extra]`
+streamlit = { version = "^1.37.1", optional = true }
+networkx = { version = ">=3.1", optional = true }
+
+
+[tool.poetry.extras]
+streamlit = ["streamlit"]
+v0 = ["networkx", "streamlit"]
 
 
 [tool.poetry.group.dev.dependencies]
