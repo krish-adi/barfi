@@ -4,9 +4,9 @@ from typing import List, Dict, Union
 
 # import st_barfi components
 from barfi.config import RELEASE
-from barfi.deprecated.block_builder import Block
-from barfi.deprecated.compute_engine import ComputeEngine
-from barfi.deprecated.manage_schema import load_schema_name, load_schemas, save_schema
+from barfi.v0.block_builder import Block
+from barfi.v0.compute_engine import ComputeEngine
+from barfi.v0.manage_schema import load_schema_name, load_schemas, save_schema
 
 
 _RELEASE = RELEASE

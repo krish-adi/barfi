@@ -1,6 +1,6 @@
 import networkx as nx
 import copy
-from barfi.deprecated.block_builder import Block
+from barfi.v0.block_builder import Block
 from typing import List, Dict
 
 
