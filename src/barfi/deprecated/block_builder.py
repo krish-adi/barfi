@@ -1,6 +1,6 @@
 import types
 from typing import Callable, Any
-from barfi.st_barfi.option_builder import build_option
+from barfi.deprecated.option_builder import build_option
 
 
 class Block(object):
