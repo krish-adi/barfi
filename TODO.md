@@ -2,7 +2,8 @@
 
 ## Top
 
-
+-   [ ] separate dependencies into optional packagages for deprecated version, and new version
+-   [ ] Check all TODOs
 
 ## P0
 
@@ -43,7 +44,6 @@
     -   [x] ideal should be blacks have only "name", nodes have name which is the label and type which is the name from baseblock
 -   [x] migrate the TextOption to a display option with display as text
 -   [x] check for redundant data types as name, type, label which would mean different acroos frontend and backend
--   [ ] separate dependencies into optional packagages for deprecated version, and new version
 -   [x] check for low haning TODOs across fe and be
 
 ## P1
@@ -64,6 +64,7 @@
 
 ## P2
 
+-   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui
 -   [ ] use the theme props given by the newer streamlit clients
 -   [ ] move barfi client to separate pkg
 -   [ ] add possibility for cyclic compute graph
