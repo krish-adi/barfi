@@ -57,9 +57,9 @@
 -   [x] add compute engine for adding functional compute logic to blocks
 -   [x] check if there are no duplicates of blocks with same block name, ex: results, result
 -   [x] inputs and outputs in the flowschema store the value type and not the values themselves
+-   [x] rename /frontend to ui-barfi and move it to archive to not confuse future devs
 -   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui
 -   [ ] Check all TODOs
--   [ ] rename /frontend to ui-barfi and move it to archive to not confuse future devs
 -   [ ] release 1.0.0
 
 ## P2

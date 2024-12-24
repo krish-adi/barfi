@@ -11,7 +11,7 @@ export default defineConfig({
         },
     },
     build: {
-        outDir: "../src/barfi/static/ui-st",
+        outDir: "../src/barfi/flow/static",
     },
     server: {
         port: 3001,
