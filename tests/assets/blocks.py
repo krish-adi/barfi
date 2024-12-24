@@ -1,4 +1,4 @@
-from barfi.st_flow import Block
+from barfi.flow import Block
 
 
 def number_10_func(self):

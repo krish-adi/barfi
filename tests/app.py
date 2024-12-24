@@ -2,8 +2,8 @@ from dataclasses import asdict
 import streamlit as st
 from barfi import st_flow
 from barfi.config import SCHEMA_VERSION
-from barfi.st_flow.schema.manage import SchemaManager
-from barfi.st_flow.flow.types import FlowSchema, FlowViewport
+from barfi.flow.schema.manage import SchemaManager
+from barfi.flow.flow.types import FlowSchema, FlowViewport
 from assets.blocks import base_blocks
 
 

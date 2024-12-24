@@ -1,5 +1,5 @@
 import pytest
-from barfi.st_flow.block import Block
+from barfi.flow.block import Block
 
 
 def test_checkbox_option():

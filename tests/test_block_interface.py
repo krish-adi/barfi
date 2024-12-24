@@ -1,7 +1,7 @@
 import pytest
 from typing import Dict, List, Any, Union
 from dataclasses import dataclass
-from barfi.st_flow.block.interface import (
+from barfi.flow.block.interface import (
     IT,
     BlockInterface,
     check_block_interface_type_equality,

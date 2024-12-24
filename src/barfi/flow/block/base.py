@@ -2,8 +2,8 @@ import types
 import uuid
 from typing import Callable, Any, Dict, List, Type
 from dataclasses import asdict, dataclass, field
-from barfi.st_flow.block.option import BlockOption, BlockOptionValue
-from barfi.st_flow.block.interface import BlockInterface, IT, is_valid_interface_type
+from barfi.flow.block.option import BlockOption, BlockOptionValue
+from barfi.flow.block.interface import BlockInterface, IT, is_valid_interface_type
 
 
 @dataclass

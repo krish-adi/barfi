@@ -1,6 +1,6 @@
 import pytest
-from barfi.st_flow.block import Block
-from barfi.st_flow.block.prepare import prepare_blocks_export
+from barfi.flow.block import Block
+from barfi.flow.block.prepare import prepare_blocks_export
 
 
 def test_prepare_blocks_export_list():

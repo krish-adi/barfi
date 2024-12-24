@@ -3,8 +3,8 @@ import tempfile
 from contextlib import contextmanager
 from typing import Generator
 from pathlib import Path
-from barfi.st_flow.schema.manage import SchemaManager
-from barfi.st_flow.flow.types import FlowSchema, FlowViewport, SCHEMA_VERSION
+from barfi.flow.schema.manage import SchemaManager
+from barfi.flow.flow.types import FlowSchema, FlowViewport, SCHEMA_VERSION
 
 
 @contextmanager

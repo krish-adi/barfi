@@ -1,5 +1,5 @@
 from typing import Union, List, Dict
-from barfi.st_flow.block import Block
+from barfi.flow.block import Block
 
 
 def prepare_blocks_export(

@@ -1,4 +1,4 @@
-from barfi.st_flow.block import Block
+from barfi.flow.block import Block
 import pytest
 
 

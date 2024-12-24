@@ -1,7 +1,7 @@
 from typing import List, Union, Literal, Dict
 from dataclasses import dataclass, field, asdict
 from barfi.config import SCHEMA_VERSION
-from barfi.st_flow.block import Block
+from barfi.flow.block import Block
 
 NodeOptionValue = Union[int, float, str, None, bool]
 NodeInterfaceValue = Union[int, float, str, None, bool]

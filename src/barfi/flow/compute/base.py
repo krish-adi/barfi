@@ -1,7 +1,7 @@
 from copy import deepcopy
 from typing import List, Union, Dict, Tuple
-from barfi.st_flow.block import Block
-from barfi.st_flow.flow.types import FlowSchema
+from barfi.flow.block import Block
+from barfi.flow.flow.types import FlowSchema
 
 
 class ComputeEngine:

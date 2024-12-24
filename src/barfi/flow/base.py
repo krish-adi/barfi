@@ -4,9 +4,9 @@ import streamlit.components.v1 as components
 
 # import st_flow components
 from barfi.config import RELEASE, SCHEMA_VERSION
-from barfi.st_flow.block import Block
-from barfi.st_flow.block.prepare import prepare_blocks_export
-from barfi.st_flow.flow.types import (
+from barfi.flow.block import Block
+from barfi.flow.block.prepare import prepare_blocks_export
+from barfi.flow.flow.types import (
     build_streamlit_flow_response,
     FlowSchema,
     FlowViewport,

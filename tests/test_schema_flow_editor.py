@@ -1,6 +1,6 @@
 import pytest
 import json
-from barfi.st_flow.flow.types import build_flow_schema_from_dict
+from barfi.flow.flow.types import build_flow_schema_from_dict
 
 
 def load_schema():

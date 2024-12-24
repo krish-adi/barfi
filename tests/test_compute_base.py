@@ -1,10 +1,10 @@
 import pytest
 import json
-from barfi.st_flow.block import Block
+from barfi.flow.block import Block
 from .assets.blocks import base_blocks
-from barfi.st_flow.schema.manage import SchemaManager
-from barfi.st_flow.compute.base import ComputeEngine
-from barfi.st_flow.flow.types import build_flow_schema_from_dict
+from barfi.flow.schema.manage import SchemaManager
+from barfi.flow.compute.base import ComputeEngine
+from barfi.flow.flow.types import build_flow_schema_from_dict
 
 
 @pytest.fixture
