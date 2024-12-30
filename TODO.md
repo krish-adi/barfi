@@ -2,6 +2,8 @@
 
 ## Top
 
+-   [ ] add documentation
+-   [ ] check optional dependencies
 -   [ ] release 1.0.0
 
 ## P0
@@ -62,6 +64,7 @@
 
 ## P2
 
+-   [ ] Add developer notes for contributors
 -   [ ] Add deprecation warning for st_barfi
 -   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui
 -   [ ] use the theme props given by the newer streamlit clients

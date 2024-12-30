@@ -8,6 +8,7 @@ from barfi.flow.flow.types import (
     build_streamlit_flow_response,
     FlowSchema,
     FlowViewport,
+    StreamlitFlowResponse,
 )
 
 try:
@@ -63,7 +64,26 @@ def st_flow(
     ),
     commands: List[str] = ["execute", "save"],
     key=None,
-):
+) -> StreamlitFlowResponse:
+    """Create a flow editor component in Streamlit.
+
+    Args:
+        base_blocks (Union[List[Block], Dict[str, List[Block]]]): The blocks available for use in the flow editor.
+            Can be either a list of Block objects or a dictionary mapping category names to lists of blocks.
+        editor_schema (FlowSchema, optional): The initial schema for the flow editor, including nodes,
+            connections, and viewport settings. Defaults to an empty schema.
+        commands (List[str], optional): List of commands available in the editor.
+            Defaults to ["execute", "save"].
+        key (str, optional): Unique key for the component instance. Use this to maintain component state
+            across re-renders. Defaults to None.
+
+    Returns:
+        StreamlitFlowResponse: Response object containing the editor state and any command execution results.
+
+    Example:
+        >>> blocks = [MyCustomBlock(), AnotherBlock()]
+        >>> response = st_flow(blocks, key="my_flow_editor")
+    """
     base_blocks_data = prepare_blocks_export(base_blocks)
     serialized_editor_schema = editor_schema.export()
 
