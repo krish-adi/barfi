@@ -2,8 +2,10 @@
 
 ## Top
 
--   [ ] update readme
 -   [ ] test optional dependencies
+-   [ ] update changelog
+-   [ ] update dev notes
+-   [ ] update docs for the images and other pages
 -   [ ] release 1.0.0
 
 ## P0
@@ -61,7 +63,10 @@
 -   [x] rename /frontend to ui-barfi and move it to archive to not confuse future devs
 -   [x] Check all TODOs
 -   [x] add documentation
--   [ ] update readme
+-   [x] update readme
+-   [ ] update changelog
+-   [ ] update dev notes
+-   [ ] update docs for the images and other pages
 -   [ ] test optional dependencies
 -   [ ] release 1.0.0
 
