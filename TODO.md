@@ -2,8 +2,6 @@
 
 ## Top
 
--   [x] update dev notes
--   [ ] update changelog
 -   [ ] test optional dependencies
 -   [ ] update docs for the images and other pages
 -   [ ] release 1.0.0
@@ -64,8 +62,8 @@
 -   [x] Check all TODOs
 -   [x] add documentation
 -   [x] update readme
--   [ ] update changelog
--   [ ] update dev notes
+-   [x] update changelog
+-   [x] update dev notes
 -   [ ] update docs for the images and other pages
 -   [ ] test optional dependencies
 -   [ ] release 1.0.0
