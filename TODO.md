@@ -2,8 +2,8 @@
 
 ## Top
 
--   [ ] add documentation
--   [ ] check optional dependencies
+-   [ ] update readme
+-   [ ] test optional dependencies
 -   [ ] release 1.0.0
 
 ## P0
@@ -60,6 +60,9 @@
 -   [x] inputs and outputs in the flowschema store the value type and not the values themselves
 -   [x] rename /frontend to ui-barfi and move it to archive to not confuse future devs
 -   [x] Check all TODOs
+-   [x] add documentation
+-   [ ] update readme
+-   [ ] test optional dependencies
 -   [ ] release 1.0.0
 
 ## P2

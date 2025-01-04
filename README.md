@@ -1,37 +1,43 @@
-# Barfi
+<img src="/assets/logo.png" width="100px" alt="Barfi Logo">
 
-**A Python visual Flow Based Programming library that integrates into your existing workflow.**
+# Welcome to Barfi ! 👋
 
-![Demo GIF](/docs/source/_static/demo.gif)
+**A Python visual Flow Based Programming library to buld workflows that integrates into existing codebases.**
 
-**Documentation** : [find it here](https://barfi.readthedocs.io/en/latest/)
+**Documentation** : [find it here](https://barfi.ai/docs)
 
-Barfi is a Flow Based Programming environment that provides a graphical programming interface. It is integratable into your existing Python workflows. A schema is built using `barfi.Block`s. Then the schema is executed with `barfi.ComputeEngine`.
+Barfi is a Flow-Based Programming framework that offers a graphical programming interface. It is designed to integrate seamlessly into your existing Python applications.
 
-Each `barfi.Block` has some properties that enable the FBP and schema building. Firstly, each Block has Input and Output interfaces that link to other Blocks. Each Block can carry an executable function, that is specified by the user. This function can access/get data from the Input interface, perform computations or calculations and set the Output interface. 
+Barfi serves as an abstraction of Graphical Programming, Flow-Based Programming, or Node Programming, where a Block corresponds to a Node, and a Link (or connection) corresponds to an Edge. These concepts go by different names, each reflecting specific needs or philosophies. In Barfi, they form the foundation of a framework for building, saving, and executing workflows as needed. The framework is intentionally kept simple, providing APIs that allow customization for diverse use cases and philosophies.
 
-In general, Barfi is an abstraction of the Graphical Programming, Flow Based Programming or Node programming. Where the Block is synonymous to Node, and a Link (connection) is synonymous to an Edge. There are many ways to call this, each serving a specific need or a philosophy. For, Barfi I've kept it simple, so that it can be customized to different use-cases and philosophy. 
+Many existing visual Flow-Based Programming (FBP) libraries/frameworks operate within their own confined isolated environments, limiting their usability as components in existing applications or scripts. Barfi addresses this by decoupling the graphical programming interface from the computation environment, which eables easy integration into existing apps. The graphical interface is provided through a Streamlit widget: `st_flow` (with a Jupyter Notebook widget currently in development), while the computation environment is managed independently via the `ComputeEngine`.
 
-Existing visual Flow Based Programming (FBP) libraries in Python run in their own/separate environment. They are not integratable into existing workflows, nor can they be used as a component in your existing scripts. Barfi bridges this with a Streamlit widget, and a Jupyter-Notebook widget is in the roadmap. 
-
-The other main limitation for the existing Python libraries is the lack of domain specific components. Barfi has a roadmap to add domain specific components. 
+> Note: The current version >= 1.0.0 introduces many changes from <= 0.7.0. Check the (changelog)[./CHANGELOG.md] for more info on this. Versions will no longer be maintained. 
 
 ## Quickstart
 
+A workflow consists of a bunch of `Block`s connected to each other, the information of the blocks and connections is stored in a `FlowSchema`, which is then executed to execute each program/function connected to each `Block` and to propagate the data from one `Block` to another.
+
 ### Installation
 
-In your Python project virtual environment install using pip:
+Since we will be using the streamlit widget st_flow for the graphical interface here, we will install the package with the streamlit requirements:
 
 ```shell
-pip install barfi
+pip install barfi[streamlit]
 ```
 
-### Graphical Interface
+> Note: As a best practice, it is recommended to setup a virtual environment to manage the dependencies of the project. If you do not know how to do this, this blog or this section could be of help.
 
-- Barfi has a Streamlit component with the API `barfi.st_barfi`. 
+### Your First App
 
-- Plans are on way to build a Jupyter-Notebok widget. 
+Follow this getting started guide on building your first `Blocks`, creating a `FlowSchema` and executing it using a `ComputeEngine`, save it using a `SchemaManager`.
+
+**Getting Started** : [find it here](https://barfi.ai/docs/getting_started)
+
+## Migration from v0
+
+If you were using the versions <= 0.7.0, a migration guide is being written. For using version >= 1.0.0, conceptually all the concepts remain with a minor API changes. v1.0.0 introduces a stronger type checking mechanism, and decouples and `SchemaManager` and `ComputeEngine` from the UI by providing separate classes to run those functions. You can check the API docs to get familiarized on how to use them. 
 
 ## Under the hood
 
-The frontend is built using Vue and [BaklavaJS](https://github.com/newcat/baklavajs). Some of the implemented backend logic are borrowed from [BaklavaJS](https://github.com/newcat/baklavajs).
+The Flow Editor UI is built using [ReactFlow](https://reactflow.dev/).
