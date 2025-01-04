@@ -2,9 +2,9 @@
 
 ## Top
 
--   [ ] test optional dependencies
+-   [x] update dev notes
 -   [ ] update changelog
--   [ ] update dev notes
+-   [ ] test optional dependencies
 -   [ ] update docs for the images and other pages
 -   [ ] release 1.0.0
 

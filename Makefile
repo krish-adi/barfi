@@ -2,18 +2,23 @@
 
 .ONESHELL:
 
-.PHONY: serve
-serve: 
-	cd frontend && npm run serve
+.PHONY: serve-ui
+serve-ui: 
+	cd ui-flow && npm run dev
 
-.PHONY: run
-run: 
-	cd tests && streamlit run test_app.py 
+.PHONY: build-ui
+build-ui: 
+	cd ui-flow && npm run build
 
-.PHONY: test
-test: 
-	cd tests/unittests && python -m unittest discover
+.PHONY: serve-barfi
+serve-barfi: 
+	cd tests && poetry run streamlit run app.py 
 
-.PHONY: upload
-upload: 
-	twine upload -u "__token__" -p "$(PYPI_BARFI_API)" --skip-existing --verbose dist/*
+.PHONY: tests
+tests: 
+	poetry run pytest tests -v -s
+
+.PHONY: build-upload
+build-upload: 
+	# twine upload -u "__token__" -p "$(PYPI_BARFI_API)" --skip-existing --verbose dist/*
+	echo "Upload to PyPi"

@@ -1,76 +1,47 @@
-# Development notes
+# Developer Notes
 
-Following are the notes for working on the development of the barfi.
-
-## Quickstart for development
-
-- In terminal 1
-```shell
-make serve
-```
-
-- In terminal 2
-```shell
-make run
-```
+Following are the developer notes on getting started to contributing to the development of Barfi.
 
 ## Requirements
 
-- Ensure you have [Python 3.6+](https://www.python.org/downloads/), [Node.js](https://nodejs.org), and [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
-- Clone this repo to a local folder.
+### Development Environment
 
-## Python virtual environment
+-   Clone this repo to a local folder.
+-   Python version is managed by [Pyenv](https://github.com/pyenv/pyenv): Base Python version currently is: `3.8.19`
+-   Python dependencies and packaging is done using [Poetry](https://python-poetry.org/).
+-   Frontend GUI environement is managed using [NVM](https://github.com/nvm-sh/nvm). Base Node version currently is: `v18.18.2`
+-   If you are using a Mac, get started by installing dependencies using [Homebrew](https://brew.sh/), and continue to the following:
 
-Create a new Python virtual environment:
+    -   Install Pyenv and Python using: `brew install pyenv` -> `pyenv install 3.8.19`
+    -   Find the location where `Python 3.8.19` install using -> `pyenv which python`
+    -   Install Poetry and activate environement: `brew install poetry` -> `cd <barfi-git-repo>` -> `poetry env use <python-3.8.19-location>` -> `poetry install`
+    -   Install NVM using [these instructions](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) and then Node using `nvm install 18.18.2` -> `nvm use 18.18.2`.
+    -   Install ui depdendencies by: `cd ui-flow` -> `npm install`
 
-```shell
-$ python3 -m venv venv  # create venv
-$ . venv/bin/activate   # activate venv
-$ pip install streamlit # install streamlit
-```
+## Quickstart for development
 
-Run the components's Streamlit app:
+Open 2 terminals, one for starting the Python env and the other for the UI env.
 
-```shell
-$ . venv/bin/activate  # activate the venv you created earlier
-$ streamlit run barfi/__init__.py  # run the root test
-```
-
-## Node environment
-
-Install and initialize the component's frontend:
+-   In terminal 1
 
 ```shell
-$ cd barfi/frontend
-$ npm install    # Install npm dependencies
-$ npm run serve  # Start the dev server
+make serve-ui
 ```
 
-# Build and Deploy
+-   In terminal 2
 
 ```shell
-pip install build twine
-python -m build 
-twine upload --verbose --skip-existing dist/*
+make serve-barfi
 ```
 
-## Checklist before building new package
-- [ ] Run unittest by running `make test`
-- [ ] Change `Node` to `Block` here `barfi/frontend/node_modules/@baklavajs/plugin-renderer-vue/dist/index.js` @ `this.contextMenu.items`
-- [ ] Build the frontend: `cd frontend/` and run `npm run build`
-- [ ] Set `release = True` in */barfi/__init__.py*
-- [ ] Bump version number in `setup.py`
-- [ ] Build package: `python -m build`
-- [ ] Bump version number in `docs/source/conf.py` 
-- [ ] Update docs if required.
-- [ ] Upload to twine using `make upload`
-- [ ] Change Set `release = False` in */barfi/__init__.py*
-- [ ] Update CHANGELOG
-- [ ] Commit the repository with the version number `v 0.4.2`
+## Checklist for building and uploading new package
 
-## Resources
-
-- https://stackoverflow.com/questions/1301346/what-is-the-meaning-of-single-and-double-underscore-before-an-object-name
-- https://stackoverflow.com/questions/972/adding-a-method-to-an-existing-object-instance
-- https://stackoverflow.com/questions/52799985/python-change-bound-method-to-another-method
-- https://docs.python.org/3/tutorial/classes.html
+-   [ ] Update Dcoumentation if required.
+-   [ ] Run tests using `make tests`
+-   [ ] Build the ui-flow: `cd build-ui`
+-   [ ] Set `RELEASE = True` in `src/barfi/config.py`
+-   [ ] Bump version number as required in `pyproject.toml`
+-   [ ] Update CHANGELOG 
+-   [ ] Build and upload package using `make build-upload`
+-   [ ] Change `RELEASE = False` in `src/barfi/config.py`
+-   [ ] Commit the repository with the version number example: `v 0.4.2`
