@@ -4,7 +4,7 @@ from typing import List, Dict, Union
 from barfi.config import RELEASE, SCHEMA_VERSION
 from barfi.flow.block import Block
 from barfi.flow.block.prepare import prepare_blocks_export
-from barfi.flow.flow.types import (
+from barfi.flow.schema.types import (
     build_streamlit_flow_response,
     FlowSchema,
     FlowViewport,

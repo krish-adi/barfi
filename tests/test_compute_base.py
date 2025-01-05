@@ -4,7 +4,7 @@ from barfi.flow.block import Block
 from .assets.blocks import base_blocks
 from barfi.flow.schema.manage import SchemaManager
 from barfi.flow.compute.base import ComputeEngine
-from barfi.flow.flow.types import build_flow_schema_from_dict
+from barfi.flow.schema.types import build_flow_schema_from_dict
 
 
 @pytest.fixture
