@@ -134,4 +134,4 @@ class ComputeEngine:
                         block.get_interface(conn.outputNodeInterface),
                     )
 
-        schema.block_map = _map_node_block
+        schema._block_map = _map_node_block

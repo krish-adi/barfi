@@ -67,7 +67,7 @@ const PanelContextMenu = memo(
     }) => {
         return (
             <ContextMenuContent>
-                <ContextMenuLabel>Add a node</ContextMenuLabel>
+                <ContextMenuLabel>Add a Block</ContextMenuLabel>
                 <ContextMenuSeparator />
                 {Array.isArray(baseBlocks)
                     ? // Handle array case

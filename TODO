@@ -3,6 +3,8 @@
 ## Top
 
 -   [ ] update docs for the images and other pages
+-   [ ] nits -> change base_blocks to just blocks in st_flow, compute and other places
+-   [ ] nits -> change flow.flow.types to flow.types
 -   [ ] test optional dependencies
 -   [ ] ruff checks & release 1.0.0
 
@@ -64,15 +66,6 @@
 -   [x] update readme
 -   [x] update changelog
 -   [x] update dev notes
--   [ ] update docs for the images and other pages
+-   [x] update docs for the images and other pages
 -   [ ] test optional dependencies
--   [ ] release 1.0.0
-
-## P2
-
--   [ ] Add developer notes for contributors
--   [ ] Add deprecation warning for st_barfi
--   [ ] Add custom commands, to make it customize to act upon a command bar of tools and commmands and how to render them on the ui
--   [ ] use the theme props given by the newer streamlit clients
--   [ ] move barfi client to separate pkg
--   [ ] add possibility for cyclic compute graph
+-   [ ] ruff checks & release 1.0.0

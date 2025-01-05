@@ -1,15 +1,17 @@
 from dataclasses import asdict
 import streamlit as st
-from barfi import st_flow
-from barfi.config import SCHEMA_VERSION
-from barfi.flow.schema.manage import SchemaManager
+from barfi.flow import st_flow, SchemaManager, ComputeEngine
 from barfi.flow.flow.types import FlowSchema, FlowViewport
+from barfi.config import SCHEMA_VERSION
 from assets.blocks import base_blocks
 
 
 schema_manager = SchemaManager(filepath="./assets/")
 # st.write(schema_manager.schema_names)
-load_schema_name = st.selectbox("Schema name", [None] + schema_manager.schema_names)
+load_schema_name = st.selectbox(
+    "Schema name", [None] + schema_manager.schema_names)
+
+compute_engine = ComputeEngine(base_blocks)
 
 
 if load_schema_name is not None:
@@ -27,15 +29,21 @@ barfi_result = st_flow(
     editor_schema=load_schema,
 )
 
-
-tab1, tab2, tab3 = st.tabs(["View Schema", "Save Schema", "Update Schema"])
+tab1, tab2, tab3, tab4 = st.tabs(
+    ["View Schema", "Save Schema", "Update Schema", "Inspect Execute Result"])
 
 with tab1:
-    st.write(asdict(barfi_result))
-    # st.write(barfi_result)
-    # st.write(
-    #     [(n.name, n.options, n.inputs, n.outputs) for n in barfi_result.editor_schema.nodes]
-    # )
+    tab1_1, tab1_2, tab1_3 = st.tabs(
+        ["View as dict", "View as object", "View Node Info"])
+    with tab1_1:
+        st.write(asdict(barfi_result))
+    with tab1_2:
+        st.write(barfi_result)
+    with tab1_3:
+        st.write(
+            [(n.name, n.options, n.inputs, n.outputs)
+             for n in barfi_result.editor_schema.nodes]
+        )
 with tab2:
     with st.form("save_schema"):
         schema_name = st.text_input("Schema name")
@@ -44,4 +52,14 @@ with tab2:
 with tab3:
     with st.form("update_schema"):
         if st.form_submit_button("Update schema"):
-            schema_manager.update_schema(load_schema_name, barfi_result.editor_schema)
+            schema_manager.update_schema(
+                load_schema_name, barfi_result.editor_schema)
+with tab4:
+    if barfi_result.command == "execute":
+        flow_schema = barfi_result.editor_schema
+        compute_engine.execute(flow_schema)
+        result_block = flow_schema.block(node_label="Result-1")
+        st.write(result_block)
+        st.write(result_block.get_interface("Input 1"))
+    else:
+        st.write("No execute command was run.")

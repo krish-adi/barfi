@@ -132,14 +132,30 @@ class FlowSchema:
     def block(
         self, node: FlowNode = None, node_id: str = None, node_label: str = None
     ) -> Block:
+        """
+        Creates or retrieves a Block instance from a FlowNode or node identifiers.
+
+        Args:
+            node (FlowNode, optional): FlowNode instance to create block from. Defaults to None.
+            node_id (str, optional): Unique identifier for the node. Defaults to None.
+            node_label (str, optional): Display label for the node. Defaults to None.
+
+        Returns:
+            Block: A Block instance representing the node in the flow.
+
+        Example:            
+            >>> block = flow_schema.block(node_label="Result-1")
+        """
+        
         if node:
             node_id = node.id
             node_label = node.label
 
         if node_label:
-            node_id = next((n.id for n in self.nodes if n.label == node_label), None)
+            node_id = next(
+                (n.id for n in self.nodes if n.label == node_label), None)
 
-        if node_id is None:
+        if node_id is None or node_id not in self._block_map:
             raise ValueError(
                 "Could not find block: no valid node ID, node, or label was provided"
             )  # noqa
@@ -199,5 +215,6 @@ def build_flow_schema_from_dict(schema_dict: dict) -> FlowSchema:
 def build_streamlit_flow_response(_from_client: dict) -> StreamlitFlowResponse:
     return StreamlitFlowResponse(
         command=_from_client["command"],
-        editor_schema=build_flow_schema_from_dict(_from_client["editor_schema"]),
+        editor_schema=build_flow_schema_from_dict(
+            _from_client["editor_schema"]),
     )

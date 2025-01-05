@@ -61,10 +61,12 @@ def test_make_execution_graph(compute_engine, load_schema):
 def test_execute(compute_engine, load_schema):
     compute_engine.execute(load_schema)
 
-    _map_node_block = load_schema.block_map
+    _map_node_block = load_schema._block_map
 
     # Assert that we get a dictionary of Block instances
     assert isinstance(_map_node_block, dict)
+    assert _map_node_block is not None
+    assert len(_map_node_block) > 0
     assert all(isinstance(block, Block) for block in _map_node_block.values())
 
     # Verify that all nodes from schema are present in the result
