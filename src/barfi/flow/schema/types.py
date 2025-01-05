@@ -143,7 +143,7 @@ class FlowSchema:
         Returns:
             Block: A Block instance representing the node in the flow.
 
-        Example:            
+        Example:
             >>> block = flow_schema.block(node_label="Result-1")
         """
 
@@ -152,8 +152,7 @@ class FlowSchema:
             node_label = node.label
 
         if node_label:
-            node_id = next(
-                (n.id for n in self.nodes if n.label == node_label), None)
+            node_id = next((n.id for n in self.nodes if n.label == node_label), None)
 
         if node_id is None or node_id not in self._block_map:
             raise ValueError(

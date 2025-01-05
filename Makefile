@@ -14,6 +14,10 @@ build-ui:
 serve-flow: 
 	cd tests && poetry run streamlit run app.py 
 
+.PHONY: ruff
+ruff:
+	poetry run ruff check src/barfi/flow/ && poetry run ruff format src/barfi/flow/
+
 .PHONY: tests
 tests: 
 	poetry run pytest tests -v -s

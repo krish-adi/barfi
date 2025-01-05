@@ -20,6 +20,5 @@ def build_streamlit_flow_response(_from_client: dict) -> StreamlitFlowResponse:
     # TODO move this to a classmethod of StreamlitFlowResponse import()
     return StreamlitFlowResponse(
         command=_from_client["command"],
-        editor_schema=build_flow_schema_from_dict(
-            _from_client["editor_schema"]),
+        editor_schema=build_flow_schema_from_dict(_from_client["editor_schema"]),
     )

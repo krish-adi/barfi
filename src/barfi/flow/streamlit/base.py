@@ -5,7 +5,10 @@ from barfi.config import RELEASE, SCHEMA_VERSION
 from barfi.flow.block import Block
 from barfi.flow.block.prepare import prepare_blocks_export
 from barfi.flow.schema.types import FlowSchema, FlowViewport
-from barfi.flow.streamlit.types import StreamlitFlowResponse, build_streamlit_flow_response
+from barfi.flow.streamlit.types import (
+    StreamlitFlowResponse,
+    build_streamlit_flow_response,
+)
 
 try:
     import streamlit.components.v1 as components
@@ -88,8 +91,7 @@ def st_flow(
         editor_schema=serialized_editor_schema,
         commands=commands,
         key=key,
-        default={"command": "default",
-                 "editor_schema": serialized_editor_schema},
+        default={"command": "default", "editor_schema": serialized_editor_schema},
     )
 
     return build_streamlit_flow_response(_from_client)
