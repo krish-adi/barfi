@@ -10,8 +10,8 @@ serve-ui:
 build-ui: 
 	cd ui-flow && npm run build
 
-.PHONY: serve-barfi
-serve-barfi: 
+.PHONY: serve-flow
+serve-flow: 
 	cd tests && poetry run streamlit run app.py 
 
 .PHONY: tests
