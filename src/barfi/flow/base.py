@@ -55,7 +55,7 @@ else:
 
 
 def st_flow(
-    base_blocks: Union[List[Block], Dict[str, List[Block]]],
+    blocks: Union[List[Block], Dict[str, List[Block]]],
     editor_schema: FlowSchema = FlowSchema(
         version=SCHEMA_VERSION,
         nodes=[],
@@ -68,7 +68,7 @@ def st_flow(
     """Create a flow editor component in Streamlit.
 
     Args:
-        base_blocks (Union[List[Block], Dict[str, List[Block]]]): The blocks available for use in the flow editor.
+        blocks (Union[List[Block], Dict[str, List[Block]]]): The blocks available for use in the flow editor.
             Can be either a list of Block objects or a dictionary mapping category names to lists of blocks.
         editor_schema (FlowSchema, optional): The initial schema for the flow editor, including nodes,
             connections, and viewport settings. Defaults to an empty schema.
@@ -84,11 +84,11 @@ def st_flow(
         >>> blocks = [MyCustomBlock(), AnotherBlock()]
         >>> response = st_flow(blocks, key="my_flow_editor")
     """
-    base_blocks_data = prepare_blocks_export(base_blocks)
+    base_blocks = prepare_blocks_export(blocks)
     serialized_editor_schema = editor_schema.export()
 
     _from_client = _component_func(
-        base_blocks=base_blocks_data,
+        blocks=base_blocks,
         editor_schema=serialized_editor_schema,
         commands=commands,
         key=key,

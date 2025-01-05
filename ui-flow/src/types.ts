@@ -128,7 +128,7 @@ export type FlowStateConnection = {
 
 export type BarfiState = {
     key: string | number | null;
-    base_blocks: BaseBlock[] | Record<string, BaseBlock[]>;
+    blocks: BaseBlock[] | Record<string, BaseBlock[]>;
     editor_schema: {
         version: string;
         nodes: FlowStateNode[];

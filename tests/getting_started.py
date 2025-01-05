@@ -14,7 +14,7 @@ number_block.add_option(name="number-block-option", type="number")
 
 def number_block_func(self):
     number_value = self.get_option(name="number-block-option")
-    self.set_interface(name="Output 1", value=option_value)
+    self.set_interface(name="Output 1", value=number_value)
 
 
 number_block.add_compute(number_block_func)
@@ -37,15 +37,16 @@ result_block.add_compute(result_block_func)
 # ... existing code as above ...
 
 # 04: The st_flow takes in the base blocks and returns the schema
-barfi_result = st_flow(base_blocks=[number_block, result_block])
+base_blocks=[number_block, result_block]
+barfi_result = st_flow(blocks=base_blocks)
 
 # 05: You can view the schema here
 st.write(barfi_result)
 
 # ... existing code as above ...
 
-# 06: Initialize your compute engine with the base_blocks and execute the schema.
-compute_engine = ComputeEngine([number_block, result_block])
+# 06: Initialize your compute engine with the base blocks and execute the schema.
+compute_engine = ComputeEngine(blocks=base_blocks)
 
 # 07: Reference to the flow_schema from the barfi_result
 flow_schema = barfi_result.editor_schema

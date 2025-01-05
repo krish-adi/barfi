@@ -2,8 +2,7 @@
 
 ## Top
 
--   [ ] update docs for the images and other pages
--   [ ] nits -> change base_blocks to just blocks in st_flow, compute and other places
+-   [x] nits -> change base_blocks to just blocks in st_flow, compute and other places
 -   [ ] nits -> change flow.flow.types to flow.types
 -   [ ] test optional dependencies
 -   [ ] ruff checks & release 1.0.0
@@ -67,5 +66,7 @@
 -   [x] update changelog
 -   [x] update dev notes
 -   [x] update docs for the images and other pages
+-   [ ] nits -> change base_blocks to just blocks in st_flow, compute and other places
+-   [ ] nits -> change flow.flow.types to flow.types
 -   [ ] test optional dependencies
 -   [ ] ruff checks & release 1.0.0

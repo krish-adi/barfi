@@ -16,7 +16,7 @@ export function App({ args }: { args: BarfiState }) {
     });
     const defaultNodes = convertFlowNodesToNodes(
         args.editor_schema.nodes,
-        args.base_blocks
+        args.blocks
     );
     const defaultEdges = convertFlowConnectionsToEdges(
         args.editor_schema.connections
@@ -52,7 +52,7 @@ export function App({ args }: { args: BarfiState }) {
                 setEdges={setEdges}
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
-                baseBlocks={args.base_blocks}
+                baseBlocks={args.blocks}
             />
         </div>
     );

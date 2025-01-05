@@ -25,7 +25,7 @@ else:
     )
 
 barfi_result = st_flow(
-    base_blocks=base_blocks,
+    blocks=base_blocks,
     editor_schema=load_schema,
 )
 
