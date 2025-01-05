@@ -1,4 +1,4 @@
-from typing import List, Union, Literal, Dict
+from typing import List, Union, Dict
 from dataclasses import dataclass, field, asdict
 from barfi.config import SCHEMA_VERSION
 from barfi.flow.block import Block
@@ -146,7 +146,7 @@ class FlowSchema:
         Example:            
             >>> block = flow_schema.block(node_label="Result-1")
         """
-        
+
         if node:
             node_id = node.id
             node_label = node.label
@@ -173,19 +173,6 @@ class FlowSchema:
         }
 
 
-@dataclass
-class StreamlitFlowResponse:
-    """Represents the response structure for Streamlit flow operations.
-
-    Attributes:
-        command (Union[str, Literal["default", "execute", "save"]]): The command to be executed
-        editor_schema (FlowSchema): The complete flow editor schema
-    """
-
-    command: Union[str, Literal["default", "execute", "save"]]
-    editor_schema: FlowSchema
-
-
 def build_flow_schema_from_dict(schema_dict: dict) -> FlowSchema:
     # TODO move this to a classmethod of FlowSchema import()
     return FlowSchema(
@@ -209,13 +196,4 @@ def build_flow_schema_from_dict(schema_dict: dict) -> FlowSchema:
             FlowConnection(**conn) for conn in schema_dict.get("connections", {})
         ],
         viewport=FlowViewport(**schema_dict.get("viewport", {})),
-    )
-
-
-def build_streamlit_flow_response(_from_client: dict) -> StreamlitFlowResponse:
-    # TODO move this to a classmethod of StreamlitFlowResponse import()
-    return StreamlitFlowResponse(
-        command=_from_client["command"],
-        editor_schema=build_flow_schema_from_dict(
-            _from_client["editor_schema"]),
     )

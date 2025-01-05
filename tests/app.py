@@ -7,7 +7,6 @@ from assets.blocks import base_blocks
 
 
 schema_manager = SchemaManager(filepath="./assets/")
-# st.write(schema_manager.schema_names)
 load_schema_name = st.selectbox(
     "Schema name", [None] + schema_manager.schema_names)
 
