@@ -20,28 +20,19 @@ Following are the developer notes on getting started to contributing to the deve
 
 ## Quickstart for development
 
-Open 2 terminals, one for starting the Python env and the other for the UI env.
-
--   In terminal 1
-
-```shell
-make serve-ui
-```
-
--   In terminal 2
-
-```shell
-make serve-barfi
-```
+-   To run the ui-flow in local development mode set `RELEASE = True` in `src/barfi/config.py`
+-   Open 2 terminals, one for starting the Python env and the other for the UI env.
+-   In terminal 1: `make serve-ui`
+-   In terminal 2: `make serve-barfi`
 
 ## Checklist for building and uploading new package
 
 -   [ ] Update Dcoumentation if required.
 -   [ ] Run tests using `make tests`
 -   [ ] Build the ui-flow: `cd build-ui`
--   [ ] Set `RELEASE = True` in `src/barfi/config.py`
+-   [ ] Check `RELEASE = True` is set in `src/barfi/config.py`
+-   [ ] Check linting and formatting: `make ruff`
 -   [ ] Bump version number as required in `pyproject.toml`
--   [ ] Update CHANGELOG 
+-   [ ] Update CHANGELOG
 -   [ ] Build and upload package using `make build-upload`
--   [ ] Change `RELEASE = False` in `src/barfi/config.py`
--   [ ] Commit the repository with the version number example: `v 0.4.2`
+-   [ ] Commit the repository with the version number example: `v 1.0.0`

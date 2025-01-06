@@ -202,8 +202,7 @@ result.add_compute(result_func)
 
 process_blocks = [feed, mixer, splitter]
 
-options_blocks = [input, integer, number,
-                  checkbox, selecto, slider, three_mixer]
+options_blocks = [input, integer, number, checkbox, selecto, slider, three_mixer]
 
 test_all_options = Block(name="All Options")
 test_all_options.add_input()
@@ -215,8 +214,9 @@ test_all_options.add_option(name="input-option", type="input")
 test_all_options.add_option(name="integer-option", type="integer")
 test_all_options.add_option(name="number-option", type="number")
 test_all_options.add_option(name="checkbox-option", type="checkbox")
-test_all_options.add_option(name="select-option", type="select",
-                            items=["Select A", "Select B", "Select C"])
+test_all_options.add_option(
+    name="select-option", type="select", items=["Select A", "Select B", "Select C"]
+)
 test_all_options.add_option(name="slider-option", type="slider", min=0, max=10)
 
 test_input = Block(name="Example Input")

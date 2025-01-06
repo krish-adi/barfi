@@ -4,6 +4,8 @@
 
 **A Python visual Flow Based Programming library to buld workflows that integrates into existing codebases.**
 
+![Demo GIF](/assets/demo.gif)
+
 **Documentation** : [find it here](https://barfi.ai/docs)
 
 Barfi is a Flow-Based Programming framework that offers a graphical programming interface. It is designed to integrate seamlessly into your existing Python applications.

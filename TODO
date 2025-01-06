@@ -1,11 +1,5 @@
 # TODOs
 
-## Top
-
--   [x] ruff lint checks and formatting
--   [ ] test optional dependencies
--   [ ] release 1.0.0
-
 ## P0
 
 -   [x] migrate to poetry for better deps management and local dev experience
@@ -68,5 +62,6 @@
 -   [x] nits -> change base_blocks to just blocks in st_flow, compute and other places
 -   [x] nits -> change flow.flow.types to flow.types
 -   [x] move st_flow from base to st along with response types
--   [ ] test optional dependencies
--   [ ] ruff checks & release 1.0.0
+-   [x] test optional dependencies
+-   [x] ruff lint checks and format
+-   [ ] release 1.0.0

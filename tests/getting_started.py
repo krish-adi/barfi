@@ -38,7 +38,7 @@ result_block.add_compute(result_block_func)
 # ... existing code as above ...
 
 # 04: The st_flow takes in the base blocks and returns the schema
-base_blocks=[number_block, result_block]
+base_blocks = [number_block, result_block]
 barfi_result = st_flow(blocks=base_blocks)
 
 # 05: You can view the schema here

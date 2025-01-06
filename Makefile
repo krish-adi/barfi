@@ -16,13 +16,13 @@ serve-flow:
 
 .PHONY: ruff
 ruff:
-	poetry run ruff check src/barfi/flow/ && poetry run ruff format src/barfi/flow/
+	poetry run ruff check src/barfi/flow/ && poetry run ruff format src/barfi/flow/ && \
+	poetry run ruff check tests/ && poetry run ruff format tests/
 
 .PHONY: tests
 tests: 
 	poetry run pytest tests -v -s
 
 .PHONY: build-upload
-build-upload: 
-	# twine upload -u "__token__" -p "$(PYPI_BARFI_API)" --skip-existing --verbose dist/*
-	echo "Upload to PyPi"
+build-upload:
+	poetry publish --build --username __token__ --password $$BARFI_PYPI_KEY --skip-existing
