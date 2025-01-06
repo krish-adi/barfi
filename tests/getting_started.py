@@ -1,6 +1,7 @@
 # 01: These would be the basic imports to get started
 import streamlit as st
-from barfi.flow import Block, SchemaManager, ComputeEngine, st_flow
+from barfi.flow import Block, ComputeEngine
+from barfi.flow.streamlit import st_flow
 
 
 # 02: The first block you'll create is one where you can set the number
