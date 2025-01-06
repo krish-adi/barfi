@@ -64,4 +64,4 @@
 -   [x] move st_flow from base to st along with response types
 -   [x] test optional dependencies
 -   [x] ruff lint checks and format
--   [ ] release 1.0.0
+-   [x] release 1.0.0
