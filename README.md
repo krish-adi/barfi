@@ -14,7 +14,7 @@ Barfi serves as an abstraction of Graphical Programming, Flow-Based Programming,
 
 Many existing visual Flow-Based Programming (FBP) libraries/frameworks operate within their own confined isolated environments, limiting their usability as components in existing applications or scripts. Barfi addresses this by decoupling the graphical programming interface from the computation environment, which eables easy integration into existing apps. The graphical interface is provided through a Streamlit widget: `st_flow` (with a Jupyter Notebook widget currently in development), while the computation environment is managed independently via the `ComputeEngine`.
 
-> Note: The current version >= 1.0.0 introduces many changes from <= 0.7.0. Check the (changelog)[./CHANGELOG.md] for more info on this. Versions will no longer be maintained. 
+> Note: The current version >= 1.0.0 introduces many changes from <= 0.7.0. Check the [changelog](./CHANGELOG.md) for more info on this. Versions will no longer be maintained.
 
 ## Quickstart
 
@@ -38,7 +38,7 @@ Follow this getting started guide on building your first `Blocks`, creating a `F
 
 ## Migration from v0
 
-If you were using the versions <= 0.7.0, a migration guide is being written. For using version >= 1.0.0, conceptually all the concepts remain with a minor API changes. v1.0.0 introduces a stronger type checking mechanism, and decouples and `SchemaManager` and `ComputeEngine` from the UI by providing separate classes to run those functions. You can check the API docs to get familiarized on how to use them. 
+If you were using the versions <= 0.7.0, a migration guide is being written. For using version >= 1.0.0, conceptually all the concepts remain with a minor API changes. v1.0.0 introduces a stronger type checking mechanism, and decouples and `SchemaManager` and `ComputeEngine` from the UI by providing separate classes to run those functions. You can check the API docs to get familiarized on how to use them.
 
 ## Under the hood
 
