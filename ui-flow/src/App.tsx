@@ -10,10 +10,7 @@ import {
     convertFlowConnectionsToEdges,
 } from "./type-casts";
 
-export function App({ args }: { args: BarfiState }) {
-    console.log({
-        args,
-    });
+export function App({ args }: { args: BarfiState }) {    
     const defaultNodes = convertFlowNodesToNodes(
         args.editor_schema.nodes,
         args.blocks
