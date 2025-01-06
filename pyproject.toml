@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "barfi"
+version = "1.0.0"
+description = "Graphical programming framework for AI and data apps."
+license = "MIT"
+authors = ["Adithya Krishnan <krishsandeep@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/krish-adi/barfi"
+repository = "https://github.com/krish-adi/barfi"
+documentation = "https://github.com/krish-adi/barfi"
+keywords = ["python", "streamlit", "graphical programming", "AI", "LLM"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+packages = [{ include = "barfi", from = "src" }]
+include = ["src/barfi/static/*"]
+
+[tool.poetry.dependencies]
+python = ">=3.8,!=3.9.7"
+
+
+# List of optional dependencies, installed using `[extra]`
+streamlit = { version = "^1.37.1", optional = true }
+networkx = { version = ">=3.1", optional = true }
+
+
+[tool.poetry.extras]
+streamlit = ["streamlit"]
+v0 = ["networkx", "streamlit"]
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+ruff = "^0.6.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
