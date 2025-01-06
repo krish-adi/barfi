@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    // base: './', // Set this to './' for relative paths
+    base: './', // Set this to './' for relative paths
     plugins: [react()],
     resolve: {
         alias: {
