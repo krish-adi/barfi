@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release dates are in YYYY-MM-DD
 
+## [1.0.1] - 2025-01-13
+
+-   Fix install errors with packaging errors from poetry. Package build to use poetry 2.0.1.
+
 ## [1.0.0] - 2025-01-05
 
 Following are major changes from v0. For using >= v1.0.0 your codebase needs to be adopted. Check for the latest documentation [here](https://barfi.ai/docs)
