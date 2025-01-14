@@ -1,40 +1,42 @@
-[tool.poetry]
+[project]
 name = "barfi"
-version = "1.0.0"
-description = "Graphical programming framework for AI and data apps."
-license = "MIT"
-authors = ["Adithya Krishnan <krishsandeep@gmail.com>"]
+version = "1.0.1"
+description = "Framework for building custom visual no-code workflows for AI and data apps. Also commonly known as: graphical flow based programming framework"
+license = { text = "Apache-2.0" }
 readme = "README.md"
-homepage = "https://github.com/krish-adi/barfi"
-repository = "https://github.com/krish-adi/barfi"
-documentation = "https://github.com/krish-adi/barfi"
-keywords = ["python", "streamlit", "graphical programming", "AI", "LLM"]
+authors = [
+    {name = "Adithya Krishnan",email = "krishsandeep@gmail.com"}
+]
+keywords = ["no-code", "framework", "streamlit", "graphical programming", "AI", "LLM"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-packages = [{ include = "barfi", from = "src" }]
-include = ["src/barfi/static/*"]
-
-[tool.poetry.dependencies]
-python = ">=3.8,!=3.9.7"
-
-
-# List of optional dependencies, installed using `[extra]`
-streamlit = { version = "^1.37.1", optional = true }
-networkx = { version = ">=3.1", optional = true }
+homepage = "https://github.com/krish-adi/barfi"
+repository = "https://github.com/krish-adi/barfi"
+documentation = "https://github.com/krish-adi/barfi"
+"Bug Tracker" = "https://github.com/krish-adi/barfi/issues"
+requires-python = ">=3.8,!=3.9.7"
+dependencies = [
+]
 
 
-[tool.poetry.extras]
-streamlit = ["streamlit"]
-v0 = ["networkx", "streamlit"]
+[project.optional-dependencies]
+streamlit = [ "streamlit>=1.0.0" ]
+deprecated-v0 = [ "networkx>=3.1", "streamlit>=1.37.1" ]
+
+
+[tool.poetry]
+packages = [{include = "barfi", from = "src"}]
+include = ["src/barfi/v0/static/*", "src/barfi/flow/streamlit/static/*"]
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
 ruff = "^0.6.3"
 
+
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
