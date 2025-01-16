@@ -16,7 +16,6 @@ def compute_engine():
 def load_schema():
     schema_manager = SchemaManager(filepath="./tests/assets/")
     return schema_manager.load_schema("math-muldiv")
-    # return schema_manager.load_schema("options-all")
 
 
 @pytest.fixture

@@ -1,4 +1,5 @@
 from barfi.flow import Block
+import asyncio
 
 
 def number_10_func(self):
@@ -84,6 +85,24 @@ multiplication.add_output()
 multiplication.add_compute(multiplication_func)
 
 
+async def async_multiplication_func(self):
+    print("async_multiplication_func")
+    in_1 = self.get_interface(name="Input 1")
+    in_2 = self.get_interface(name="Input 2")
+    # Simulate async operation
+    await asyncio.sleep(0.1)
+    value = in_1 * in_2
+    print(f"{in_1} * {in_2} = {value}")
+    self.set_interface(name="Output 1", value=value)
+
+
+async_multiplication = Block(name="Async Multiplication")
+async_multiplication.add_input()
+async_multiplication.add_input()
+async_multiplication.add_output()
+async_multiplication.add_compute(async_multiplication_func)
+
+
 def division_func(self):
     print("division_func")
     in_1 = self.get_interface(name="Input 1")
@@ -98,6 +117,24 @@ division.add_input()
 division.add_input()
 division.add_output()
 division.add_compute(division_func)
+
+
+async def async_division_func(self):
+    print("async_division_func")
+    in_1 = self.get_interface(name="Input 1")
+    in_2 = self.get_interface(name="Input 2")
+    # Simulate async operation
+    await asyncio.sleep(0.1)
+    value = in_1 / in_2
+    print(f"{in_1} / {in_2} = {value}")
+    self.set_interface(name="Output 1", value=value)
+
+
+async_division = Block(name="Async Division")
+async_division.add_input()
+async_division.add_input()
+async_division.add_output()
+async_division.add_compute(async_division_func)
 
 
 checkbox = Block(name="Checkbox")
@@ -234,6 +271,8 @@ math_blocks = [
     subtraction,
     multiplication,
     division,
+    async_multiplication,
+    async_division,
 ]
 
 base_blocks = {
