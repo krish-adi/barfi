@@ -115,20 +115,41 @@ class ComputeEngine:
                     if parents_visited and child not in queue:
                         queue.append(child)
 
+    @staticmethod
+    def _propagate_interface_values(
+        schema: FlowSchema, node_id: str, _map_node_block: Dict[str, Block]
+    ):
+        """
+        Propagates output values from a node to its connected input interfaces.
+
+        Args:
+            schema (FlowSchema): The flow schema containing connections
+            node_id (str): ID of the node whose outputs need to be propagated
+            _map_node_block (Dict[str, Block]): Mapping of node IDs to Block instances
+        """
+        for conn in schema.connections:
+            if conn.outputNode == node_id:
+                input_node_block = _map_node_block[conn.inputNode]
+                input_node_block.set_interface(
+                    conn.inputNodeInterface,
+                    _map_node_block[node_id].get_interface(conn.outputNodeInterface),
+                )
+
     def execute(self, schema: FlowSchema):
         """
         Executes the flow schema synchronously by processing blocks in topological order.
 
-        Args:
-            schema (FlowSchema): The flow schema containing nodes and connections to be executed.
+        This method creates a mapping of nodes to blocks, builds an execution graph,
+        and processes each block in the correct order. For each block, it:
+        1. Runs the block's compute function synchronously
+        2. Propagates output values to connected blocks
+        3. Updates the schema with the final block mapping
 
-        The method:
-        1. Creates a mapping between node IDs and Block instances
-        2. Builds an execution graph
-        3. Traverses the graph in topological order
-        4. Executes each block's computation
-        5. Propagates output values to connected input interfaces
-        6. Updates the schema with the computed block map
+        Args:
+            schema (FlowSchema): The flow schema to execute, containing nodes and their connections
+
+        Note:
+            This method handles async blocks by running them in a synchronous context using asyncio.run()
         """
         _map_node_block = self._make_map_node_block(schema)
         _execution_graph, _root_nodes = self._make_execution_graph(schema)
@@ -139,16 +160,8 @@ class ComputeEngine:
         ):
             block = _map_node_block[node_id]
             # Run async computation in synchronous context
-            asyncio.run(block._on_compute())            
-
-            # set all dependent node input interfaces
-            for conn in schema.connections:
-                if conn.outputNode == node_id:
-                    input_node_block = _map_node_block[conn.inputNode]
-                    input_node_block.set_interface(
-                        conn.inputNodeInterface,
-                        block.get_interface(conn.outputNodeInterface),
-                    )
+            asyncio.run(block._on_compute())
+            self._propagate_interface_values(schema, node_id, _map_node_block)
 
         schema._block_map = _map_node_block
 
@@ -156,16 +169,17 @@ class ComputeEngine:
         """
         Executes the flow schema asynchronously by processing blocks in topological order.
 
-        Args:
-            schema (FlowSchema): The flow schema containing nodes and connections to be executed.
+        This method creates a mapping of nodes to blocks, builds an execution graph,
+        and processes each block in the correct order. For each block, it:
+        1. Awaits the block's compute function
+        2. Propagates output values to connected blocks
+        3. Updates the schema with the final block mapping
 
-        The method follows the same logic as execute(), but handles async computations natively:
-        1. Creates a mapping between node IDs and Block instances
-        2. Builds an execution graph
-        3. Traverses the graph in topological order
-        4. Awaits each block's async computation
-        5. Propagates output values to connected input interfaces
-        6. Updates the schema with the computed block map
+        Args:
+            schema (FlowSchema): The flow schema to execute, containing nodes and their connections
+
+        Note:
+            This method should be called with await when executing async blocks
         """
         _map_node_block = self._make_map_node_block(schema)
         _execution_graph, _root_nodes = self._make_execution_graph(schema)
@@ -176,14 +190,6 @@ class ComputeEngine:
         ):
             block = _map_node_block[node_id]
             await block._on_compute()  # await the async compute function
-
-            # set all dependent node input interfaces
-            for conn in schema.connections:
-                if conn.outputNode == node_id:
-                    input_node_block = _map_node_block[conn.inputNode]
-                    input_node_block.set_interface(
-                        conn.inputNodeInterface,
-                        block.get_interface(conn.outputNodeInterface),
-                    )
+            self._propagate_interface_values(schema, node_id, _map_node_block)
 
         schema._block_map = _map_node_block
