@@ -8,6 +8,7 @@ from barfi.flow.schema.types import FlowSchema
 class ComputeEngine:
     def __init__(self, blocks: Union[List[Block], Dict[str, List[Block]]]):
         self._blocks = blocks
+        self.execution_mode = "parallel"
 
     def _make_map_node_block(self, schema: FlowSchema) -> Dict[str, Block]:
         """
@@ -47,7 +48,7 @@ class ComputeEngine:
 
         return _map_node_block
 
-    def _make_execution_graph(
+    def _make_serial_execution_graph(
         self, schema: FlowSchema
     ) -> Tuple[Dict[str, List[str]], List[str]]:
         """
@@ -82,7 +83,7 @@ class ComputeEngine:
 
         return graph, root_nodes
 
-    def _traverse_graph_compute_blocks(
+    def _traverse_serial_execution_graph(
         self, graph: Dict[str, List[str]], root_nodes: List[str]
     ):
         """
@@ -114,6 +115,72 @@ class ComputeEngine:
                     )
                     if parents_visited and child not in queue:
                         queue.append(child)
+
+    def _make_parallel_execution_graph(
+        self, schema: FlowSchema
+    ) -> Tuple[Dict[str, List[str]], Dict[int, List[str]]]:
+        """
+        Creates a directed graph representation and groups nodes by execution levels.
+
+        Args:
+            schema (FlowSchema): The flow schema containing nodes and connections
+
+        Returns:
+            Tuple[Dict[str, List[str]], Dict[int, List[str]]]: A tuple containing:
+                - Dict[str, List[str]]: A dictionary where keys are node IDs and values are
+                lists of child node IDs that they connect to
+                - Dict[int, List[str]]: A dictionary where keys are level numbers (0-based)
+                and values are lists of node IDs that can be executed in parallel at that level
+        """
+        # Create adjacency list representation
+        graph = {node.id: [] for node in schema.nodes}
+
+        # Track incoming connections count for each node
+        incoming_count = {node.id: 0 for node in schema.nodes}
+
+        # Build the graph connections
+        for conn in schema.connections:
+            from_node = conn.outputNode
+            to_node = conn.inputNode
+            graph[from_node].append(to_node)
+            incoming_count[to_node] += 1
+
+        # Group nodes by levels
+        levels = {}
+        current_level = 0
+
+        # Start with nodes that have no incoming connections (root nodes)
+        current_nodes = [
+            node_id for node_id, count in incoming_count.items() if count == 0
+        ]
+
+        while current_nodes:
+            levels[current_level] = current_nodes
+
+            # Find next level nodes
+            next_nodes = []
+            for node in current_nodes:
+                # For each child of current level nodes
+                for child in graph[node]:
+                    incoming_count[child] -= 1
+                    # If all dependencies are processed, add to next level
+                    if incoming_count[child] == 0:
+                        next_nodes.append(child)
+
+            current_nodes = sorted(list(set(next_nodes)))  # Remove duplicates
+            current_level += 1
+
+        return graph, levels
+
+    def _traverse_parallel_execution_graph(
+        self, graph: Dict[str, List[str]], levels: Dict[int, List[str]]
+    ):
+        """
+        Generator that traverses the execution graph from root nodes in topological order.
+        """
+        for level, nodes in levels.items():
+            for node in nodes:
+                yield node
 
     @staticmethod
     def _propagate_interface_values(
@@ -152,22 +219,43 @@ class ComputeEngine:
             This method handles async blocks by running them in a synchronous context using asyncio.run()
         """
         _map_node_block = self._make_map_node_block(schema)
-        _execution_graph, _root_nodes = self._make_execution_graph(schema)
 
-        # Traverse the graph and compute the blocks
-        for node_id in self._traverse_graph_compute_blocks(
-            _execution_graph, _root_nodes
-        ):
-            block = _map_node_block[node_id]
-            # Run async computation in synchronous context
-            try:
-                # If there is a running loop, run the async computation in it
-                loop = asyncio.get_running_loop()
-                loop.create_task(block._on_compute())
-            except RuntimeError:
-                # If there is no running loop, run the async computation in a new loop
-                asyncio.run(block._on_compute())
-            self._propagate_interface_values(schema, node_id, _map_node_block)
+        if self.execution_mode == "serial":
+            _execution_graph, _root_nodes = self._make_serial_execution_graph(schema)
+            # Traverse the graph and compute the blocks
+            for node_id in self._traverse_serial_execution_graph(
+                _execution_graph, _root_nodes
+            ):
+                block = _map_node_block[node_id]
+                # Run async computation in synchronous context
+                try:
+                    # If there is a running loop, run the async computation in it
+                    loop = asyncio.get_running_loop()
+                    loop.create_task(block._on_compute())
+                except RuntimeError:
+                    # If there is no running loop, run the async computation in a new loop
+                    asyncio.run(block._on_compute())
+
+                self._propagate_interface_values(schema, node_id, _map_node_block)
+
+        elif self.execution_mode == "parallel":
+            _graph, _levels = self._make_parallel_execution_graph(schema)
+            for level_id, level_nodes in _levels.items():
+                # Create tasks for all blocks in this level to run in parallel
+                tasks = [
+                    _map_node_block[node_id]._on_compute() for node_id in level_nodes
+                ]
+                # Run async computation in synchronous context
+                try:
+                    # If there is a running loop, run the async computation in it
+                    loop = asyncio.get_running_loop()
+                    loop.create_task(asyncio.gather(*tasks))
+                except RuntimeError:
+                    # If there is no running loop, run the async computation in a new loop
+                    asyncio.run(asyncio.gather(*tasks))
+
+                for node_id in level_nodes:
+                    self._propagate_interface_values(schema, node_id, _map_node_block)
 
         schema._block_map = _map_node_block
 
@@ -188,14 +276,29 @@ class ComputeEngine:
             This method should be called with await when executing async blocks
         """
         _map_node_block = self._make_map_node_block(schema)
-        _execution_graph, _root_nodes = self._make_execution_graph(schema)
 
-        # Traverse the graph and compute the blocks
-        for node_id in self._traverse_graph_compute_blocks(
-            _execution_graph, _root_nodes
-        ):
-            block = _map_node_block[node_id]
-            await block._on_compute()  # await the async compute function
-            self._propagate_interface_values(schema, node_id, _map_node_block)
+        if self.execution_mode == "serial":
+            _execution_graph, _root_nodes = self._make_serial_execution_graph(schema)
+            # Traverse the graph and compute the blocks
+            for node_id in self._traverse_serial_execution_graph(
+                _execution_graph, _root_nodes
+            ):
+                block = _map_node_block[node_id]
+                await block._on_compute()  # await the async compute function
+                self._propagate_interface_values(schema, node_id, _map_node_block)
+
+        elif self.execution_mode == "parallel":
+            _graph, _levels = self._make_parallel_execution_graph(schema)
+
+            for level_id, level_nodes in _levels.items():
+                # Create tasks for all blocks in this level to run in parallel
+                tasks = [
+                    _map_node_block[node_id]._on_compute() for node_id in level_nodes
+                ]
+                # Wait for all tasks to complete
+                await asyncio.gather(*tasks)
+
+                for node_id in level_nodes:
+                    self._propagate_interface_values(schema, node_id, _map_node_block)
 
         schema._block_map = _map_node_block

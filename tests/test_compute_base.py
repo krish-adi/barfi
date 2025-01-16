@@ -45,8 +45,8 @@ def test_make_map_node_block(compute_engine, load_schema):
             assert _map[node.id]._type == node.type
 
 
-def test_make_execution_graph(compute_engine, load_schema):
-    _graph, _root_nodes = compute_engine._make_execution_graph(load_schema)
+def test_make_serial_execution_graph(compute_engine, load_schema):
+    _graph, _root_nodes = compute_engine._make_serial_execution_graph(load_schema)
     assert isinstance(_graph, dict)
     assert all(isinstance(node_id, str) for node_id in _graph.keys())
     assert all(isinstance(children, list) for children in _graph.values())
