@@ -160,7 +160,13 @@ class ComputeEngine:
         ):
             block = _map_node_block[node_id]
             # Run async computation in synchronous context
-            asyncio.run(block._on_compute())
+            try:
+                # If there is a running loop, run the async computation in it
+                loop = asyncio.get_running_loop()
+                loop.create_task(block._on_compute())
+            except RuntimeError:
+                # If there is no running loop, run the async computation in a new loop
+                asyncio.run(block._on_compute())
             self._propagate_interface_values(schema, node_id, _map_node_block)
 
         schema._block_map = _map_node_block
