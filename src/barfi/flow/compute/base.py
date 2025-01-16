@@ -240,6 +240,10 @@ class ComputeEngine:
 
         elif self.execution_mode == "parallel":
             _graph, _levels = self._make_parallel_execution_graph(schema)
+
+            async def run_level_tasks(tasks):
+                await asyncio.gather(*tasks)
+
             for level_id, level_nodes in _levels.items():
                 # Create tasks for all blocks in this level to run in parallel
                 tasks = [
@@ -249,10 +253,10 @@ class ComputeEngine:
                 try:
                     # If there is a running loop, run the async computation in it
                     loop = asyncio.get_running_loop()
-                    loop.create_task(asyncio.gather(*tasks))
+                    loop.create_task(run_level_tasks(tasks))
                 except RuntimeError:
                     # If there is no running loop, run the async computation in a new loop
-                    asyncio.run(asyncio.gather(*tasks))
+                    asyncio.run(run_level_tasks(tasks))
 
                 for node_id in level_nodes:
                     self._propagate_interface_values(schema, node_id, _map_node_block)
