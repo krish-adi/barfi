@@ -1,3 +1,4 @@
+import asyncio
 from copy import deepcopy
 from typing import List, Union, Dict, Tuple
 from barfi.flow.block import Block
@@ -115,6 +116,20 @@ class ComputeEngine:
                         queue.append(child)
 
     def execute(self, schema: FlowSchema):
+        """
+        Executes the flow schema synchronously by processing blocks in topological order.
+
+        Args:
+            schema (FlowSchema): The flow schema containing nodes and connections to be executed.
+
+        The method:
+        1. Creates a mapping between node IDs and Block instances
+        2. Builds an execution graph
+        3. Traverses the graph in topological order
+        4. Executes each block's computation
+        5. Propagates output values to connected input interfaces
+        6. Updates the schema with the computed block map
+        """
         _map_node_block = self._make_map_node_block(schema)
         _execution_graph, _root_nodes = self._make_execution_graph(schema)
 
@@ -123,7 +138,44 @@ class ComputeEngine:
             _execution_graph, _root_nodes
         ):
             block = _map_node_block[node_id]
-            block._on_compute()
+            # Run async computation in synchronous context
+            asyncio.run(block._on_compute())            
+
+            # set all dependent node input interfaces
+            for conn in schema.connections:
+                if conn.outputNode == node_id:
+                    input_node_block = _map_node_block[conn.inputNode]
+                    input_node_block.set_interface(
+                        conn.inputNodeInterface,
+                        block.get_interface(conn.outputNodeInterface),
+                    )
+
+        schema._block_map = _map_node_block
+
+    async def async_execute(self, schema: FlowSchema):
+        """
+        Executes the flow schema asynchronously by processing blocks in topological order.
+
+        Args:
+            schema (FlowSchema): The flow schema containing nodes and connections to be executed.
+
+        The method follows the same logic as execute(), but handles async computations natively:
+        1. Creates a mapping between node IDs and Block instances
+        2. Builds an execution graph
+        3. Traverses the graph in topological order
+        4. Awaits each block's async computation
+        5. Propagates output values to connected input interfaces
+        6. Updates the schema with the computed block map
+        """
+        _map_node_block = self._make_map_node_block(schema)
+        _execution_graph, _root_nodes = self._make_execution_graph(schema)
+
+        # Traverse the graph and compute the blocks
+        for node_id in self._traverse_graph_compute_blocks(
+            _execution_graph, _root_nodes
+        ):
+            block = _map_node_block[node_id]
+            await block._on_compute()  # await the async compute function
 
             # set all dependent node input interfaces
             for conn in schema.connections:

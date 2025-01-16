@@ -1,5 +1,6 @@
-import types
 import uuid
+import inspect
+from types import MethodType
 from typing import Callable, Any, Dict, List, Type
 from dataclasses import asdict, dataclass, field
 from barfi.flow.block.option import BlockOption, BlockOptionValue
@@ -276,22 +277,32 @@ class Block:
             "options": [asdict(option) for option in self._options.values()],
         }
 
-    def _on_compute(self) -> None:
+    async def _on_compute(self) -> None:
         """
         Default compute method for the block.
         This method is meant to be overridden by the user-defined compute function.
+        Can be either synchronous or asynchronous.
         """
         pass
 
-    def add_compute(self, _func: Callable[["Block"], None]) -> None:
+    def add_compute(self, _func: Callable[["Block"], Any]) -> None:
         """
         Add a compute function to the block.
 
         Args:
-            _func (Callable[['Block'], None]): The compute function to be added.
-                It should take a single argument of type 'Block' (self) and return None.
+            _func (Callable[['Block'], Any]): The compute function to be added.
+                It should take a single argument of type 'Block' (self).
+                Can be either a synchronous or asynchronous function.
 
         This method binds the provided function to the block instance,
         allowing it to access and modify the block's attributes.
         """
-        self._on_compute = types.MethodType(_func, self)
+
+        if inspect.iscoroutinefunction(_func):
+            self._on_compute = MethodType(_func, self)
+        else:
+            # Wrap synchronous functions to make them async-compatible
+            async def wrapper(self):
+                return _func(self)
+
+            self._on_compute = MethodType(wrapper, self)
