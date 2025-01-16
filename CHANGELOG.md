@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release dates are in YYYY-MM-DD
 
+## [1.1.0] - 2025-xx-xx
+
+-   Drop support Python 3.8, as it has reached end of life. Support only Python 3.9 and above. v +1.0.x will support Python 3.8. Essentialy to help users migrate to to the current v +1.0.x.
+-   Add support for async compute functions.
+    -   `Block.add_compute` now supports binding a async compute function.
+    -   `ComputeEngine.execute()` now supports async compute functions in sync and async contexts.
+    -   `await ComputeEngine.async_execute()` is the new method to execute the flow schema asynchronously.
+
 ## [1.0.1] - 2025-01-13
 
 -   Fix install errors with packaging errors from poetry. Package build to use poetry 2.0.1.
