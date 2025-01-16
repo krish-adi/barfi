@@ -13,6 +13,8 @@ Here are the list of features and functionality that will be worked on in the co
 -   [ ] Add deprecation warnings.
 -   [ ] Add a textarea input
 -   [ ] Add a file uploader
+-   [ ] Add conditional blocks
+-   [ ] Add loop blocks
 
 ## `ui-flow`
 
@@ -22,6 +24,15 @@ Here are the list of features and functionality that will be worked on in the co
 -   [ ] Package the ui-flow as a separate package.
 -   [ ] Type check for interfaces on connect.
 -   [ ] text area input with editor draw from the side
+-   [ ] Multi-output connect to a single block input.
+-   [ ] Add a file uploader
+
+## `barfi.app`
+
+-   [ ] Request and Response blocks
+-   [ ] A base Block app api
+-   [ ] A Block based app api
+-   [ ] A Flow based app api
 
 ## `barfi.hub`
 
