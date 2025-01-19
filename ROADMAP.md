@@ -4,17 +4,17 @@ Here are the list of features and functionality that will be worked on in the co
 
 ## `barfi.flow`
 
--   [ ] Async/Await functions for `Block` compute.
--   [ ] Parallelize execution of Nodes that are non-dependent.
+-   [x] Async/Await functions for `Block` compute.
+-   [x] Parallelize execution of Nodes that are non-dependent.
 -   [ ] Logging for the functionality.
+-   [ ] Add conditional blocks
+-   [ ] Add loop blocks
 -   [ ] ComputeEngine to support cycles.
 -   [ ] Error and retry handling
 -   [ ] Type checks for interfaces on compute.
 -   [ ] Add deprecation warnings.
 -   [ ] Add a textarea input
 -   [ ] Add a file uploader
--   [ ] Add conditional blocks
--   [ ] Add loop blocks
 
 ## `ui-flow`
 
