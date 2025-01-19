@@ -16,12 +16,12 @@ def compute_engine() -> ComputeEngine:
 @pytest.fixture
 def load_schema():
     schema_manager = SchemaManager(filepath="./tests/assets/")
-    return schema_manager.load_schema("parallel-math")
+    return schema_manager.load_schema("async-math-deep")
 
 
 @pytest.fixture
 def editor_schema():
-    with open("tests/assets/schema_wall_parallel.json", "r") as f:
+    with open("tests/assets/schema_wall_parallel_deep.json", "r") as f:
         load_schema = json.load(f)
     return build_flow_schema_from_dict(load_schema.get("editor_schema"))
 
@@ -42,9 +42,9 @@ async def test_async_parallel_execution(compute_engine, editor_schema):
     end_time = asyncio.get_event_loop().time()
     execution_time = end_time - start_time
 
-    # Since we have three blocks with 0.1s sleep each, 2 in parallel, then 1 in serial,
-    # the total time should be close to 0.2s rather than 0.3s
-    assert execution_time < 0.21  # Adding some buffer for execution overhead
+    # Since we have 7 blocks with 0.1s sleep each, 4, 2, 1 in parallel,
+    # the total time should be close to 0.3s rather than 0.7s
+    assert execution_time < 0.33  # Adding some buffer for execution overhead
 
 
 def test_sync_parallel_execution(compute_engine, editor_schema):
@@ -57,6 +57,6 @@ def test_sync_parallel_execution(compute_engine, editor_schema):
     end_time = time.time()
     execution_time = end_time - start_time
 
-    # Since we have three blocks with 0.1s sleep each, 2 in parallel, then 1 in serial,
-    # the total time should be close to 0.2s rather than 0.3s
-    assert execution_time < 0.22  # Adding some buffer for execution overhead
+    # Since we have 7 blocks with 0.1s sleep each, 4, 2, 1 in parallel,
+    # the total time should be close to 0.3s rather than 0.7s
+    assert execution_time < 0.33  # Adding some buffer for execution overhead
