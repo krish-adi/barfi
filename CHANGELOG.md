@@ -14,6 +14,10 @@ Release dates are in YYYY-MM-DD
     -   `Block.add_compute` now supports binding a async compute function.
     -   `ComputeEngine.execute()` now supports async compute functions in sync and async contexts.
     -   `await ComputeEngine.async_execute()` is the new method to execute the flow schema asynchronously.
+-   Add support for parallel execution of nodes.
+    -   `ComputeEngine(execution_mode='parallel')` will execute the nodes in parallel. Default is parallel, can be set to serial using `execution_mode='serial'`.
+    -   `ComputeEngine.execute()` now supports parallel execution of nodes in sync and async contexts.
+    -   `await ComputeEngine.async_execute()` is the new method to execute the flow schema asynchronously.
 
 ## [1.0.1] - 2025-01-13
 
