@@ -1,14 +1,28 @@
 import asyncio
 from copy import deepcopy
-from typing import List, Union, Dict, Tuple
+from typing import List, Union, Dict, Tuple, Literal
 from barfi.flow.block import Block
 from barfi.flow.schema.types import FlowSchema
 
 
 class ComputeEngine:
-    def __init__(self, blocks: Union[List[Block], Dict[str, List[Block]]]):
-        self._blocks = blocks
-        self.execution_mode = "parallel"
+    def __init__(
+        self,
+        blocks: Union[List[Block], Dict[str, List[Block]]],
+        execution_mode: Literal["serial", "parallel"] = "parallel",
+    ):
+        """Initialize the ComputeEngine.
+
+        Args:
+            blocks: Either a list of Block instances or a dictionary mapping categories to lists of Block instances.
+                   These blocks serve as templates for creating node instances in the flow.
+            execution_mode: The mode of execution for the flow. Can be either "serial" or "parallel".
+                          In "serial" mode, nodes are executed sequentially.
+                          In "parallel" mode, independent nodes can be executed concurrently.
+                          Defaults to "parallel".
+        """
+        self.blocks = blocks
+        self.execution_mode = execution_mode
 
     def _make_map_node_block(self, schema: FlowSchema) -> Dict[str, Block]:
         """
@@ -28,11 +42,11 @@ class ComputeEngine:
         """
 
         _map_name_block = {}
-        if isinstance(self._blocks, List):
-            for block in self._blocks:
+        if isinstance(self.blocks, List):
+            for block in self.blocks:
                 _map_name_block[block.name] = block
-        elif isinstance(self._blocks, Dict):
-            for category, blocks in self._blocks.items():
+        elif isinstance(self.blocks, Dict):
+            for category, blocks in self.blocks.items():
                 for block in blocks:
                     _map_name_block[block.name] = block
 
@@ -171,16 +185,6 @@ class ComputeEngine:
             current_level += 1
 
         return graph, levels
-
-    def _traverse_parallel_execution_graph(
-        self, graph: Dict[str, List[str]], levels: Dict[int, List[str]]
-    ):
-        """
-        Generator that traverses the execution graph from root nodes in topological order.
-        """
-        for level, nodes in levels.items():
-            for node in nodes:
-                yield node
 
     @staticmethod
     def _propagate_interface_values(
