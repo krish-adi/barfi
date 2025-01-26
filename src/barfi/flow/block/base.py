@@ -312,7 +312,7 @@ class Block:
             ...     self.set_interface("Output 1", result)
             >>> block.add_compute(compute)
         """
-        
+
         if inspect.iscoroutinefunction(_func):
             self._on_compute = MethodType(_func, self)
         else:

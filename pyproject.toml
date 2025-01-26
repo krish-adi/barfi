@@ -17,7 +17,7 @@ homepage = "https://github.com/krish-adi/barfi"
 repository = "https://github.com/krish-adi/barfi"
 documentation = "https://github.com/krish-adi/barfi"
 "Bug Tracker" = "https://github.com/krish-adi/barfi/issues"
-requires-python = ">=3.9,<3.9.7 || >3.9.7"
+requires-python = ">=3.9,!=3.9.7"
 dependencies = [
 ]
 
