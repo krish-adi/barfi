@@ -1,6 +1,6 @@
 [project]
 name = "barfi"
-version = "1.0.1"
+version = "1.1.0"
 description = "Framework for building custom visual no-code workflows for AI and data apps. Also commonly known as: graphical flow based programming framework"
 license = { text = "Apache-2.0" }
 readme = "README.md"
@@ -17,7 +17,7 @@ homepage = "https://github.com/krish-adi/barfi"
 repository = "https://github.com/krish-adi/barfi"
 documentation = "https://github.com/krish-adi/barfi"
 "Bug Tracker" = "https://github.com/krish-adi/barfi/issues"
-requires-python = ">=3.9,<3.9.7 || >3.9.7"
+requires-python = ">=3.9,!=3.9.7"
 dependencies = [
 ]
 

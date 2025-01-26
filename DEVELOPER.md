@@ -20,7 +20,7 @@ Following are the developer notes on getting started to contributing to the deve
 
 ## Quickstart for development
 
--   To run the ui-flow in local development mode set `RELEASE = True` in `src/barfi/config.py`
+-   To run the ui-flow in local development mode set `RELEASE = False` in `src/barfi/config.py`
 -   Open 2 terminals, one for starting the Python env and the other for the UI env.
 -   In terminal 1: `make serve-ui`
 -   In terminal 2: `make serve-barfi`

@@ -289,13 +289,28 @@ class Block:
         """
         Add a compute function to the block.
 
+        Notes:
+            - Synchronous functions are automatically wrapped to be async-compatible
+            - The function is bound to the block instance, allowing it to access
+              and modify the block's attributes through 'self'
+
         Args:
             _func (Callable[['Block'], Any]): The compute function to be added.
                 It should take a single argument of type 'Block' (self).
-                Can be either a synchronous or asynchronous function.
+                Can be either a synchronous function or an async coroutine.
 
-        This method binds the provided function to the block instance,
-        allowing it to access and modify the block's attributes.
+        Examples:
+            >>> # Synchronous function
+            >>> def compute(self):
+            ...     result = self.get_interface("Input 1")
+            ...     self.set_interface("Output 1", result)
+            >>> block.add_compute(compute)
+
+            >>> # Asynchronous function
+            >>> async def compute(self):
+            ...     result = await some_async_operation()
+            ...     self.set_interface("Output 1", result)
+            >>> block.add_compute(compute)
         """
 
         if inspect.iscoroutinefunction(_func):
