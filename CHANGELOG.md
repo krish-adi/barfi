@@ -7,15 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Release dates are in YYYY-MM-DD
 
-## [1.1.0] - 2025-xx-xx
+## [1.1.0] - 2025-01-26
 
--   Drop support Python 3.8, as it has reached end of life. Support only Python 3.9 and above. v +1.0.x will support Python 3.8. Essentialy to help users migrate to to the current v +1.0.x.
+-   Drop support Python 3.8, as it has reached end of life. Support only Python 3.9 and above. v +1.0.x will support Python 3.8. Essentialy to help users migrate to the current v +1.1.x.
 -   Add support for async compute functions.
     -   `Block.add_compute` now supports binding a async compute function.
     -   `ComputeEngine.execute()` now supports async compute functions in sync and async contexts.
     -   `await ComputeEngine.async_execute()` is the new method to execute the flow schema asynchronously.
 -   Add support for parallel execution of nodes.
     -   `ComputeEngine(execution_mode='parallel')` will execute the nodes in parallel. Default is parallel, can be set to serial using `execution_mode='serial'`.
+    -   Default execution mode is parallel.
     -   `ComputeEngine.execute()` now supports parallel execution of nodes in sync and async contexts.
     -   `await ComputeEngine.async_execute()` is the new method to execute the flow schema asynchronously.
 
